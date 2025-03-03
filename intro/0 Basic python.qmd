@@ -1,0 +1,325 @@
+---
+title: "Basic Python"
+author: "Tony Duan"
+
+execute:
+  warning: false
+  error: false
+format:
+  html:
+    toc: true
+    toc-location: right
+    code-fold: show
+    code-tools: true
+    number-sections: true
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+---
+
+![](images/Python-logo-notext.svg.png){width="300"}
+
+# download and install python
+
+## check python version
+
+```{python}
+import sys
+print(sys.version)
+```
+
+## delete old version python in mac
+
+### delete framework
+
+Go-\>computer-\>Macintosh HD-\>Library-\>Frameworks-\>Python.framework-\>Versions
+
+Delete the old version python folder:
+
+![](images/clipboard-613753018.png)
+
+### delete python file
+
+list all python file
+
+```{bash}
+ls /usr/local/bin/python*
+```
+
+![](images/paste-1.png)
+
+delete the old version
+
+```{bash}
+brew uninstall python@3.11
+```
+
+## set python version in Rstudio
+
+list all file in home path
+
+```{python filename="Terminal"}
+#| eval: false
+ls -a
+```
+
+find .Renviron and edit to new version
+
+```{python filename="Terminal"}
+#| eval: false
+nano .Renviron
+```
+
+![](images/clipboard-2838033785.png){width="510"}
+
+# install jupyter
+
+```{python filename="Terminal"}
+#| eval: false
+python3 -m pip install jupyter
+```
+
+# work with file
+
+## get current directory
+
+```{python}
+#| eval: false
+import os
+os.getcwd()
+```
+
+## get all file name under current directory
+
+```{python}
+import os
+os.listdir(os.getcwd()) 
+```
+
+## get file info
+
+```{python}
+a=os.stat('3 statistic Book.qmd')
+a
+```
+
+show st_atime
+
+```{python}
+import datetime as dt
+#a.st_atime
+dt.date.fromtimestamp(a.st_atime).strftime('%Y%m%d')
+```
+
+## create folder
+
+create it if not exist
+
+```{python}
+#| eval: false
+if not os.path.exists('test_folder'): 
+  os.mkdir('test_folder') 
+```
+
+## delete folder
+
+```{python}
+#| eval: false
+os.rmdir('test_folder')
+```
+
+## delete file
+
+```{python}
+#| eval: false
+os.remove('test.csv')
+```
+
+## copy file
+
+```{python}
+#| eval: false
+import shutil
+
+shutil.copyfile('test.csv', 'test2.csv')
+```
+
+## downlaod file online
+
+```{python}
+#| eval: false
+import urllib.request
+
+url="https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-11/hotels.csv"
+
+urllib.request.urlretrieve(url, "hotels.csv")
+```
+
+# Condition with if/elif/else
+
+```{python}
+a = 200
+b = 33
+if b > a:
+  print("b is greater than a")
+elif a == b:
+  print("a and b are equal")
+else:
+  print("a is greater than b")
+```
+
+# Loop
+
+## for Loop
+
+```{python}
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+  print(x)
+```
+
+## for enumerate Loop
+
+it will add index
+
+```{python}
+fruits = ["apple", "banana", "cherry"]
+
+list(enumerate(fruits))
+```
+
+```{python}
+for index,i in enumerate(fruits):
+  print("The index is:",index)
+  print("The element is:",i)
+```
+
+## while Loop
+
+```{python}
+i = 1
+while i < 4:
+  print(i)
+  i += 1
+```
+
+with break statement
+
+```{python}
+i = 1
+while i < 6:
+  print(i)
+  if i == 3:
+    break
+  i += 1
+```
+
+# function
+
+## without Arguments
+
+```{python}
+def my_function():
+  print("Hello from a function")
+```
+
+```{python}
+my_function()
+```
+
+## with Arguments
+
+```{python}
+def my_function(x):
+  print(x + " !!!!!!!!!!!!!!!!!")
+```
+
+```{python}
+my_function('hello')
+```
+
+## with default Arguments
+
+```{python}
+def my_function(x='hello'):
+  print(x + " !!!!!!!!!!!!!!!!!")
+```
+
+```{python}
+my_function()
+```
+
+## return result
+
+```{python}
+def adding_ten(x):
+  a=x+10
+  return(a)
+```
+
+```{python}
+result=adding_ten(3)
+result
+```
+
+## lambda function
+
+it a faster way to do function
+
+```{python}
+lambda_adding_ten=lambda x:x+10
+```
+
+```{python}
+lambda_adding_ten(4)
+```
+
+# List Comprehension
+
+its a for loop in list
+
+```{python}
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+
+newlist = [x for x in fruits if "a" in x]
+
+print(newlist)
+```
+
+# Package
+
+## install package
+
+The Python Package Index (PyPI).<https://pypi.org//>
+
+![](images/logo-large.516e776d.svg){width="300"}
+
+```{python}
+#| eval: false
+import os
+os.system('pip3 install scikit-learn')
+os.system('pip3 install tensorflow')
+os.system('pip3 install pandas')
+os.system('pip3 install SciPy')
+```
+
+## check one package version
+
+```{python}
+import os
+os.system('pip show scikit-learn')
+```
+
+## check all package version
+
+```{python}
+import os
+os.system('pip list')
+
+```
+
+## check package install location
+
+```{python}
+#| eval: false
+import site; site.getsitepackages()
+```

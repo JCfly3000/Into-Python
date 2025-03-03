@@ -1,0 +1,871 @@
+[
+  {
+    "objectID": "data manipulation/3 Pandas.html",
+    "href": "data manipulation/3 Pandas.html",
+    "title": "Data manipulation with Pandas",
+    "section": "",
+    "text": "pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.\nCode\nimport pandas as pd\nprint('pandas version', pd.__version__)\n\n\npandas version 2.2.3\nCode\nimport os\n#os.system('pip show pandas')",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#load-package",
+    "href": "data manipulation/3 Pandas.html#load-package",
+    "title": "Data manipulation with Pandas",
+    "section": "0.1 load package",
+    "text": "0.1 load package\n\n\nCode\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pylab as plt\nimport seaborn as sns\n\n# from siuba.data import mtcars,penguins\n# \n# from siuba.siu import call\n# from siuba import _, mutate, filter, group_by, summarize,show_query\n# from siuba import *\n# \n# from siuba.data import mtcars,penguins\n\n\n\n\nCode\nmtcars=mtcars\n\n\n\n\nCode\nmtcars=r.mtcars\n\n\n\n\nCode\nsmall_mtcars = mtcars[[\"cyl\", \"mpg\",'hp']]\n\nsmall_mtcars=small_mtcars.head(5)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#get-info-on-the-data",
+    "href": "data manipulation/3 Pandas.html#get-info-on-the-data",
+    "title": "Data manipulation with Pandas",
+    "section": "0.2 get info on the data",
+    "text": "0.2 get info on the data\n\n\nCode\nsmall_mtcars.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nIndex: 5 entries, Mazda RX4 to Hornet Sportabout\nData columns (total 3 columns):\n #   Column  Non-Null Count  Dtype  \n---  ------  --------------  -----  \n 0   cyl     5 non-null      float64\n 1   mpg     5 non-null      float64\n 2   hp      5 non-null      float64\ndtypes: float64(3)\nmemory usage: 160.0+ bytes",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#select-column",
+    "href": "data manipulation/3 Pandas.html#select-column",
+    "title": "Data manipulation with Pandas",
+    "section": "0.3 select column",
+    "text": "0.3 select column\n\n0.3.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n['cyl', 'mpg', 'hp']\n\n\n\n\n0.3.2 select by name\n\n\nCode\nsmall_mtcars [[\"cyl\", \"mpg\",'hp']]\n\n\n                   cyl   mpg     hp\nMazda RX4          6.0  21.0  110.0\nMazda RX4 Wag      6.0  21.0  110.0\nDatsun 710         4.0  22.8   93.0\nHornet 4 Drive     6.0  21.4  110.0\nHornet Sportabout  8.0  18.7  175.0\n\n\nother way: ::: {.cell}\n\nCode\nsmall_mtcars.filter(items=['cyl', 'mpg','hp'])\n\n\n                   cyl   mpg     hp\nMazda RX4          6.0  21.0  110.0\nMazda RX4 Wag      6.0  21.0  110.0\nDatsun 710         4.0  22.8   93.0\nHornet 4 Drive     6.0  21.4  110.0\nHornet Sportabout  8.0  18.7  175.0\n\n:::\n\n\n0.3.3 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars.loc[:,small_mtcars.columns.str.contains(\"p\")]\n\n\n                    mpg     hp\nMazda RX4          21.0  110.0\nMazda RX4 Wag      21.0  110.0\nDatsun 710         22.8   93.0\nHornet 4 Drive     21.4  110.0\nHornet Sportabout  18.7  175.0\n\n\nother way: ::: {.cell}\n\nCode\nsmall_mtcars.filter(regex='p.*', axis=1)\n\n\n                    mpg     hp\nMazda RX4          21.0  110.0\nMazda RX4 Wag      21.0  110.0\nDatsun 710         22.8   93.0\nHornet 4 Drive     21.4  110.0\nHornet Sportabout  18.7  175.0\n\n:::\n\n\n0.3.4 select columns by index\n\n0.3.4.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars.iloc[[0,2]]\n\n\n            cyl   mpg     hp\nMazda RX4   6.0  21.0  110.0\nDatsun 710  4.0  22.8   93.0\n\n\n\n\n0.3.4.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars[0:3]\n\n\n               cyl   mpg     hp\nMazda RX4      6.0  21.0  110.0\nMazda RX4 Wag  6.0  21.0  110.0\nDatsun 710     4.0  22.8   93.0",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#drop-column",
+    "href": "data manipulation/3 Pandas.html#drop-column",
+    "title": "Data manipulation with Pandas",
+    "section": "0.4 drop column",
+    "text": "0.4 drop column\n\n\nCode\nsmall_mtcars.drop('cyl', axis=1)\n\n\n                    mpg     hp\nMazda RX4          21.0  110.0\nMazda RX4 Wag      21.0  110.0\nDatsun 710         22.8   93.0\nHornet 4 Drive     21.4  110.0\nHornet Sportabout  18.7  175.0",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#renaming-column",
+    "href": "data manipulation/3 Pandas.html#renaming-column",
+    "title": "Data manipulation with Pandas",
+    "section": "0.5 Renaming column",
+    "text": "0.5 Renaming column\n\n\nCode\nsmall_mtcars.rename(columns={'mpg':\"new_name_mpg\", 'cyl':'new_name_cyl'})\n\n\n                   new_name_cyl  new_name_mpg     hp\nMazda RX4                   6.0          21.0  110.0\nMazda RX4 Wag               6.0          21.0  110.0\nDatsun 710                  4.0          22.8   93.0\nHornet 4 Drive              6.0          21.4  110.0\nHornet Sportabout           8.0          18.7  175.0",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#create-column",
+    "href": "data manipulation/3 Pandas.html#create-column",
+    "title": "Data manipulation with Pandas",
+    "section": "0.6 Create column",
+    "text": "0.6 Create column\n\n0.6.1 Mutate\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\n\nsmall_mtcars['mpg3']  = np.where(small_mtcars['mpg']&gt; 20, \"long\", \"short\")\n\n\nsmall_mtcars['mpg4'] =np.where(small_mtcars[\"mpg\"]&lt;19, \"short\",\n                   np.where(small_mtcars[\"mpg\"]&lt;=22, \"Medium\",\n                   np.where(small_mtcars[\"mpg\"]&gt;22, \"long\",\"else\")))\n\n\nsmall_mtcars\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nDatsun 710         4.0  22.8   93.0  23.8   long    long\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short\n\n\n\n\n0.6.2 Transmute,create column and only keep this column\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\nnew_data=small_mtcars[['mpg2']]\n\nnew_data\n\n\n                   mpg2\nMazda RX4          22.0\nMazda RX4 Wag      22.0\nDatsun 710         23.8\nHornet 4 Drive     22.4\nHornet Sportabout  19.7",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#filter-rows",
+    "href": "data manipulation/3 Pandas.html#filter-rows",
+    "title": "Data manipulation with Pandas",
+    "section": "0.7 Filter rows",
+    "text": "0.7 Filter rows\n\n\nCode\nmtcars[(mtcars['gear'] ==4)]\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710      22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nMerc 240D       24.4  4.0  146.7   62.0  3.69  ...  20.00  1.0  0.0   4.0   2.0\nMerc 230        22.8  4.0  140.8   95.0  3.92  ...  22.90  1.0  0.0   4.0   2.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nFiat 128        32.4  4.0   78.7   66.0  4.08  ...  19.47  1.0  1.0   4.0   1.0\nHonda Civic     30.4  4.0   75.7   52.0  4.93  ...  18.52  1.0  1.0   4.0   2.0\nToyota Corolla  33.9  4.0   71.1   65.0  4.22  ...  19.90  1.0  1.0   4.0   1.0\nFiat X1-9       27.3  4.0   79.0   66.0  4.08  ...  18.90  1.0  1.0   4.0   1.0\nVolvo 142E      21.4  4.0  121.0  109.0  4.11  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 11 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('gear==4')\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710      22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nMerc 240D       24.4  4.0  146.7   62.0  3.69  ...  20.00  1.0  0.0   4.0   2.0\nMerc 230        22.8  4.0  140.8   95.0  3.92  ...  22.90  1.0  0.0   4.0   2.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nFiat 128        32.4  4.0   78.7   66.0  4.08  ...  19.47  1.0  1.0   4.0   1.0\nHonda Civic     30.4  4.0   75.7   52.0  4.93  ...  18.52  1.0  1.0   4.0   2.0\nToyota Corolla  33.9  4.0   71.1   65.0  4.22  ...  19.90  1.0  1.0   4.0   1.0\nFiat X1-9       27.3  4.0   79.0   66.0  4.08  ...  18.90  1.0  1.0   4.0   1.0\nVolvo 142E      21.4  4.0  121.0  109.0  4.11  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 11 columns]\n\n:::\n\n0.7.1 Filters with AND conditions\n\n\nCode\nmtcars[(mtcars['cyl'] &gt;4)&(mtcars['gear'] ==5) ]\n\n\n                 mpg  cyl   disp     hp  drat    wt  qsec   vs   am  gear  carb\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  3.17  14.5  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  2.77  15.5  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  3.57  14.6  0.0  1.0   5.0   8.0\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl&gt;4 and gear==5')\n\n\n                 mpg  cyl   disp     hp  drat    wt  qsec   vs   am  gear  carb\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  3.17  14.5  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  2.77  15.5  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  3.57  14.6  0.0  1.0   5.0   8.0\n\n:::\n\n\n0.7.2 Filters with OR conditions\n\n\nCode\nmtcars[(mtcars['cyl'] ==6) |(mtcars['gear'] ==5) ]\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nHornet 4 Drive  21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\nValiant         18.1  6.0  225.0  105.0  2.76  ...  20.22  1.0  0.0   3.0   1.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nPorsche 914-2   26.0  4.0  120.3   91.0  4.43  ...  16.70  0.0  1.0   5.0   2.0\nLotus Europa    30.4  4.0   95.1  113.0  3.77  ...  16.90  1.0  1.0   5.0   2.0\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  ...  14.50  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  ...  15.50  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 11 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl==6 or gear==5')\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nHornet 4 Drive  21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\nValiant         18.1  6.0  225.0  105.0  2.76  ...  20.22  1.0  0.0   3.0   1.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nPorsche 914-2   26.0  4.0  120.3   91.0  4.43  ...  16.70  0.0  1.0   5.0   2.0\nLotus Europa    30.4  4.0   95.1  113.0  3.77  ...  16.90  1.0  1.0   5.0   2.0\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  ...  14.50  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  ...  15.50  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 11 columns]\n\n:::\n\n\n0.7.3 filter row with index\n\n0.7.3.1 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n                    mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nHornet Sportabout  18.7  8.0  360.0  175.0  3.15  ...  17.02  0.0  0.0   3.0   2.0\n\n[1 rows x 11 columns]\n\n\n\n\n0.7.3.2 1 and 5tj rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n                    mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4          21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nHornet Sportabout  18.7  8.0  360.0  175.0  3.15  ...  17.02  0.0  0.0   3.0   2.0\n\n[2 rows x 11 columns]\n\n\n\n\n0.7.3.3 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710      22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nHornet 4 Drive  21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\n\n[4 rows x 11 columns]\n\n\n\n\n0.7.3.4 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)\n\n\n                      mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nFerrari Dino         19.7  6.0  145.0  175.0  3.62  ...  15.50  0.0  1.0   5.0   6.0\nLincoln Continental  10.4  8.0  460.0  215.0  3.00  ...  17.82  0.0  0.0   3.0   4.0\nPontiac Firebird     19.2  8.0  400.0  175.0  3.08  ...  17.05  0.0  0.0   3.0   2.0\nFiat 128             32.4  4.0   78.7   66.0  4.08  ...  19.47  1.0  1.0   4.0   1.0\nMerc 230             22.8  4.0  140.8   95.0  3.92  ...  22.90  1.0  0.0   4.0   2.0\n\n[5 rows x 11 columns]",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#append",
+    "href": "data manipulation/3 Pandas.html#append",
+    "title": "Data manipulation with Pandas",
+    "section": "0.8 Append",
+    "text": "0.8 Append\n\n0.8.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n    mpg  cyl   disp     hp  drat     wt   qsec   vs   am  gear  carb\n0  21.0  6.0  160.0  110.0  3.90  2.620  16.46  0.0  1.0   4.0   4.0\n1  21.0  6.0  160.0  110.0  3.90  2.875  17.02  0.0  1.0   4.0   4.0\n2  22.8  4.0  108.0   93.0  3.85  2.320  18.61  1.0  1.0   4.0   1.0\n3  21.4  6.0  258.0  110.0  3.08  3.215  19.44  1.0  0.0   3.0   1.0\n4  17.8  6.0  167.6  123.0  3.92  3.440  18.90  1.0  0.0   4.0   4.0\n\n\n\n\n0.8.2 append by column\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_columns\n\n\n\n\nCode\n# using pandas\n# data1=small_mtcars&gt;&gt;select(_.mpg)\n# \n# data2=small_mtcars&gt;&gt;select(_.cyl)\n# \n# data3=pd.concat([data1, data2],axis=1)\n# \n# data3\n\n\n\n\n0.8.3 Dropping NA values\n\n\n0.8.4 keep NA values",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#group-by",
+    "href": "data manipulation/3 Pandas.html#group-by",
+    "title": "Data manipulation with Pandas",
+    "section": "0.9 group by",
+    "text": "0.9 group by\n\n0.9.1 average,min,max,sum\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].mean()\n\n\ncyl\n4.0     82.636364\n6.0    122.285714\n8.0    209.214286\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].min()\n\n\ncyl\n4.0     52.0\n6.0    105.0\n8.0    150.0\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].max()\n\n\ncyl\n4.0    113.0\n6.0    175.0\n8.0    335.0\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].sum()\n\n\ncyl\n4.0     909.0\n6.0     856.0\n8.0    2929.0\nName: hp, dtype: float64\n\n\n\n\n0.9.2 count record and count distinct record\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].count()\n\n\ncyl\n4.0    11\n6.0     7\n8.0    14\nName: hp, dtype: int64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].nunique()\n\n\ncyl\n4.0    10\n6.0     4\n8.0     9\nName: hp, dtype: int64",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#order-rows",
+    "href": "data manipulation/3 Pandas.html#order-rows",
+    "title": "Data manipulation with Pandas",
+    "section": "0.10 order rows",
+    "text": "0.10 order rows\n\n\nCode\nsmall_mtcars.sort_values('hp')\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nDatsun 710         4.0  22.8   93.0  23.8   long    long\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short\n\n\n\n0.10.1 Sort in descending order\n\n\nCode\nsmall_mtcars.sort_values('hp',ascending=False)\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nDatsun 710         4.0  22.8   93.0  23.8   long    long\n\n\n\n\n0.10.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars.sort_values(by=['cyl','mpg'])\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nDatsun 710         4.0  22.8   93.0  23.8   long    long\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#join",
+    "href": "data manipulation/3 Pandas.html#join",
+    "title": "Data manipulation with Pandas",
+    "section": "0.11 join",
+    "text": "0.11 join\n\n\nCode\n\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n   id    val\n0   1  lhs.1\n1   2  lhs.2\n2   3  lhs.3\n\n\n\n\nCode\nrhs\n\n\n   id    val\n0   1  rhs.1\n1   2  rhs.2\n2   4  rhs.3\n\n\n\n0.11.1 inner_join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='inner')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n\n\n\n\n0.11.2 full join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='outer')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n3   4    NaN  rhs.3\n\n\n\n\n0.11.3 left join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='left')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n\n\n\n\n0.11.4 anti join\nkeep data in left which not in right ::: {.cell}\n\nCode\n#in siuba\n# result=lhs &gt;&gt; anti_join(_, rhs, on=\"id\")\n# result\n\n:::\nkeep data in right which not in left ::: {.cell}\n\nCode\n#in siuba\n# result=rhs &gt;&gt; anti_join(_, lhs, on=\"id\")\n# result\n\n:::",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#reshape-tables",
+    "href": "data manipulation/3 Pandas.html#reshape-tables",
+    "title": "Data manipulation with Pandas",
+    "section": "0.12 Reshape tables",
+    "text": "0.12 Reshape tables\n\n\nCode\ncosts = pd.DataFrame({\n    'id': [1,2],\n    'price_x': [.1, .2],\n    'price_y': [.4, .5],\n    'price_z': [.7, .8]\n})\n\ncosts\n\n\n   id  price_x  price_y  price_z\n0   1      0.1      0.4      0.7\n1   2      0.2      0.5      0.8\n\n\n\n0.12.1 Gather data long(wide to long)\n\n\nCode\n# selecting each variable manually\nlong_date=pd.melt(costs,id_vars=['id'], value_vars=['price_x', 'price_y','price_z'])\n\nlong_date\n\n\n   id variable  value\n0   1  price_x    0.1\n1   2  price_x    0.2\n2   1  price_y    0.4\n3   2  price_y    0.5\n4   1  price_z    0.7\n5   2  price_z    0.8\n\n\nCode\n#costs &gt;&gt; gather('measure', 'value', _.price_x, _.price_y, _.price_z)\n\n\n\n\n0.12.2 Spread data wide (long to wide)\n\n\nCode\nlong_date.pivot(index=\"id\", columns=\"variable\", values=\"value\")\n\n\nvariable  price_x  price_y  price_z\nid                                 \n1             0.1      0.4      0.7\n2             0.2      0.5      0.8",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#string",
+    "href": "data manipulation/3 Pandas.html#string",
+    "title": "Data manipulation with Pandas",
+    "section": "0.13 string",
+    "text": "0.13 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n    text  num\n0    abc    3\n1    DDD    4\n2  1243c    7\n3   aeEe    8\n\n\n\n0.13.1 upper case\n\n\nCode\n#df&gt;&gt; mutate(text_new=_.text.str.upper())\n\n\n\n\n0.13.2 lower case\n\n\nCode\n#df&gt;&gt; mutate(text_new=_.text.str.lower())\n\n\n\n\n0.13.3 match\n\n\nCode\n# df&gt;&gt; mutate(text_new1=if_else(_.text== \"abc\",'T','F')\n#             ,text_new2=if_else(_.text.str.startswith(\"a\"),'T','F')\n#             ,text_new3=if_else(_.text.str.endswith(\"c\"),'T','F')\n#             ,text_new4=if_else(_.text.str.contains(\"4\"),'T','F')\n# \n# )\n\n\n\n\n0.13.4 concatenation\n\n\nCode\n# df&gt;&gt; mutate(text_new1=_.text+' is '+_.text\n# )\n\n\n\n\n0.13.5 replace\nUse .str.replace(…, regex=True) with regular expressions to replace patterns in strings.\nFor example, the code below uses “p.”, where . is called a wildcard–which matches any character.\n\n\nCode\n# df&gt;&gt; mutate(text_new1=_.text.str.replace(\"a.\", \"XX\", regex=True)\n# )\n\n\n\n\n0.13.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.\n\n\n\nCode\n# df&gt;&gt; mutate(text_new1=_.text.str.extract(\"a(.*)\")\n#             ,text_new2=_.text.str.extract(\"(.*)c\")\n# )",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#date",
+    "href": "data manipulation/3 Pandas.html#date",
+    "title": "Data manipulation with Pandas",
+    "section": "0.14 date",
+    "text": "0.14 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n       dates                  raw\n0 2021-01-02  2023-04-05 06:07:08\n1 2021-02-03  2024-05-06 07:08:09\n\n\n\n\nCode\n# from datetime import datetime\n# \n# df_date=df_dates&gt;&gt;mutate(month=_.dates.dt.month_name()\n#                   ,date_format_raw = call(pd.to_datetime, _.raw)\n#                   ,date_format_raw_year=_.date_format_raw.dt.year\n# \n# )\n# \n# df_date\n\n\n\n\nCode\ndf_dates.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2 entries, 0 to 1\nData columns (total 2 columns):\n #   Column  Non-Null Count  Dtype         \n---  ------  --------------  -----         \n 0   dates   2 non-null      datetime64[ns]\n 1   raw     2 non-null      object        \ndtypes: datetime64[ns](1), object(1)\nmemory usage: 164.0+ bytes",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#dataframe-to-numpy-array",
+    "href": "data manipulation/3 Pandas.html#dataframe-to-numpy-array",
+    "title": "Data manipulation with Pandas",
+    "section": "0.15 dataframe to numpy array",
+    "text": "0.15 dataframe to numpy array\n\n\nCode\ndf_dates.to_numpy()\n\n\narray([[Timestamp('2021-01-02 00:00:00'), '2023-04-05 06:07:08'],\n       [Timestamp('2021-02-03 00:00:00'), '2024-05-06 07:08:09']],\n      dtype=object)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html",
+    "href": "plot/3 plotly.html",
+    "title": "Plotly chart",
+    "section": "",
+    "text": "Plotly’s Python graphing library makes interactive, publication-quality graphs. Examples of how to make line plots, scatter plots, area charts, bar charts, error bars, box plots, histograms, heatmaps, subplots, multiple-axes, polar charts, and bubble charts.\nCode\nimport plotly\nprint(plotly.__version__)\nCode\nfrom plotnine import *\nimport seaborn as sns\nimport plotly.express as px\nimport pandas as pd\n\n# Apply the default theme\n\n\n# Load an example dataset\ntips = sns.load_dataset(\"tips\")\ntips.head()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#color-by-group",
+    "href": "plot/3 plotly.html#color-by-group",
+    "title": "Plotly chart",
+    "section": "1.1 color by group",
+    "text": "1.1 color by group\n\n\nCode\nfig = px.scatter(tips,x=\"tip\", y=\"total_bill\",color=\"sex\")\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#size-by-group",
+    "href": "plot/3 plotly.html#size-by-group",
+    "title": "Plotly chart",
+    "section": "1.2 size by group",
+    "text": "1.2 size by group\n\n\nCode\nfig = px.scatter(tips,x=\"tip\", y=\"total_bill\",size=\"size\")\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#color-by-group-1",
+    "href": "plot/3 plotly.html#color-by-group-1",
+    "title": "Plotly chart",
+    "section": "2.1 color by group",
+    "text": "2.1 color by group\n\n\nCode\nimport random\nfrom siuba import _, mutate, filter, group_by, summarize,show_query\nfrom siuba import *\n\ndowjones2=dowjones&gt;&gt;mutate(type='old')\n\ndowjones3=dowjones&gt;&gt;mutate(Price=_.Price+random.random()*200,type='new')\n\ndowjones4=pd.concat([dowjones2, dowjones3], ignore_index = True)&gt;&gt; arrange(_.Date)\n\ndf = px.data.gapminder().query(\"continent=='Oceania'\")\n\n\n\n\nCode\ndowjones4.head()\n\n\n\n\nCode\nimport plotly.express as px\n\nfig = px.line(dowjones4, x=\"Date\", y=\"Price\", color='type')\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#color-by-group-2",
+    "href": "plot/3 plotly.html#color-by-group-2",
+    "title": "Plotly chart",
+    "section": "3.1 color by group",
+    "text": "3.1 color by group\n\n\nCode\nfig = px.histogram(tips, x=\"total_bill\", color='sex', barmode='group')\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#color-by-group-3",
+    "href": "plot/3 plotly.html#color-by-group-3",
+    "title": "Plotly chart",
+    "section": "5.1 color by group",
+    "text": "5.1 color by group\n\n\nCode\nfig = px.box(tips, y=\"total_bill\",x='sex',color='sex')\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#color-by-group-4",
+    "href": "plot/3 plotly.html#color-by-group-4",
+    "title": "Plotly chart",
+    "section": "6.1 color by group",
+    "text": "6.1 color by group\n\n\nCode\nfig = px.strip(tips,x=\"day\", y=\"total_bill\",color='sex')\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#add-title",
+    "href": "plot/3 plotly.html#add-title",
+    "title": "Plotly chart",
+    "section": "8.1 add title",
+    "text": "8.1 add title\n\n\nCode\nfig = px.scatter(tips,x=\"tip\", y=\"total_bill\", title=\"total_bill title\").update_layout(title_x=0.5)\nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#adjust-size",
+    "href": "plot/3 plotly.html#adjust-size",
+    "title": "Plotly chart",
+    "section": "8.2 adjust size",
+    "text": "8.2 adjust size\n\n\nCode\nfig = px.scatter(tips,x=\"tip\", y=\"total_bill\")\n\nfig.update_layout(\n    autosize=False\n    ,width=200\n    ,height=200\n    )\n    \nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/3 plotly.html#change-x-y-name",
+    "href": "plot/3 plotly.html#change-x-y-name",
+    "title": "Plotly chart",
+    "section": "8.3 change x y name",
+    "text": "8.3 change x y name\n\n\nCode\nfig = px.scatter(tips,x=\"tip\", y=\"total_bill\"\n                ,labels={\n                     \"tip\": \"new x label)\",\n                     \"total_bill\": \"new y label\"\n                 }\n\n)\n\n    \nfig.show()",
+    "crumbs": [
+      "Plot",
+      "Plotly chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html",
+    "href": "plot/2 plotnine.html",
+    "title": "plotnine chart",
+    "section": "",
+    "text": "plotnine is an implementation of a grammar of graphics in Python based on ggplot2.\nCode\nimport plotnine\nprint(plotnine.__version__)\nCode\nfrom plotnine import *\n\nprint(plotnine.__version__)\nCode\nfrom plotnine import *\nimport seaborn as sns\nimport pandas as pd\n\n\n# Apply the default theme\n\n\n# Load an example dataset\ntips = sns.load_dataset(\"tips\")\ntips.head()",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#color-by-group",
+    "href": "plot/2 plotnine.html#color-by-group",
+    "title": "plotnine chart",
+    "section": "1.1 color by group",
+    "text": "1.1 color by group\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point(aes(color=\"sex\"))\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#size-by-group",
+    "href": "plot/2 plotnine.html#size-by-group",
+    "title": "plotnine chart",
+    "section": "1.2 size by group",
+    "text": "1.2 size by group\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\",size=\"size\")+ geom_point()\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#color-by-group-1",
+    "href": "plot/2 plotnine.html#color-by-group-1",
+    "title": "plotnine chart",
+    "section": "2.1 color by group",
+    "text": "2.1 color by group\n\n\nCode\np=(\n    ggplot(data=dowjones4)+aes(x=\"Date\",y=\"Price\")+ geom_line(aes(color=\"type\"))\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#color-by-group-2",
+    "href": "plot/2 plotnine.html#color-by-group-2",
+    "title": "plotnine chart",
+    "section": "3.1 color by group",
+    "text": "3.1 color by group\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#color-by-group-3",
+    "href": "plot/2 plotnine.html#color-by-group-3",
+    "title": "plotnine chart",
+    "section": "5.1 color by group",
+    "text": "5.1 color by group\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x='day',y='tip',fill=\"sex\")+geom_boxplot()\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#color-by-group-4",
+    "href": "plot/2 plotnine.html#color-by-group-4",
+    "title": "plotnine chart",
+    "section": "6.1 color by group",
+    "text": "6.1 color by group\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x='day',y='tip',fill=\"sex\")+geom_jitter(position=position_jitterdodge())\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#add-title",
+    "href": "plot/2 plotnine.html#add-title",
+    "title": "plotnine chart",
+    "section": "8.1 add title",
+    "text": "8.1 add title\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ ggtitle(\"tip by sex\")\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#adjust-size",
+    "href": "plot/2 plotnine.html#adjust-size",
+    "title": "plotnine chart",
+    "section": "8.2 adjust size",
+    "text": "8.2 adjust size\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ ggtitle(\"tip by sex\")+ theme(figure_size=(4, 3)) \n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/2 plotnine.html#change-x-y-name",
+    "href": "plot/2 plotnine.html#change-x-y-name",
+    "title": "plotnine chart",
+    "section": "8.3 change x y name",
+    "text": "8.3 change x y name\n\n\nCode\np=(\n    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point()+ scale_x_continuous(name=\"new x name\")+ scale_y_continuous(name=\"new y name\")\n)\n\np",
+    "crumbs": [
+      "Plot",
+      "plotnine chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html",
+    "href": "plot/1 seaborn.html",
+    "title": "seaborn chart",
+    "section": "",
+    "text": "Seaborn is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics.\nCode\nimport seaborn as sns\nprint(sns.__version__)\nCode\n# Import seaborn\nimport seaborn as sns\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport matplotlib\n\n# Apply the default theme\n#sns.set_theme()\n\n# Load an example dataset\ntips = sns.load_dataset(\"tips\")\ntips.head()",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#color-by-group",
+    "href": "plot/1 seaborn.html#color-by-group",
+    "title": "seaborn chart",
+    "section": "1.1 color by group",
+    "text": "1.1 color by group\n\n\nCode\nsns.scatterplot(data=tips,x='tip',y='total_bill',hue='sex')",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#size-by-group",
+    "href": "plot/1 seaborn.html#size-by-group",
+    "title": "seaborn chart",
+    "section": "1.2 size by group",
+    "text": "1.2 size by group\n\n\nCode\nsns.scatterplot(data=tips,x='tip',y='total_bill',size='size')",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#color-by-group-1",
+    "href": "plot/1 seaborn.html#color-by-group-1",
+    "title": "seaborn chart",
+    "section": "2.1 color by group",
+    "text": "2.1 color by group\n\n\nCode\nimport random\nfrom siuba import _, mutate, filter, group_by, summarize,show_query\nfrom siuba import *\n\ndowjones2=dowjones&gt;&gt;mutate(type='old')\n\ndowjones3=dowjones&gt;&gt;mutate(Price=_.Price+random.random()*200,type='new')\n\ndowjones4=pd.concat([dowjones2, dowjones3], ignore_index = True)&gt;&gt; arrange(_.Date)\n\n\n\n\nCode\ndowjones4.head()\n\n\n\n\nCode\nsns.lineplot(data=dowjones4,x='Date',y='Price',hue='type')",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#color-by-group-2",
+    "href": "plot/1 seaborn.html#color-by-group-2",
+    "title": "seaborn chart",
+    "section": "3.1 color by group",
+    "text": "3.1 color by group\n\n\nCode\nsns.histplot(data=tips,x='tip',hue='sex',multiple=\"dodge\")",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#show-number",
+    "href": "plot/1 seaborn.html#show-number",
+    "title": "seaborn chart",
+    "section": "4.1 show number",
+    "text": "4.1 show number\n\n\nCode\nax=sns.barplot(data=tips,x='sex',y='tip',errorbar=None)\n\nfor i in ax.containers:\n    ax.bar_label(i,)",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#horizontal-bar-plot",
+    "href": "plot/1 seaborn.html#horizontal-bar-plot",
+    "title": "seaborn chart",
+    "section": "4.2 horizontal bar plot",
+    "text": "4.2 horizontal bar plot\n\n\nCode\nax=sns.barplot(data=tips,y='sex',x='tip',errorbar=None,orient = 'h')\nplt.show()",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#color-by-group-3",
+    "href": "plot/1 seaborn.html#color-by-group-3",
+    "title": "seaborn chart",
+    "section": "5.1 color by group",
+    "text": "5.1 color by group\n\n\nCode\nsns.boxplot(data=tips,x='day',y='tip',hue='sex')",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#color-by-group-4",
+    "href": "plot/1 seaborn.html#color-by-group-4",
+    "title": "seaborn chart",
+    "section": "6.1 color by group",
+    "text": "6.1 color by group\n\n\nCode\nsns.stripplot(data=tips,x='day',y='tip',hue='sex',dodge=True)\n\n\njoin plot\n\n\nCode\nsns.jointplot(data=tips,x='total_bill',y='tip',kind='reg')",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#add-title",
+    "href": "plot/1 seaborn.html#add-title",
+    "title": "seaborn chart",
+    "section": "9.1 add title",
+    "text": "9.1 add title\n\n\nCode\ndf = sns.load_dataset(\"tips\")\n\nax=sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n\nax.set_title(\"tips box plot \")",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#adjust-size",
+    "href": "plot/1 seaborn.html#adjust-size",
+    "title": "seaborn chart",
+    "section": "9.2 adjust size",
+    "text": "9.2 adjust size\n\n\nCode\nplt.clf()\n\nplt.figure(figsize=(10, 6))\n\nax=sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\nax.set_title(\"tips box plot \")\n\nplt.show()",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "plot/1 seaborn.html#change-x-y-name",
+    "href": "plot/1 seaborn.html#change-x-y-name",
+    "title": "seaborn chart",
+    "section": "9.3 change x y name",
+    "text": "9.3 change x y name\n\n\nCode\nax=sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\nax.set_title(\"tips box plot \")\nax.set(xlabel='x-axis label', ylabel='y-axis label')",
+    "crumbs": [
+      "Plot",
+      "seaborn chart"
+    ]
+  },
+  {
+    "objectID": "other/1 Web scraping on www.whiskynotes.be/4 whiskynote all year page.html",
+    "href": "other/1 Web scraping on www.whiskynotes.be/4 whiskynote all year page.html",
+    "title": "All year page",
+    "section": "",
+    "text": "Code\nlibrary(tidyverse)\nlibrary(rvest)\n\n\n\n\nCode\npackageVersion(\"rvest\")\n\n\n\n1 loop all year page\n\n\nCode\nyear_list=seq(2010,2024)\nyear_list\n\n\n\n\nCode\nurl_list=paste0('https://www.whiskynotes.be/',year_list)\nurl_list\n\n\n\n\nCode\nbottle_list=c()\ntopic_list=c()\ntopic_link_list=c()\nall_year_list_topic=c()\nall_year_list_bottle=c()\n\nfor (i in url_list){\n  year=tail(unlist(strsplit(i, split = \"/\")),1)\n  print(year)\n  print(i)\n  year_ur=i\n  year_page &lt;- read_html(year_ur)\n  bottle001 &lt;- year_page %&gt;% html_elements(\"p\")%&gt;% html_text2()\n  bottle003=unlist(strsplit(bottle001,\"\\n\"))\n  \n  \n  topic001 &lt;- year_page %&gt;% html_elements(\".archive-link\") %&gt;% html_text2()\n  topic_link_001 &lt;- year_page %&gt;%\n    html_elements(css = \".entry-permalink\")%&gt;% html_attr(\"href\")\n\n  year_list_topic=rep(year,length(topic001))\n  year_list_bottle=rep(year,length(bottle003))\n  \n  all_year_list_topic=c(all_year_list_topic,year_list_topic)\n  all_year_list_bottle=c(all_year_list_bottle,year_list_bottle)\n  \n  bottle_list=c(bottle_list,bottle003)\n  topic_list=c(topic_list,topic001)\n  topic_link_list=c(topic_link_list,topic_link_001)\n  \n  Sys.sleep(1)\n  }\n\n\n\n\n2 combine\n\n\nCode\ndata=tibble(topic_list,topic_link_list,all_year_list_topic)\n\n\n\n\nCode\nbottle003=tibble(bottle_list,all_year_list_bottle)\n\n\n\n\n3 output\n\n\nCode\nlibrary(openxlsx)\nlist_of_datasets &lt;- list(\"topic\" = data, \"bottle\" = bottle003)\n\nwrite.xlsx(list_of_datasets, file = \"./output/all year page.xlsx\")\n\n\n\n\n4 reference:\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Other",
+      "1 Web scraping on www.whiskynotes.be",
+      "All year page"
+    ]
+  },
+  {
+    "objectID": "other/1 Web scraping on www.whiskynotes.be/1 whiskynote data.html",
+    "href": "other/1 Web scraping on www.whiskynotes.be/1 whiskynote data.html",
+    "title": "Whiskynotes.be data",
+    "section": "",
+    "text": "1 whiskynotes.be data\nhttps://www.whiskynotes.be/\n\nWhiskyNotes is a personal collection of impressions, written while searching for the ultimate single malt whisky. A work in progress, and a continuous exercise for the senses.\nI started it in 2008 while living in Spain for a couple of years. I had discovered whisky a few years earlier but suddenly I was cut off from festivals, shops and whisky friends in my home country. A whisky blog seemed a good way of keeping in touch. It quickly gained a following, first in Belgium but now from all over the world.\n\n\n2 BeautifulSoup package\n\nBeautiful Soup is a Python library for pulling data out of HTML and XML files. It works with your favorite parser to provide idiomatic ways of navigating, searching, and modifying the parse tree. It commonly saves programmers hours or days of work.\n\n\nCode\nimport requests\nimport os\nfrom bs4 import BeautifulSoup\nimport pandas as pd\nimport time\n\n\n\n\nCode\nos.system('pip show beautifulsoup4')\n\n\nName: beautifulsoup4\nVersion: 4.13.3\nSummary: Screen-scraping library\nHome-page: https://www.crummy.com/software/BeautifulSoup/bs4/\nAuthor: \nAuthor-email: Leonard Richardson &lt;leonardr@segfault.org&gt;\nLicense: MIT License\nLocation: /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages\nRequires: soupsieve, typing-extensions\nRequired-by: nbconvert\n\n\n0\n\n\n\n\n3 reference:\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Other",
+      "1 Web scraping on www.whiskynotes.be",
+      "Whiskynotes.be data"
+    ]
+  },
+  {
+    "objectID": "intro/2 Data Book.html",
+    "href": "intro/2 Data Book.html",
+    "title": "Data analytic in Python Boook",
+    "section": "",
+    "text": "1 Python for Data Analysis\nby William McKinney\n\n\n\n2 Introduction to Machine Learning with Python\nby Andreas C. Müller, Sarah Guido\n\n\n\n3 Machine Learning with Python Cookbook\nby Chris Albon\n\n\n\n4 Data Wrangling with Python\nby Jacqueline Kazil (Author), Katharine Jarmul (Author)\n\n\n\n5 A Course in Machine Learning\nby Hal Daumé\n\n\n\n6 Think Stats\nby Allen B. Downey\n\n\n\n7 Think Bayes\nby Allen B. Downey\n\n\n\n8 Think Like a Data Scientist\nby Brian Godsey\n\n\n\n9 Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow\nby Aurélien Géron\n\n\n\n10 Deep Learning with Python\nBy Francois Chollet\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Intro",
+      "Data analytic in Python Boook"
+    ]
+  },
+  {
+    "objectID": "intro/3 statistic Book.html",
+    "href": "intro/3 statistic Book.html",
+    "title": "Statistic Boook",
+    "section": "",
+    "text": "1 Naked Statistics\nby Charles Wheelan\n\n\n\n2 Storytelling with Data\nby Cole Nussbaumer Knaflic\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Intro",
+      "Statistic Boook"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#check-python-version",
+    "href": "intro/0 Basic python.html#check-python-version",
+    "title": "Basic Python",
+    "section": "1.1 check python version",
+    "text": "1.1 check python version\n\n\nCode\nimport sys\nprint(sys.version)\n\n\n3.13.2 (v3.13.2:4f8bb3947cf, Feb  4 2025, 11:51:10) [Clang 15.0.0 (clang-1500.3.9.4)]",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#delete-old-version-python-in-mac",
+    "href": "intro/0 Basic python.html#delete-old-version-python-in-mac",
+    "title": "Basic Python",
+    "section": "1.2 delete old version python in mac",
+    "text": "1.2 delete old version python in mac\n\n1.2.1 delete framework\nGo-&gt;computer-&gt;Macintosh HD-&gt;Library-&gt;Frameworks-&gt;Python.framework-&gt;Versions\nDelete the old version python folder:\n\n\n\n1.2.2 delete python file\nlist all python file\nls /usr/local/bin/python*\n\ndelete the old version\nbrew uninstall python@3.11",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#set-python-version-in-rstudio",
+    "href": "intro/0 Basic python.html#set-python-version-in-rstudio",
+    "title": "Basic Python",
+    "section": "1.3 set python version in Rstudio",
+    "text": "1.3 set python version in Rstudio\nlist all file in home path\n\n\nCode\nls -a\n\n\nfind .Renviron and edit to new version\n\n\nCode\nnano .Renviron",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#get-current-directory",
+    "href": "intro/0 Basic python.html#get-current-directory",
+    "title": "Basic Python",
+    "section": "3.1 get current directory",
+    "text": "3.1 get current directory\n\n\nCode\nimport os\nos.getcwd()",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#get-all-file-name-under-current-directory",
+    "href": "intro/0 Basic python.html#get-all-file-name-under-current-directory",
+    "title": "Basic Python",
+    "section": "3.2 get all file name under current directory",
+    "text": "3.2 get all file name under current directory\n\n\nCode\nimport os\nos.listdir(os.getcwd()) \n\n\n['.Rhistory',\n 'test_folder',\n '.DS_Store',\n 'images',\n '0 Basic python.qmd',\n 'hotels.csv',\n '.RData',\n '3 statistic Book.qmd',\n '1 Python Book.qmd',\n '2 Data Book.qmd',\n 'data',\n '0 Basic python.quarto_ipynb']",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#get-file-info",
+    "href": "intro/0 Basic python.html#get-file-info",
+    "title": "Basic Python",
+    "section": "3.3 get file info",
+    "text": "3.3 get file info\n\n\nCode\na=os.stat('3 statistic Book.qmd')\na\n\n\nos.stat_result(st_mode=33188, st_ino=69773616, st_dev=16777229, st_nlink=1, st_uid=501, st_gid=20, st_size=453, st_atime=1740969674, st_mtime=1712419159, st_ctime=1740969673)\n\n\nshow st_atime\n\n\nCode\nimport datetime as dt\n#a.st_atime\ndt.date.fromtimestamp(a.st_atime).strftime('%Y%m%d')\n\n\n'20250303'",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#create-folder",
+    "href": "intro/0 Basic python.html#create-folder",
+    "title": "Basic Python",
+    "section": "3.4 create folder",
+    "text": "3.4 create folder\ncreate it if not exist\n\n\nCode\nif not os.path.exists('test_folder'): \n  os.mkdir('test_folder')",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#delete-folder",
+    "href": "intro/0 Basic python.html#delete-folder",
+    "title": "Basic Python",
+    "section": "3.5 delete folder",
+    "text": "3.5 delete folder\n\n\nCode\nos.rmdir('test_folder')",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#delete-file",
+    "href": "intro/0 Basic python.html#delete-file",
+    "title": "Basic Python",
+    "section": "3.6 delete file",
+    "text": "3.6 delete file\n\n\nCode\nos.remove('test.csv')",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#copy-file",
+    "href": "intro/0 Basic python.html#copy-file",
+    "title": "Basic Python",
+    "section": "3.7 copy file",
+    "text": "3.7 copy file\n\n\nCode\nimport shutil\n\nshutil.copyfile('test.csv', 'test2.csv')",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#downlaod-file-online",
+    "href": "intro/0 Basic python.html#downlaod-file-online",
+    "title": "Basic Python",
+    "section": "3.8 downlaod file online",
+    "text": "3.8 downlaod file online\n\n\nCode\nimport urllib.request\n\nurl=\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-11/hotels.csv\"\n\nurllib.request.urlretrieve(url, \"hotels.csv\")",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#for-loop",
+    "href": "intro/0 Basic python.html#for-loop",
+    "title": "Basic Python",
+    "section": "5.1 for Loop",
+    "text": "5.1 for Loop\n\n\nCode\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor x in fruits:\n  print(x)\n\n\napple\nbanana\ncherry",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#for-enumerate-loop",
+    "href": "intro/0 Basic python.html#for-enumerate-loop",
+    "title": "Basic Python",
+    "section": "5.2 for enumerate Loop",
+    "text": "5.2 for enumerate Loop\nit will add index\n\n\nCode\nfruits = [\"apple\", \"banana\", \"cherry\"]\n\nlist(enumerate(fruits))\n\n\n[(0, 'apple'), (1, 'banana'), (2, 'cherry')]\n\n\n\n\nCode\nfor index,i in enumerate(fruits):\n  print(\"The index is:\",index)\n  print(\"The element is:\",i)\n\n\nThe index is: 0\nThe element is: apple\nThe index is: 1\nThe element is: banana\nThe index is: 2\nThe element is: cherry",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#while-loop",
+    "href": "intro/0 Basic python.html#while-loop",
+    "title": "Basic Python",
+    "section": "5.3 while Loop",
+    "text": "5.3 while Loop\n\n\nCode\ni = 1\nwhile i &lt; 4:\n  print(i)\n  i += 1\n\n\n1\n2\n3\n\n\nwith break statement\n\n\nCode\ni = 1\nwhile i &lt; 6:\n  print(i)\n  if i == 3:\n    break\n  i += 1\n\n\n1\n2\n3",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#without-arguments",
+    "href": "intro/0 Basic python.html#without-arguments",
+    "title": "Basic Python",
+    "section": "6.1 without Arguments",
+    "text": "6.1 without Arguments\n\n\nCode\ndef my_function():\n  print(\"Hello from a function\")\n\n\n\n\nCode\nmy_function()\n\n\nHello from a function",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#with-arguments",
+    "href": "intro/0 Basic python.html#with-arguments",
+    "title": "Basic Python",
+    "section": "6.2 with Arguments",
+    "text": "6.2 with Arguments\n\n\nCode\ndef my_function(x):\n  print(x + \" !!!!!!!!!!!!!!!!!\")\n\n\n\n\nCode\nmy_function('hello')\n\n\nhello !!!!!!!!!!!!!!!!!",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#with-default-arguments",
+    "href": "intro/0 Basic python.html#with-default-arguments",
+    "title": "Basic Python",
+    "section": "6.3 with default Arguments",
+    "text": "6.3 with default Arguments\n\n\nCode\ndef my_function(x='hello'):\n  print(x + \" !!!!!!!!!!!!!!!!!\")\n\n\n\n\nCode\nmy_function()\n\n\nhello !!!!!!!!!!!!!!!!!",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#return-result",
+    "href": "intro/0 Basic python.html#return-result",
+    "title": "Basic Python",
+    "section": "6.4 return result",
+    "text": "6.4 return result\n\n\nCode\ndef adding_ten(x):\n  a=x+10\n  return(a)\n\n\n\n\nCode\nresult=adding_ten(3)\nresult\n\n\n13",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#lambda-function",
+    "href": "intro/0 Basic python.html#lambda-function",
+    "title": "Basic Python",
+    "section": "6.5 lambda function",
+    "text": "6.5 lambda function\nit a faster way to do function\n\n\nCode\nlambda_adding_ten=lambda x:x+10\n\n\n\n\nCode\nlambda_adding_ten(4)\n\n\n14",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#install-package",
+    "href": "intro/0 Basic python.html#install-package",
+    "title": "Basic Python",
+    "section": "8.1 install package",
+    "text": "8.1 install package\nThe Python Package Index (PyPI).https://pypi.org//\n\n\n\nCode\nimport os\nos.system('pip3 install scikit-learn')\nos.system('pip3 install tensorflow')\nos.system('pip3 install pandas')\nos.system('pip3 install SciPy')",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#check-one-package-version",
+    "href": "intro/0 Basic python.html#check-one-package-version",
+    "title": "Basic Python",
+    "section": "8.2 check one package version",
+    "text": "8.2 check one package version\n\n\nCode\nimport os\nos.system('pip show scikit-learn')\n\n\n256",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#check-all-package-version",
+    "href": "intro/0 Basic python.html#check-all-package-version",
+    "title": "Basic Python",
+    "section": "8.3 check all package version",
+    "text": "8.3 check all package version\n\n\nCode\nimport os\nos.system('pip list')\n\n\nPackage                   Version\n------------------------- --------------\nanyio                     4.8.0\nappnope                   0.1.4\nargon2-cffi               23.1.0\nargon2-cffi-bindings      21.2.0\narrow                     1.3.0\nasttokens                 3.0.0\nasync-lru                 2.0.4\nattrs                     25.1.0\nbabel                     2.17.0\nbeautifulsoup4            4.13.3\nbleach                    6.2.0\ncertifi                   2025.1.31\ncffi                      1.17.1\ncharset-normalizer        3.4.1\ncomm                      0.2.2\ncontourpy                 1.3.1\ncycler                    0.12.1\ndebugpy                   1.8.12\ndecorator                 5.2.1\ndefusedxml                0.7.1\nexecuting                 2.2.0\nfastjsonschema            2.21.1\nfonttools                 4.56.0\nfqdn                      1.5.1\nh11                       0.14.0\nhttpcore                  1.0.7\nhttpx                     0.28.1\nidna                      3.10\nipykernel                 6.29.5\nipython                   9.0.0\nipython_pygments_lexers   1.1.1\nipywidgets                8.1.5\nisoduration               20.11.0\njedi                      0.19.2\nJinja2                    3.1.5\njson5                     0.10.0\njsonpointer               3.0.0\njsonschema                4.23.0\njsonschema-specifications 2024.10.1\njupyter                   1.1.1\njupyter_client            8.6.3\njupyter-console           6.6.3\njupyter_core              5.7.2\njupyter-events            0.12.0\njupyter-lsp               2.2.5\njupyter_server            2.15.0\njupyter_server_terminals  0.5.3\njupyterlab                4.3.5\njupyterlab_pygments       0.3.0\njupyterlab_server         2.27.3\njupyterlab_widgets        3.0.13\nkiwisolver                1.4.8\nMarkupSafe                3.0.2\nmatplotlib                3.10.1\nmatplotlib-inline         0.1.7\nmistune                   3.1.2\nmizani                    0.13.1\nnarwhals                  1.28.0\nnbclient                  0.10.2\nnbconvert                 7.16.6\nnbformat                  5.10.4\nnest-asyncio              1.6.0\nnotebook                  7.3.2\nnotebook_shim             0.2.4\nnumpy                     2.2.3\noverrides                 7.7.0\npackaging                 24.2\npandas                    2.2.3\npandasql                  0.7.3\npandocfilters             1.5.1\nparso                     0.8.4\npatsy                     1.0.1\npexpect                   4.9.0\npillow                    11.1.0\npip                       25.0.1\nplatformdirs              4.3.6\nplotly                    6.0.0\nplotnine                  0.14.5\nprometheus_client         0.21.1\nprompt_toolkit            3.0.50\npsutil                    7.0.0\nptyprocess                0.7.0\npure_eval                 0.2.3\npycparser                 2.22\nPygments                  2.19.1\npyparsing                 3.2.1\npython-dateutil           2.9.0.post0\npython-json-logger        3.2.1\npytz                      2025.1\nPyYAML                    6.0.2\npyzmq                     26.2.1\nreferencing               0.36.2\nrequests                  2.32.3\nrfc3339-validator         0.1.4\nrfc3986-validator         0.1.1\nrpds-py                   0.23.1\nscipy                     1.15.2\nseaborn                   0.13.2\nSend2Trash                1.8.3\nsetuptools                75.8.2\nsix                       1.17.0\nsniffio                   1.3.1\nsoupsieve                 2.6\nSQLAlchemy                2.0.38\nstack-data                0.6.3\nstatsmodels               0.14.4\nterminado                 0.18.1\ntinycss2                  1.4.0\ntornado                   6.4.2\ntraitlets                 5.14.3\ntypes-python-dateutil     2.9.0.20241206\ntyping_extensions         4.12.2\ntzdata                    2025.1\nuri-template              1.3.0\nurllib3                   2.3.0\nwcwidth                   0.2.13\nwebcolors                 24.11.1\nwebencodings              0.5.1\nwebsocket-client          1.8.0\nwidgetsnbextension        4.0.13\n\n\n0",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#check-package-install-location",
+    "href": "intro/0 Basic python.html#check-package-install-location",
+    "title": "Basic Python",
+    "section": "8.4 check package install location",
+    "text": "8.4 check package install location\n\n\nCode\nimport site; site.getsitepackages()",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/1 Python Book.html",
+    "href": "intro/1 Python Book.html",
+    "title": "Python Boook",
+    "section": "",
+    "text": "1 Introducing Python\nby Bill Lubanovic\n\n\n\n2 Fluent Python\nby Luciano Ramalho\n\n\n\n3 Python Crash Course\nby Eric Matthes\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Intro",
+      "Python Boook"
+    ]
+  },
+  {
+    "objectID": "other/1 Web scraping on www.whiskynotes.be/3 whiskynote one year page.html",
+    "href": "other/1 Web scraping on www.whiskynotes.be/3 whiskynote one year page.html",
+    "title": "One year page review",
+    "section": "",
+    "text": "Code\nimport requests\nimport os\nfrom bs4 import BeautifulSoup\nimport pandas as pd\nimport time\n\n\n\n\nCode\nos.system('pip show beautifulsoup4')\n\n\nWeb scraping on www.whiskynotes.be\n\n1 year page\n\n\nCode\nyear_ur='https://www.whiskynotes.be/2023'\n\n\n\n\n\n2 read in html\n\n\nCode\n# Send an HTTP GET request to the website\nheaders = {'User-Agent': 'My User Agent'}\nresponse = requests.get(year_ur,headers=headers)\n\n\n\n\nCode\n# success code - 200 \nprint(response) \n\n\n\n\nCode\n#print(response.content)\n\n\n\n\nCode\n# Parse the HTML code using BeautifulSoup\nsoup = BeautifulSoup(response.content, 'html.parser')\n\n\n\n\n3 review bottle name on one year\n\n\nCode\nbottle001=soup.find_all('p')\n\n\n\n\nCode\nfor i in bottle001[1:5]:\n  i.get_text()\n\n\n\n\n4 review topic name on one year\n\n\nCode\ntopic001=soup.select('.archive-link')\n\n\n\n\nCode\nfor i in topic001[1:5]:\n  i.get_text()\n\n\n\n\nCode\ntopic_link=soup.select('.entry-permalink')\n\nfor link in topic_link[1:5]:\n  link.get('href')\n\n\n\n\n5 reference:\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Other",
+      "1 Web scraping on www.whiskynotes.be",
+      "One year page review"
+    ]
+  },
+  {
+    "objectID": "other/1 Web scraping on www.whiskynotes.be/2 whiskynote one page.html",
+    "href": "other/1 Web scraping on www.whiskynotes.be/2 whiskynote one page.html",
+    "title": "One page reveiw",
+    "section": "",
+    "text": "Code\nimport requests\nimport os\nfrom bs4 import BeautifulSoup\nimport pandas as pd\nimport time\n\n\n\n\nCode\nos.system('pip show beautifulsoup4')\n\n\nName: beautifulsoup4\nVersion: 4.13.3\nSummary: Screen-scraping library\nHome-page: https://www.crummy.com/software/BeautifulSoup/bs4/\nAuthor: \nAuthor-email: Leonard Richardson &lt;leonardr@segfault.org&gt;\nLicense: MIT License\nLocation: /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages\nRequires: soupsieve, typing-extensions\nRequired-by: nbconvert\n\n\n0\n\n\nWeb scraping on www.whiskynotes.be\n\n1 review page\n\n\n\nCode\nreview_url='https://www.whiskynotes.be/2024/ardbeg/spheric-spirits-springbank-blended-malt-islay-malt/'\n\n\n\n\n2 read in html\n\n\nCode\n# Send an HTTP GET request to the website\nheaders = {'User-Agent': 'My User Agent'}\nresponse = requests.get(review_url,headers=headers)\n\n\n\n\nCode\n# success code - 200 \nprint(response) \n\n\n&lt;Response [200]&gt;\n\n\n\n\nCode\n#print(response.content)\n\n\n\n\nCode\n# Parse the HTML code using BeautifulSoup\nsoup = BeautifulSoup(response.content, 'html.parser')\n\n\n\n\nCode\n#print(soup.prettify())\n\n\n\n\nCode\nsoup.title\n\n\n&lt;title&gt;Spheric Spirits: Springbank / Blended Malt / Islay Malt&lt;/title&gt;\n\n\n\n\nCode\nsoup.p\n\n\n&lt;p&gt;&lt;strong&gt;Spheric Spirits&lt;/strong&gt; is a young indie bottler from Germany, started by Benedict and Claudio. They have a slightly edgy / flashy branding (check &lt;a href=\"https://sphericspirits.com/\" rel=\"noopener\" target=\"_blank\"&gt;the website&lt;/a&gt;) – I like the vibrant colours on the labels but apparently not everything agrees. Besides whisky, they’re also looking at armagnac and &lt;em&gt;destilado de agave&lt;/em&gt;. They’re not just bottlers, by the way, they like to get involved at the beginning of production.&lt;/p&gt;\n\n\n\n\nCode\nsoup.find_all('.entry-content h2')\n\n\n[]\n\n\n\n\n3 take picture of url\n\n\n4 bottle_name\n\n\nCode\nbottle_name=soup.find_all('h2',class_=\"product-main__name\")\nbottle_name\n\n\n[&lt;h2 class=\"product-main__name\"&gt;Blended Malt 44 yo 1978 (59,8%, Spheric Spirits 2023, refill sherry butt #6, 331 btl.)&lt;/h2&gt;,\n &lt;h2 class=\"product-main__name\"&gt;Springbank 27 yo 1994 (47,1%, Spheric Spirits 2022, refill sherry hogshead #95, 241 btl.)&lt;/h2&gt;,\n &lt;h2 class=\"product-main__name\"&gt;Islay Malt 25 yo (48,4%, Spheric Spirits 2022, 407 btl.)&lt;/h2&gt;]\n\n\n\n\nCode\nbottle_name2=[]\n\nfor i in bottle_name:\n  name=i.text\n  bottle_name2.append(name)\n\nbottle_name2\n\n\n['Blended Malt 44 yo 1978 (59,8%, Spheric Spirits 2023, refill sherry butt #6, 331 btl.)',\n 'Springbank 27 yo 1994 (47,1%, Spheric Spirits 2022, refill sherry hogshead #95, 241 btl.)',\n 'Islay Malt 25 yo (48,4%, Spheric Spirits 2022, 407 btl.)']\n\n\n\n\n5 bottle_review\n\n\n6 bottle_review_Nose\n\n\n7 bottle_review_Mouth\n\n\n8 bottle_review_Finish\n\n\n9 first score\n\n\n10 all other score\n\n\n11 combine all score\n\n\n12 page_published_date\n\n\n13 page_class\n\n\n14 page_title\n\n\n15 combine all one_page_review\n\n\n16 output\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Other",
+      "1 Web scraping on www.whiskynotes.be",
+      "One page reveiw"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n Back to top"
+  }
+]

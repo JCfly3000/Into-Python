@@ -1,0 +1,1188 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Data manipulation with Pandas\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/Pandas_logo.svg.png){width=\"600\"}\n",
+        "\n",
+        "\n",
+        "pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,\n",
+        "built on top of the Python programming language.\n"
+      ],
+      "id": "f0633220"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "print('pandas version', pd.__version__)"
+      ],
+      "id": "ca31a889",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import os\n",
+        "#os.system('pip show pandas')"
+      ],
+      "id": "d0a417d6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## load package"
+      ],
+      "id": "74a1dba9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "import matplotlib.pylab as plt\n",
+        "import seaborn as sns\n",
+        "\n",
+        "# from siuba.data import mtcars,penguins\n",
+        "# \n",
+        "# from siuba.siu import call\n",
+        "# from siuba import _, mutate, filter, group_by, summarize,show_query\n",
+        "# from siuba import *\n",
+        "# \n",
+        "# from siuba.data import mtcars,penguins"
+      ],
+      "id": "d334504b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars = mtcars[[\"cyl\", \"mpg\",'hp']]\n",
+        "small_mtcars=small_mtcars.head(5)"
+      ],
+      "id": "a0947fe1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## get info on the data"
+      ],
+      "id": "11e43520"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.info()"
+      ],
+      "id": "2300c7b7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## select column\n",
+        "\n",
+        "### get column names"
+      ],
+      "id": "4a74b855"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "list(small_mtcars)"
+      ],
+      "id": "a7f4e188",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### select by name"
+      ],
+      "id": "5f8cc39b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars [[\"cyl\", \"mpg\",'hp']]"
+      ],
+      "id": "ea24c4d9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "other way:"
+      ],
+      "id": "72f55132"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.filter(items=['cyl', 'mpg','hp'])"
+      ],
+      "id": "daaa4790",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### select columns by name match with 'p'"
+      ],
+      "id": "8e2fe3cf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.loc[:,small_mtcars.columns.str.contains(\"p\")]"
+      ],
+      "id": "094af74f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "other way:"
+      ],
+      "id": "7ac1c4f0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.filter(regex='p.*', axis=1)"
+      ],
+      "id": "f5c98099",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### select columns by index\n",
+        "\n",
+        "#### select first and 3rd columns"
+      ],
+      "id": "68ed7df9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.iloc[[0,2]]"
+      ],
+      "id": "928e431c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### select first to 3rd columns"
+      ],
+      "id": "b2c2d354"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars[0:3]"
+      ],
+      "id": "6e9a9126",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## drop column"
+      ],
+      "id": "185205fe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.drop('cyl', axis=1)"
+      ],
+      "id": "0c11bb9d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Renaming column"
+      ],
+      "id": "d92143ea"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.rename(columns={'mpg':\"new_name_mpg\", 'cyl':'new_name_cyl'})"
+      ],
+      "id": "7a059721",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Create column\n",
+        "\n",
+        "### Mutate"
+      ],
+      "id": "803d0389"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars['mpg2'] = small_mtcars['mpg']+1\n",
+        "\n",
+        "\n",
+        "small_mtcars['mpg3']  = np.where(small_mtcars['mpg']> 20, \"long\", \"short\")\n",
+        "\n",
+        "\n",
+        "small_mtcars['mpg4'] =np.where(small_mtcars[\"mpg\"]<19, \"short\",\n",
+        "                   np.where(small_mtcars[\"mpg\"]<=22, \"Medium\",\n",
+        "                   np.where(small_mtcars[\"mpg\"]>22, \"long\",\"else\")))\n",
+        "\n",
+        "\n",
+        "small_mtcars"
+      ],
+      "id": "787dd822",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Transmute,create column and only keep this column"
+      ],
+      "id": "17fc2d8f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars['mpg2'] = small_mtcars['mpg']+1\n",
+        "\n",
+        "new_data=small_mtcars[['mpg2']]\n",
+        "\n",
+        "new_data"
+      ],
+      "id": "94d7c313",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Filter rows"
+      ],
+      "id": "822a01ed"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars[(mtcars['gear'] ==4)]"
+      ],
+      "id": "8cf07a49",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "other way:"
+      ],
+      "id": "8c725743"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.query('gear==4')"
+      ],
+      "id": "75e168ff",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filters with AND conditions"
+      ],
+      "id": "1ca5befe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars[(mtcars['cyl'] >4)&(mtcars['gear'] ==5) ]"
+      ],
+      "id": "41188dde",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "other way:"
+      ],
+      "id": "6cfadc94"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.query('cyl>4 and gear==5')"
+      ],
+      "id": "2882bd7b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filters with OR conditions\n"
+      ],
+      "id": "6778d364"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars[(mtcars['cyl'] ==6) |(mtcars['gear'] ==5) ]"
+      ],
+      "id": "85b5cf30",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "other way:"
+      ],
+      "id": "b56cf984"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.query('cyl==6 or gear==5')"
+      ],
+      "id": "e8e8fba4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### filter row with index\n",
+        "\n",
+        "#### 5th rows"
+      ],
+      "id": "a692cd45"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# not in siuba, in pandas\n",
+        "mtcars.iloc[[4]]"
+      ],
+      "id": "3888d75c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### 1 and 5tj rows"
+      ],
+      "id": "0cf327fe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# not in siuba, in pandas\n",
+        "mtcars.iloc[[0,4]]"
+      ],
+      "id": "7bb57b0c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### 1 to 5th rows"
+      ],
+      "id": "5244820a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# not in siuba, in pandas\n",
+        "mtcars.iloc[0:4]"
+      ],
+      "id": "ed96c886",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### get ramdon 5 rows"
+      ],
+      "id": "a06b02bf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.sample(5, random_state=42)"
+      ],
+      "id": "d2a002f4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Append\n",
+        "\n",
+        "\n",
+        "### append by row"
+      ],
+      "id": "ab25dadc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# not available in siuba yet\n",
+        "#from siuba import bind_rows"
+      ],
+      "id": "0a36ebb0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# using pandas\n",
+        "\n",
+        "# get 1 to 4 rows\n",
+        "data1=mtcars.iloc[0:4]\n",
+        "\n",
+        "# get 9 rows\n",
+        "data2=mtcars.iloc[10:11]\n",
+        "\n",
+        "data3=pd.concat([data1, data2], ignore_index = True,axis=0)\n",
+        "\n",
+        "data3"
+      ],
+      "id": "497b3635",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### append by column"
+      ],
+      "id": "5490e3ee"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# not available in siuba yet\n",
+        "#from siuba import bind_columns"
+      ],
+      "id": "4ae38af8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# using pandas\n",
+        "data1=small_mtcars>>select(_.mpg)\n",
+        "\n",
+        "data2=small_mtcars>>select(_.cyl)\n",
+        "\n",
+        "data3=pd.concat([data1, data2],axis=1)\n",
+        "\n",
+        "data3"
+      ],
+      "id": "6892e899",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Dropping NA values\n",
+        "\n",
+        "\n",
+        "### keep NA values\n",
+        "\n",
+        "\n",
+        "\n",
+        "## group by\n",
+        "\n",
+        "### average,min,max,sum"
+      ],
+      "id": "503c5671"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.groupby(\"cyl\")[\"hp\"].mean()"
+      ],
+      "id": "d8846bca",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.groupby(\"cyl\")[\"hp\"].min()"
+      ],
+      "id": "c2bc2c1c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.groupby(\"cyl\")[\"hp\"].max()"
+      ],
+      "id": "01bbb530",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.groupby(\"cyl\")[\"hp\"].sum()"
+      ],
+      "id": "a0c0db9f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### count record and count distinct record"
+      ],
+      "id": "8bfeb74e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.groupby(\"cyl\")[\"hp\"].count()"
+      ],
+      "id": "4eec7bff",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mtcars.groupby(\"cyl\")[\"hp\"].nunique()"
+      ],
+      "id": "8ddcf217",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## order rows"
+      ],
+      "id": "26040e53"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.sort_values('hp')"
+      ],
+      "id": "1f5d8d1b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Sort in descending order"
+      ],
+      "id": "e948ed53"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.sort_values('hp',ascending=False)"
+      ],
+      "id": "e5a053bd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Arrange by multiple variables\n"
+      ],
+      "id": "fff0dcd5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "small_mtcars.sort_values(by=['cyl','mpg'])"
+      ],
+      "id": "fe077ede",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## join"
+      ],
+      "id": "24a04eff"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "lhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\n",
+        "rhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})"
+      ],
+      "id": "f042dccf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "lhs"
+      ],
+      "id": "dff6c3dc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "rhs"
+      ],
+      "id": "d156ae20",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### inner_join"
+      ],
+      "id": "88f30fc3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "result=pd.merge(lhs, rhs, on='id', how='inner')\n",
+        "result"
+      ],
+      "id": "0ed69ba3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### full join"
+      ],
+      "id": "92003d38"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "result=pd.merge(lhs, rhs, on='id', how='outer')\n",
+        "result"
+      ],
+      "id": "358e1e77",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### left join "
+      ],
+      "id": "dd9e052c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "result=pd.merge(lhs, rhs, on='id', how='left')\n",
+        "result"
+      ],
+      "id": "02a741ac",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### anti join\n",
+        "\n",
+        "keep data in left which not in right"
+      ],
+      "id": "72b4879c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#in siuba\n",
+        "result=lhs >> anti_join(_, rhs, on=\"id\")\n",
+        "result"
+      ],
+      "id": "03da8bc0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "keep data in right which not in left"
+      ],
+      "id": "d40a1206"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#in siuba\n",
+        "result=rhs >> anti_join(_, lhs, on=\"id\")\n",
+        "result"
+      ],
+      "id": "a3c4e9ce",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Reshape tables\n"
+      ],
+      "id": "96f3ac68"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "costs = pd.DataFrame({\n",
+        "    'id': [1,2],\n",
+        "    'price_x': [.1, .2],\n",
+        "    'price_y': [.4, .5],\n",
+        "    'price_z': [.7, .8]\n",
+        "})\n",
+        "\n",
+        "costs"
+      ],
+      "id": "0cb65d81",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Gather data long(wide to long)"
+      ],
+      "id": "57ec0694"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# selecting each variable manually\n",
+        "long_date=pd.melt(costs,id_vars=['id'], value_vars=['price_x', 'price_y','price_z'])\n",
+        "\n",
+        "long_date\n",
+        "#costs >> gather('measure', 'value', _.price_x, _.price_y, _.price_z)"
+      ],
+      "id": "d8befa69",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Spread data wide (long to wide)\n"
+      ],
+      "id": "3eab56d1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "long_date.pivot(index=\"id\", columns=\"variable\", values=\"value\")"
+      ],
+      "id": "6913d030",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## string"
+      ],
+      "id": "13e43d2f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n",
+        "\n",
+        "df"
+      ],
+      "id": "1a1e6e1c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### upper case"
+      ],
+      "id": "c44e89c8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df>> mutate(text_new=_.text.str.upper())"
+      ],
+      "id": "54e6560d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### lower case"
+      ],
+      "id": "9a7eb42f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df>> mutate(text_new=_.text.str.lower())"
+      ],
+      "id": "0e3b826d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### match"
+      ],
+      "id": "1be12e82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df>> mutate(text_new1=if_else(_.text== \"abc\",'T','F')\n",
+        "            ,text_new2=if_else(_.text.str.startswith(\"a\"),'T','F')\n",
+        "            ,text_new3=if_else(_.text.str.endswith(\"c\"),'T','F')\n",
+        "            ,text_new4=if_else(_.text.str.contains(\"4\"),'T','F')\n",
+        "\n",
+        ")"
+      ],
+      "id": "f370dfdc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "###  concatenation"
+      ],
+      "id": "bacedcde"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df>> mutate(text_new1=_.text+' is '+_.text\n",
+        ")"
+      ],
+      "id": "e5452440",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### replace\n",
+        "\n",
+        "Use .str.replace(..., regex=True) with regular expressions to replace patterns in strings.\n",
+        "\n",
+        "For example, the code below uses \"p.\", where . is called a wildcard–which matches any character."
+      ],
+      "id": "42f34641"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df>> mutate(text_new1=_.text.str.replace(\"a.\", \"XX\", regex=True)\n",
+        ")"
+      ],
+      "id": "cdf92485",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### extract\n",
+        "\n",
+        "Use str.extract() with a regular expression to pull out a matching piece of text.\n",
+        "\n",
+        "For example the regular expression “^(.*) ” contains the following pieces:\n",
+        "\n",
+        "-  a matches the literal letter “a”\n",
+        "\n",
+        "- .* has a . which matches anything, and * which modifies it to apply 0 or more times."
+      ],
+      "id": "35b33ee2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df>> mutate(text_new1=_.text.str.extract(\"a(.*)\")\n",
+        "            ,text_new2=_.text.str.extract(\"(.*)c\")\n",
+        ")"
+      ],
+      "id": "fc4206a1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## date"
+      ],
+      "id": "9c2c9984"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_dates = pd.DataFrame({\n",
+        "    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n",
+        "    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n",
+        "})\n",
+        "df_dates"
+      ],
+      "id": "6dc3dec4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from datetime import datetime\n",
+        "\n",
+        "df_date=df_dates>>mutate(month=_.dates.dt.month_name()\n",
+        "                  ,date_format_raw = call(pd.to_datetime, _.raw)\n",
+        "                  ,date_format_raw_year=_.date_format_raw.dt.year\n",
+        "\n",
+        ")\n",
+        "\n",
+        "df_date"
+      ],
+      "id": "267d0010",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_date.info()"
+      ],
+      "id": "1ab995fe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## dataframe to numpy array"
+      ],
+      "id": "a6939a30"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_date.to_numpy()"
+      ],
+      "id": "0f2a85f6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Reference:\n",
+        "\n",
+        "https://pandas.pydata.org/docs/user_guide\n"
+      ],
+      "id": "f8dcc200"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "#| include: false\n",
+        "\n",
+        "this is hidding code chunk"
+      ],
+      "id": "b445c66d",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
