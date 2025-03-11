@@ -4,7 +4,7 @@
     "href": "data manipulation/3 Pandas.html",
     "title": "Data manipulation with Pandas",
     "section": "",
-    "text": "pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.\nCode\nimport pandas as pd\nprint('pandas version', pd.__version__)\n\n\npandas version 2.2.3\nCode\nimport os\n#os.system('pip show pandas')",
+    "text": "pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.\nCode\nimport pandas as pd\nprint('pandas version', pd.__version__)\n\n\npandas version 2.2.3\nShow package’s dependencies ::: {.cell}\n:::",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -15,7 +15,7 @@
     "href": "data manipulation/3 Pandas.html#load-package",
     "title": "Data manipulation with Pandas",
     "section": "0.1 load package",
-    "text": "0.1 load package\n\n\nCode\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pylab as plt\nimport seaborn as sns\n\n# from siuba.data import mtcars,penguins\n# \n# from siuba.siu import call\n# from siuba import _, mutate, filter, group_by, summarize,show_query\n# from siuba import *\n# \n# from siuba.data import mtcars,penguins\n\n\n\n\nCode\nmtcars=mtcars\n\n\n\n\nCode\nmtcars=r.mtcars\n\n\n\n\nCode\nsmall_mtcars = mtcars[[\"cyl\", \"mpg\",'hp']]\n\nsmall_mtcars=small_mtcars.head(5)",
+    "text": "0.1 load package\n\n\nCode\nimport pandas as pd\nfrom pandasql import sqldf\nimport numpy as np\nimport matplotlib.pylab as plt\nimport seaborn as sns\n\n\n\n\nCode\nmtcars=mtcars\n\n\n\n\nCode\nmtcars=r.mtcars\n\n\n\n\nCode\nmtcars.head(5)\n\n\n                    mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4          21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag      21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710         22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nHornet 4 Drive     21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\nHornet Sportabout  18.7  8.0  360.0  175.0  3.15  ...  17.02  0.0  0.0   3.0   2.0\n\n[5 rows x 11 columns]\n\n\nrow name to column ::: {.cell}\n\nCode\nmtcars.index.name = 'newhead'\nmtcars.reset_index(inplace=True)\n\n:::\n\n\nCode\nmtcars.head(5)\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0          Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1      Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2         Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3     Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[5 rows x 12 columns]\n\n\n\n\nCode\nsmall_mtcars = mtcars[[\"cyl\", \"mpg\",'hp']]\nsmall_mtcars=small_mtcars.head(5)\nsmall_mtcars\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -26,7 +26,7 @@
     "href": "data manipulation/3 Pandas.html#get-info-on-the-data",
     "title": "Data manipulation with Pandas",
     "section": "0.2 get info on the data",
-    "text": "0.2 get info on the data\n\n\nCode\nsmall_mtcars.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nIndex: 5 entries, Mazda RX4 to Hornet Sportabout\nData columns (total 3 columns):\n #   Column  Non-Null Count  Dtype  \n---  ------  --------------  -----  \n 0   cyl     5 non-null      float64\n 1   mpg     5 non-null      float64\n 2   hp      5 non-null      float64\ndtypes: float64(3)\nmemory usage: 160.0+ bytes",
+    "text": "0.2 get info on the data\n\n\nCode\nsmall_mtcars.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 5 entries, 0 to 4\nData columns (total 3 columns):\n #   Column  Non-Null Count  Dtype  \n---  ------  --------------  -----  \n 0   cyl     5 non-null      float64\n 1   mpg     5 non-null      float64\n 2   hp      5 non-null      float64\ndtypes: float64(3)\nmemory usage: 252.0 bytes",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -37,7 +37,7 @@
     "href": "data manipulation/3 Pandas.html#select-column",
     "title": "Data manipulation with Pandas",
     "section": "0.3 select column",
-    "text": "0.3 select column\n\n0.3.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n['cyl', 'mpg', 'hp']\n\n\n\n\n0.3.2 select by name\n\n\nCode\nsmall_mtcars [[\"cyl\", \"mpg\",'hp']]\n\n\n                   cyl   mpg     hp\nMazda RX4          6.0  21.0  110.0\nMazda RX4 Wag      6.0  21.0  110.0\nDatsun 710         4.0  22.8   93.0\nHornet 4 Drive     6.0  21.4  110.0\nHornet Sportabout  8.0  18.7  175.0\n\n\nother way: ::: {.cell}\n\nCode\nsmall_mtcars.filter(items=['cyl', 'mpg','hp'])\n\n\n                   cyl   mpg     hp\nMazda RX4          6.0  21.0  110.0\nMazda RX4 Wag      6.0  21.0  110.0\nDatsun 710         4.0  22.8   93.0\nHornet 4 Drive     6.0  21.4  110.0\nHornet Sportabout  8.0  18.7  175.0\n\n:::\n\n\n0.3.3 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars.loc[:,small_mtcars.columns.str.contains(\"p\")]\n\n\n                    mpg     hp\nMazda RX4          21.0  110.0\nMazda RX4 Wag      21.0  110.0\nDatsun 710         22.8   93.0\nHornet 4 Drive     21.4  110.0\nHornet Sportabout  18.7  175.0\n\n\nother way: ::: {.cell}\n\nCode\nsmall_mtcars.filter(regex='p.*', axis=1)\n\n\n                    mpg     hp\nMazda RX4          21.0  110.0\nMazda RX4 Wag      21.0  110.0\nDatsun 710         22.8   93.0\nHornet 4 Drive     21.4  110.0\nHornet Sportabout  18.7  175.0\n\n:::\n\n\n0.3.4 select columns by index\n\n0.3.4.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars.iloc[[0,2]]\n\n\n            cyl   mpg     hp\nMazda RX4   6.0  21.0  110.0\nDatsun 710  4.0  22.8   93.0\n\n\n\n\n0.3.4.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars[0:3]\n\n\n               cyl   mpg     hp\nMazda RX4      6.0  21.0  110.0\nMazda RX4 Wag  6.0  21.0  110.0\nDatsun 710     4.0  22.8   93.0",
+    "text": "0.3 select column\n\n0.3.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n['cyl', 'mpg', 'hp']\n\n\n\n\n0.3.2 select by name\n\n\nCode\nsmall_mtcars [[\"cyl\", \"mpg\",'hp']]\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\nother way: ::: {.cell}\n\nCode\nsmall_mtcars.filter(items=['cyl', 'mpg','hp'])\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n:::\n\n\n0.3.3 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars.loc[:,small_mtcars.columns.str.contains(\"p\")]\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0\n\n\nother way: ::: {.cell}\n\nCode\nsmall_mtcars.filter(regex='p.*', axis=1)\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0\n\n:::\n\n\n0.3.4 select columns by index\n\n0.3.4.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars.iloc[[0,2]]\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n2  4.0  22.8   93.0\n\n\n\n\n0.3.4.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars[0:3]\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -48,7 +48,7 @@
     "href": "data manipulation/3 Pandas.html#drop-column",
     "title": "Data manipulation with Pandas",
     "section": "0.4 drop column",
-    "text": "0.4 drop column\n\n\nCode\nsmall_mtcars.drop('cyl', axis=1)\n\n\n                    mpg     hp\nMazda RX4          21.0  110.0\nMazda RX4 Wag      21.0  110.0\nDatsun 710         22.8   93.0\nHornet 4 Drive     21.4  110.0\nHornet Sportabout  18.7  175.0",
+    "text": "0.4 drop column\n\n\nCode\nsmall_mtcars.drop('cyl', axis=1)\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -59,7 +59,7 @@
     "href": "data manipulation/3 Pandas.html#renaming-column",
     "title": "Data manipulation with Pandas",
     "section": "0.5 Renaming column",
-    "text": "0.5 Renaming column\n\n\nCode\nsmall_mtcars.rename(columns={'mpg':\"new_name_mpg\", 'cyl':'new_name_cyl'})\n\n\n                   new_name_cyl  new_name_mpg     hp\nMazda RX4                   6.0          21.0  110.0\nMazda RX4 Wag               6.0          21.0  110.0\nDatsun 710                  4.0          22.8   93.0\nHornet 4 Drive              6.0          21.4  110.0\nHornet Sportabout           8.0          18.7  175.0",
+    "text": "0.5 Renaming column\n\n\nCode\nsmall_mtcars.rename(columns={'mpg':\"new_name_mpg\", 'cyl':'new_name_cyl'})\n\n\n   new_name_cyl  new_name_mpg     hp\n0           6.0          21.0  110.0\n1           6.0          21.0  110.0\n2           4.0          22.8   93.0\n3           6.0          21.4  110.0\n4           8.0          18.7  175.0",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -70,7 +70,7 @@
     "href": "data manipulation/3 Pandas.html#create-column",
     "title": "Data manipulation with Pandas",
     "section": "0.6 Create column",
-    "text": "0.6 Create column\n\n0.6.1 Mutate\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\n\nsmall_mtcars['mpg3']  = np.where(small_mtcars['mpg']&gt; 20, \"long\", \"short\")\n\n\nsmall_mtcars['mpg4'] =np.where(small_mtcars[\"mpg\"]&lt;19, \"short\",\n                   np.where(small_mtcars[\"mpg\"]&lt;=22, \"Medium\",\n                   np.where(small_mtcars[\"mpg\"]&gt;22, \"long\",\"else\")))\n\n\nsmall_mtcars\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nDatsun 710         4.0  22.8   93.0  23.8   long    long\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short\n\n\n\n\n0.6.2 Transmute,create column and only keep this column\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\nnew_data=small_mtcars[['mpg2']]\n\nnew_data\n\n\n                   mpg2\nMazda RX4          22.0\nMazda RX4 Wag      22.0\nDatsun 710         23.8\nHornet 4 Drive     22.4\nHornet Sportabout  19.7",
+    "text": "0.6 Create column\n\n0.6.1 Mutate\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\n\nsmall_mtcars['mpg3']  = np.where(small_mtcars['mpg']&gt; 20, \"long\", \"short\")\n\n\nsmall_mtcars['mpg4'] =np.where(small_mtcars[\"mpg\"]&lt;19, \"short\",\n                   np.where(small_mtcars[\"mpg\"]&lt;=22, \"Medium\",\n                   np.where(small_mtcars[\"mpg\"]&gt;22, \"long\",\"else\")))\n\n\nsmall_mtcars\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n2  4.0  22.8   93.0  23.8   long    long\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short\n\n\n\n\n0.6.2 Transmute,create column and only keep this column\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\nnew_data=small_mtcars[['mpg2']]\n\nnew_data\n\n\n   mpg2\n0  22.0\n1  22.0\n2  23.8\n3  22.4\n4  19.7",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -81,7 +81,7 @@
     "href": "data manipulation/3 Pandas.html#filter-rows",
     "title": "Data manipulation with Pandas",
     "section": "0.7 Filter rows",
-    "text": "0.7 Filter rows\n\n\nCode\nmtcars[(mtcars['gear'] ==4)]\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710      22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nMerc 240D       24.4  4.0  146.7   62.0  3.69  ...  20.00  1.0  0.0   4.0   2.0\nMerc 230        22.8  4.0  140.8   95.0  3.92  ...  22.90  1.0  0.0   4.0   2.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nFiat 128        32.4  4.0   78.7   66.0  4.08  ...  19.47  1.0  1.0   4.0   1.0\nHonda Civic     30.4  4.0   75.7   52.0  4.93  ...  18.52  1.0  1.0   4.0   2.0\nToyota Corolla  33.9  4.0   71.1   65.0  4.22  ...  19.90  1.0  1.0   4.0   1.0\nFiat X1-9       27.3  4.0   79.0   66.0  4.08  ...  18.90  1.0  1.0   4.0   1.0\nVolvo 142E      21.4  4.0  121.0  109.0  4.11  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 11 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('gear==4')\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710      22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nMerc 240D       24.4  4.0  146.7   62.0  3.69  ...  20.00  1.0  0.0   4.0   2.0\nMerc 230        22.8  4.0  140.8   95.0  3.92  ...  22.90  1.0  0.0   4.0   2.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nFiat 128        32.4  4.0   78.7   66.0  4.08  ...  19.47  1.0  1.0   4.0   1.0\nHonda Civic     30.4  4.0   75.7   52.0  4.93  ...  18.52  1.0  1.0   4.0   2.0\nToyota Corolla  33.9  4.0   71.1   65.0  4.22  ...  19.90  1.0  1.0   4.0   1.0\nFiat X1-9       27.3  4.0   79.0   66.0  4.08  ...  18.90  1.0  1.0   4.0   1.0\nVolvo 142E      21.4  4.0  121.0  109.0  4.11  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 11 columns]\n\n:::\n\n0.7.1 Filters with AND conditions\n\n\nCode\nmtcars[(mtcars['cyl'] &gt;4)&(mtcars['gear'] ==5) ]\n\n\n                 mpg  cyl   disp     hp  drat    wt  qsec   vs   am  gear  carb\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  3.17  14.5  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  2.77  15.5  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  3.57  14.6  0.0  1.0   5.0   8.0\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl&gt;4 and gear==5')\n\n\n                 mpg  cyl   disp     hp  drat    wt  qsec   vs   am  gear  carb\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  3.17  14.5  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  2.77  15.5  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  3.57  14.6  0.0  1.0   5.0   8.0\n\n:::\n\n\n0.7.2 Filters with OR conditions\n\n\nCode\nmtcars[(mtcars['cyl'] ==6) |(mtcars['gear'] ==5) ]\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nHornet 4 Drive  21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\nValiant         18.1  6.0  225.0  105.0  2.76  ...  20.22  1.0  0.0   3.0   1.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nPorsche 914-2   26.0  4.0  120.3   91.0  4.43  ...  16.70  0.0  1.0   5.0   2.0\nLotus Europa    30.4  4.0   95.1  113.0  3.77  ...  16.90  1.0  1.0   5.0   2.0\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  ...  14.50  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  ...  15.50  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 11 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl==6 or gear==5')\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nHornet 4 Drive  21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\nValiant         18.1  6.0  225.0  105.0  2.76  ...  20.22  1.0  0.0   3.0   1.0\nMerc 280        19.2  6.0  167.6  123.0  3.92  ...  18.30  1.0  0.0   4.0   4.0\nMerc 280C       17.8  6.0  167.6  123.0  3.92  ...  18.90  1.0  0.0   4.0   4.0\nPorsche 914-2   26.0  4.0  120.3   91.0  4.43  ...  16.70  0.0  1.0   5.0   2.0\nLotus Europa    30.4  4.0   95.1  113.0  3.77  ...  16.90  1.0  1.0   5.0   2.0\nFord Pantera L  15.8  8.0  351.0  264.0  4.22  ...  14.50  0.0  1.0   5.0   4.0\nFerrari Dino    19.7  6.0  145.0  175.0  3.62  ...  15.50  0.0  1.0   5.0   6.0\nMaserati Bora   15.0  8.0  301.0  335.0  3.54  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 11 columns]\n\n:::\n\n\n0.7.3 filter row with index\n\n0.7.3.1 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n                    mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nHornet Sportabout  18.7  8.0  360.0  175.0  3.15  ...  17.02  0.0  0.0   3.0   2.0\n\n[1 rows x 11 columns]\n\n\n\n\n0.7.3.2 1 and 5tj rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n                    mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4          21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nHornet Sportabout  18.7  8.0  360.0  175.0  3.15  ...  17.02  0.0  0.0   3.0   2.0\n\n[2 rows x 11 columns]\n\n\n\n\n0.7.3.3 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n                 mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nMazda RX4       21.0  6.0  160.0  110.0  3.90  ...  16.46  0.0  1.0   4.0   4.0\nMazda RX4 Wag   21.0  6.0  160.0  110.0  3.90  ...  17.02  0.0  1.0   4.0   4.0\nDatsun 710      22.8  4.0  108.0   93.0  3.85  ...  18.61  1.0  1.0   4.0   1.0\nHornet 4 Drive  21.4  6.0  258.0  110.0  3.08  ...  19.44  1.0  0.0   3.0   1.0\n\n[4 rows x 11 columns]\n\n\n\n\n0.7.3.4 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)\n\n\n                      mpg  cyl   disp     hp  drat  ...   qsec   vs   am  gear  carb\nFerrari Dino         19.7  6.0  145.0  175.0  3.62  ...  15.50  0.0  1.0   5.0   6.0\nLincoln Continental  10.4  8.0  460.0  215.0  3.00  ...  17.82  0.0  0.0   3.0   4.0\nPontiac Firebird     19.2  8.0  400.0  175.0  3.08  ...  17.05  0.0  0.0   3.0   2.0\nFiat 128             32.4  4.0   78.7   66.0  4.08  ...  19.47  1.0  1.0   4.0   1.0\nMerc 230             22.8  4.0  140.8   95.0  3.92  ...  22.90  1.0  0.0   4.0   2.0\n\n[5 rows x 11 columns]",
+    "text": "0.7 Filter rows\n\n\nCode\nmtcars[(mtcars['gear'] ==4)]\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2       Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n7        Merc 240D  24.4  4.0  146.7   62.0  ...  20.00  1.0  0.0   4.0   2.0\n8         Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n17        Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n18     Honda Civic  30.4  4.0   75.7   52.0  ...  18.52  1.0  1.0   4.0   2.0\n19  Toyota Corolla  33.9  4.0   71.1   65.0  ...  19.90  1.0  1.0   4.0   1.0\n25       Fiat X1-9  27.3  4.0   79.0   66.0  ...  18.90  1.0  1.0   4.0   1.0\n31      Volvo 142E  21.4  4.0  121.0  109.0  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('gear==4')\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2       Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n7        Merc 240D  24.4  4.0  146.7   62.0  ...  20.00  1.0  0.0   4.0   2.0\n8         Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n17        Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n18     Honda Civic  30.4  4.0   75.7   52.0  ...  18.52  1.0  1.0   4.0   2.0\n19  Toyota Corolla  33.9  4.0   71.1   65.0  ...  19.90  1.0  1.0   4.0   1.0\n25       Fiat X1-9  27.3  4.0   79.0   66.0  ...  18.90  1.0  1.0   4.0   1.0\n31      Volvo 142E  21.4  4.0  121.0  109.0  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 12 columns]\n\n:::\n\n0.7.1 Filters with AND conditions\n\n\nCode\nmtcars[(mtcars['cyl'] &gt;4)&(mtcars['gear'] ==5) ]\n\n\n           newhead   mpg  cyl   disp     hp  ...  qsec   vs   am  gear  carb\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.5  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.5  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.6  0.0  1.0   5.0   8.0\n\n[3 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl&gt;4 and gear==5')\n\n\n           newhead   mpg  cyl   disp     hp  ...  qsec   vs   am  gear  carb\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.5  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.5  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.6  0.0  1.0   5.0   8.0\n\n[3 rows x 12 columns]\n\n:::\n\n\n0.7.2 Filters with OR conditions\n\n\nCode\nmtcars[(mtcars['cyl'] ==6) |(mtcars['gear'] ==5) ]\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n3   Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n5          Valiant  18.1  6.0  225.0  105.0  ...  20.22  1.0  0.0   3.0   1.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n26   Porsche 914-2  26.0  4.0  120.3   91.0  ...  16.70  0.0  1.0   5.0   2.0\n27    Lotus Europa  30.4  4.0   95.1  113.0  ...  16.90  1.0  1.0   5.0   2.0\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.50  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl==6 or gear==5')\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n3   Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n5          Valiant  18.1  6.0  225.0  105.0  ...  20.22  1.0  0.0   3.0   1.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n26   Porsche 914-2  26.0  4.0  120.3   91.0  ...  16.70  0.0  1.0   5.0   2.0\n27    Lotus Europa  30.4  4.0   95.1  113.0  ...  16.90  1.0  1.0   5.0   2.0\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.50  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 12 columns]\n\n:::\n\n\n0.7.3 filter row with index\n\n0.7.3.1 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[1 rows x 12 columns]\n\n\n\n\n0.7.3.2 1 and 5tj rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0          Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[2 rows x 12 columns]\n\n\n\n\n0.7.3.3 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n          newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0       Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1   Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2      Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3  Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n\n[4 rows x 12 columns]\n\n\n\n\n0.7.3.4 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)\n\n\n                newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n29         Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n15  Lincoln Continental  10.4  8.0  460.0  215.0  ...  17.82  0.0  0.0   3.0   4.0\n24     Pontiac Firebird  19.2  8.0  400.0  175.0  ...  17.05  0.0  0.0   3.0   2.0\n17             Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n8              Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n\n[5 rows x 12 columns]",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -92,7 +92,7 @@
     "href": "data manipulation/3 Pandas.html#append",
     "title": "Data manipulation with Pandas",
     "section": "0.8 Append",
-    "text": "0.8 Append\n\n0.8.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n    mpg  cyl   disp     hp  drat     wt   qsec   vs   am  gear  carb\n0  21.0  6.0  160.0  110.0  3.90  2.620  16.46  0.0  1.0   4.0   4.0\n1  21.0  6.0  160.0  110.0  3.90  2.875  17.02  0.0  1.0   4.0   4.0\n2  22.8  4.0  108.0   93.0  3.85  2.320  18.61  1.0  1.0   4.0   1.0\n3  21.4  6.0  258.0  110.0  3.08  3.215  19.44  1.0  0.0   3.0   1.0\n4  17.8  6.0  167.6  123.0  3.92  3.440  18.90  1.0  0.0   4.0   4.0\n\n\n\n\n0.8.2 append by column\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_columns\n\n\n\n\nCode\n# using pandas\n# data1=small_mtcars&gt;&gt;select(_.mpg)\n# \n# data2=small_mtcars&gt;&gt;select(_.cyl)\n# \n# data3=pd.concat([data1, data2],axis=1)\n# \n# data3\n\n\n\n\n0.8.3 Dropping NA values\n\n\n0.8.4 keep NA values",
+    "text": "0.8 Append\n\n0.8.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n          newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0       Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1   Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2      Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3  Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n4       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n\n[5 rows x 12 columns]\n\n\n\n\n0.8.2 append by column\n\n\nCode\n# using pandas\ndata1=small_mtcars[[\"cyl\", \"mpg\"]]\n\ndata2=small_mtcars[['hp']]\n\ndata3=pd.concat([data1, data2], axis=1).reindex(data2.index)\n\ndata3\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\n\n\n0.8.3 Dropping NA values\n\n\n0.8.4 keep NA values",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -114,7 +114,7 @@
     "href": "data manipulation/3 Pandas.html#order-rows",
     "title": "Data manipulation with Pandas",
     "section": "0.10 order rows",
-    "text": "0.10 order rows\n\n\nCode\nsmall_mtcars.sort_values('hp')\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nDatsun 710         4.0  22.8   93.0  23.8   long    long\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short\n\n\n\n0.10.1 Sort in descending order\n\n\nCode\nsmall_mtcars.sort_values('hp',ascending=False)\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nDatsun 710         4.0  22.8   93.0  23.8   long    long\n\n\n\n\n0.10.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars.sort_values(by=['cyl','mpg'])\n\n\n                   cyl   mpg     hp  mpg2   mpg3    mpg4\nDatsun 710         4.0  22.8   93.0  23.8   long    long\nMazda RX4          6.0  21.0  110.0  22.0   long  Medium\nMazda RX4 Wag      6.0  21.0  110.0  22.0   long  Medium\nHornet 4 Drive     6.0  21.4  110.0  22.4   long  Medium\nHornet Sportabout  8.0  18.7  175.0  19.7  short   short",
+    "text": "0.10 order rows\n\n\nCode\nsmall_mtcars.sort_values('hp')\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n2  4.0  22.8   93.0  23.8   long    long\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short\n\n\n\n0.10.1 Sort in descending order\n\n\nCode\nsmall_mtcars.sort_values('hp',ascending=False)\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n4  8.0  18.7  175.0  19.7  short   short\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n2  4.0  22.8   93.0  23.8   long    long\n\n\n\n\n0.10.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars.sort_values(by=['cyl','mpg'])\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n2  4.0  22.8   93.0  23.8   long    long\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -125,7 +125,7 @@
     "href": "data manipulation/3 Pandas.html#join",
     "title": "Data manipulation with Pandas",
     "section": "0.11 join",
-    "text": "0.11 join\n\n\nCode\n\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n   id    val\n0   1  lhs.1\n1   2  lhs.2\n2   3  lhs.3\n\n\n\n\nCode\nrhs\n\n\n   id    val\n0   1  rhs.1\n1   2  rhs.2\n2   4  rhs.3\n\n\n\n0.11.1 inner_join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='inner')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n\n\n\n\n0.11.2 full join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='outer')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n3   4    NaN  rhs.3\n\n\n\n\n0.11.3 left join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='left')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n\n\n\n\n0.11.4 anti join\nkeep data in left which not in right ::: {.cell}\n\nCode\n#in siuba\n# result=lhs &gt;&gt; anti_join(_, rhs, on=\"id\")\n# result\n\n:::\nkeep data in right which not in left ::: {.cell}\n\nCode\n#in siuba\n# result=rhs &gt;&gt; anti_join(_, lhs, on=\"id\")\n# result\n\n:::",
+    "text": "0.11 join\n\n\nCode\n\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n   id    val\n0   1  lhs.1\n1   2  lhs.2\n2   3  lhs.3\n\n\n\n\nCode\nrhs\n\n\n   id    val\n0   1  rhs.1\n1   2  rhs.2\n2   4  rhs.3\n\n\n\n0.11.1 inner_join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='inner')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n\n\n\n\n0.11.2 full join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='outer')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n3   4    NaN  rhs.3\n\n\n\n\n0.11.3 left join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='left')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -147,7 +147,7 @@
     "href": "data manipulation/3 Pandas.html#string",
     "title": "Data manipulation with Pandas",
     "section": "0.13 string",
-    "text": "0.13 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n    text  num\n0    abc    3\n1    DDD    4\n2  1243c    7\n3   aeEe    8\n\n\n\n0.13.1 upper case\n\n\nCode\n#df&gt;&gt; mutate(text_new=_.text.str.upper())\n\n\n\n\n0.13.2 lower case\n\n\nCode\n#df&gt;&gt; mutate(text_new=_.text.str.lower())\n\n\n\n\n0.13.3 match\n\n\nCode\n# df&gt;&gt; mutate(text_new1=if_else(_.text== \"abc\",'T','F')\n#             ,text_new2=if_else(_.text.str.startswith(\"a\"),'T','F')\n#             ,text_new3=if_else(_.text.str.endswith(\"c\"),'T','F')\n#             ,text_new4=if_else(_.text.str.contains(\"4\"),'T','F')\n# \n# )\n\n\n\n\n0.13.4 concatenation\n\n\nCode\n# df&gt;&gt; mutate(text_new1=_.text+' is '+_.text\n# )\n\n\n\n\n0.13.5 replace\nUse .str.replace(…, regex=True) with regular expressions to replace patterns in strings.\nFor example, the code below uses “p.”, where . is called a wildcard–which matches any character.\n\n\nCode\n# df&gt;&gt; mutate(text_new1=_.text.str.replace(\"a.\", \"XX\", regex=True)\n# )\n\n\n\n\n0.13.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.\n\n\n\nCode\n# df&gt;&gt; mutate(text_new1=_.text.str.extract(\"a(.*)\")\n#             ,text_new2=_.text.str.extract(\"(.*)c\")\n# )",
+    "text": "0.13 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n    text  num\n0    abc    3\n1    DDD    4\n2  1243c    7\n3   aeEe    8\n\n\n\n0.13.1 upper case\n\n\n0.13.2 lower case\n\n\n0.13.3 match\n\n\n0.13.4 concatenation\n\n\n0.13.5 replace\n\n\n0.13.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -158,7 +158,7 @@
     "href": "data manipulation/3 Pandas.html#date",
     "title": "Data manipulation with Pandas",
     "section": "0.14 date",
-    "text": "0.14 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n       dates                  raw\n0 2021-01-02  2023-04-05 06:07:08\n1 2021-02-03  2024-05-06 07:08:09\n\n\n\n\nCode\n# from datetime import datetime\n# \n# df_date=df_dates&gt;&gt;mutate(month=_.dates.dt.month_name()\n#                   ,date_format_raw = call(pd.to_datetime, _.raw)\n#                   ,date_format_raw_year=_.date_format_raw.dt.year\n# \n# )\n# \n# df_date\n\n\n\n\nCode\ndf_dates.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2 entries, 0 to 1\nData columns (total 2 columns):\n #   Column  Non-Null Count  Dtype         \n---  ------  --------------  -----         \n 0   dates   2 non-null      datetime64[ns]\n 1   raw     2 non-null      object        \ndtypes: datetime64[ns](1), object(1)\nmemory usage: 164.0+ bytes",
+    "text": "0.14 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n       dates                  raw\n0 2021-01-02  2023-04-05 06:07:08\n1 2021-02-03  2024-05-06 07:08:09\n\n\n\n\nCode\ndf_dates.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2 entries, 0 to 1\nData columns (total 2 columns):\n #   Column  Non-Null Count  Dtype         \n---  ------  --------------  -----         \n 0   dates   2 non-null      datetime64[ns]\n 1   raw     2 non-null      object        \ndtypes: datetime64[ns](1), object(1)\nmemory usage: 164.0+ bytes",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -867,5 +867,379 @@
     "title": "About",
     "section": "",
     "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html",
+    "href": "data manipulation/4 siuba.html",
+    "title": "Data manipulation with siuba",
+    "section": "",
+    "text": "siuba (小巴) is a port of dplyr and other R libraries with seamless support for pandas and SQL",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#comparison-with-different-python-dataframe-package",
+    "href": "data manipulation/4 siuba.html#comparison-with-different-python-dataframe-package",
+    "title": "Data manipulation with siuba",
+    "section": "1 Comparison with different python dataframe package",
+    "text": "1 Comparison with different python dataframe package",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#package-download",
+    "href": "data manipulation/4 siuba.html#package-download",
+    "title": "Data manipulation with siuba",
+    "section": "2 Package download",
+    "text": "2 Package download\n\n\nCode\nimport sys\nprint(sys.version)\n\n\n\n\nCode\nimport os\nos.system('pip install pandas')\n\n\n\n\nCode\nimport os\n#os.system('pip install --upgrade pandas')\nos.system('pip install siuba')",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#load-package",
+    "href": "data manipulation/4 siuba.html#load-package",
+    "title": "Data manipulation with siuba",
+    "section": "3 load package",
+    "text": "3 load package\n\n\nCode\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pylab as plt\nimport seaborn as sns\n\n\n\nfrom siuba.siu import call\nfrom siuba import _, mutate, filter, group_by, summarize,show_query\nfrom siuba import *\n\nfrom siuba.data import mtcars,penguins\n\n\n\n\nCode\nimport os\nos.system('pip show siuba')\n\n\n\n\nCode\nsmall_mtcars = mtcars &gt;&gt; select(_.cyl, _.mpg, _.hp)&gt;&gt; head(5)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#select-column",
+    "href": "data manipulation/4 siuba.html#select-column",
+    "title": "Data manipulation with siuba",
+    "section": "4 select column",
+    "text": "4 select column\n\n4.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n\n\n4.2 select columns by name\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.cyl, _.mpg)\n\n\n\n\n4.3 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.contains(\"p\"))\n\n\n\n\n4.4 select columns by index\n\n4.4.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars &gt;&gt; select(0,2)\n\n\n\n\n4.4.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars &gt;&gt; select(_[0:3])",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#drop-column",
+    "href": "data manipulation/4 siuba.html#drop-column",
+    "title": "Data manipulation with siuba",
+    "section": "5 drop column",
+    "text": "5 drop column\n\n\nCode\nsmall_mtcars &gt;&gt; select(~_.cyl)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#renaming-column",
+    "href": "data manipulation/4 siuba.html#renaming-column",
+    "title": "Data manipulation with siuba",
+    "section": "6 Renaming column",
+    "text": "6 Renaming column\n\n\nCode\nsmall_mtcars &gt;&gt; rename(new_name_mpg = _.mpg)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#create-column",
+    "href": "data manipulation/4 siuba.html#create-column",
+    "title": "Data manipulation with siuba",
+    "section": "7 Create column",
+    "text": "7 Create column\n\n7.1 Mutate\n\n\nCode\nmtcars.head()&gt;&gt; mutate(gear2 = _.gear+1\n                      ,gear3=if_else(_.gear &gt; 3, \"long\", \"short\")\n                       ,qsec2=case_when({\n                                          _.qsec &lt;= 17: \"short\",\n                                          _.qsec &lt;= 18: \"Medium\",\n                                          True: \"long\"\n                                                     })\n                       )\n\n\n\n\n7.2 Transmute,create column and only keep this column\n\n\nCode\nmtcars.head()&gt;&gt; transmute(gear2 = _.gear+1)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#filter-rows",
+    "href": "data manipulation/4 siuba.html#filter-rows",
+    "title": "Data manipulation with siuba",
+    "section": "8 Filter rows",
+    "text": "8 Filter rows\n\n\nCode\nmtcars&gt;&gt; filter(_.gear ==4)\n\n\n\n8.1 Filters with AND conditions\n\n\nCode\nmtcars &gt;&gt; filter((_.cyl &gt;4) & (_.gear == 5))\n\n\n\n\n8.2 Filters with OR conditions\n\n\nCode\nmtcars &gt;&gt; filter((_.cyl == 6) | (_.gear == 5))\n\n\n\n\n8.3 filter row with index\n\n8.3.1 first 3\n\n\nCode\nsmall_mtcars&gt;&gt;head(3)\n\n\n\n\n8.3.2 last 3\n\n\nCode\n# not in siuba, in pandas\nsmall_mtcars.tail(3)\n\n\n\n\n8.3.3 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n\n\n8.3.4 1 and 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n\n\n8.3.5 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n\n\n8.3.6 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#append",
+    "href": "data manipulation/4 siuba.html#append",
+    "title": "Data manipulation with siuba",
+    "section": "9 Append",
+    "text": "9 Append\n\n9.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n\n\n9.2 append by column\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_columns\n\n\n\n\nCode\n# using pandas\ndata1=small_mtcars&gt;&gt;select(_.mpg)\n\ndata2=small_mtcars&gt;&gt;select(_.cyl)\n\ndata3=pd.concat([data1, data2],axis=1)\n\ndata3\n\n\n\n\n9.3 Dropping NA values\n\n\n9.4 keep NA values",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#group-by",
+    "href": "data manipulation/4 siuba.html#group-by",
+    "title": "Data manipulation with siuba",
+    "section": "10 group by",
+    "text": "10 group by\n\n10.1 average,min,max,sum\n\n\nCode\ntbl_query = (mtcars\n  &gt;&gt; group_by(_.cyl)\n  &gt;&gt; summarize(avg_hp = _.hp.mean()\n              ,min_hp=_.hp.min()\n              ,max_hp=_.hp.max()\n              ,totol_disp=_.disp.sum()\n  )\n  )\n\ntbl_query\n\n\n\n\n10.2 count record and count distinct record\n\n\nCode\nmtcars &gt;&gt; group_by(_.cyl)  &gt;&gt; summarize(n = _.shape[0])\n\n\n\n\nCode\nmtcars &gt;&gt; group_by(_.cyl)  &gt;&gt; summarize(n = _.hp.nunique())",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#order-rows",
+    "href": "data manipulation/4 siuba.html#order-rows",
+    "title": "Data manipulation with siuba",
+    "section": "11 order rows",
+    "text": "11 order rows\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(_.hp)\n\n\n\n11.1 Sort in descending order\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(-_.hp)\n\n\n\n\n11.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(_.cyl, -_.mpg)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#join",
+    "href": "data manipulation/4 siuba.html#join",
+    "title": "Data manipulation with siuba",
+    "section": "12 join",
+    "text": "12 join\n\n\nCode\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n\n\nCode\nrhs\n\n\n\n12.1 inner_join\n\n\nCode\nresult=lhs &gt;&gt; inner_join(_, rhs, on=\"id\")\nresult\n\n\n\n\n12.2 full join\n\n\nCode\nresult=rhs &gt;&gt; full_join(_, lhs, on=\"id\")\nresult\n\n\n\n\n12.3 left join\n\n\nCode\nresult=lhs &gt;&gt; left_join(_, rhs, on=\"id\")\nresult\n\n\n\n\n12.4 anti join\nkeep data in left which not in right\n\n\nCode\nresult=lhs &gt;&gt; anti_join(_, rhs, on=\"id\")\nresult\n\n\nkeep data in right which not in left\n\n\nCode\nresult=rhs &gt;&gt; anti_join(_, lhs, on=\"id\")\nresult",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#reshape-tables",
+    "href": "data manipulation/4 siuba.html#reshape-tables",
+    "title": "Data manipulation with siuba",
+    "section": "13 Reshape tables",
+    "text": "13 Reshape tables\n\n\nCode\ncosts = pd.DataFrame({\n    'id': [1,2],\n    'price_x': [.1, .2],\n    'price_y': [.4, .5],\n    'price_z': [.7, .8]\n})\n\ncosts\n\n\n\n13.1 Gather data long(wide to long)\nBelow 3 method will give same result\n\n\nCode\n# selecting each variable manually\ncosts &gt;&gt; gather('measure', 'value', _.price_x, _.price_y, _.price_z)\n\n\nother way:\n\n\nCode\n# selecting variables using a slice\ncosts &gt;&gt; gather('measure', 'value', _[\"price_x\":\"price_z\"])\n\n\nother way:\n\n\nCode\n# selecting by excluding id\ncosts &gt;&gt; gather('measure', 'value', -_.id)\n\n\n\n\n13.2 Spread data wide(long to wide)\n\n\nCode\ncosts_long= costs&gt;&gt; gather('measure', 'value', -_.id)\ncosts_long\n\n\n\n\nCode\ncosts_long&gt;&gt; spread('measure', 'value')",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#string",
+    "href": "data manipulation/4 siuba.html#string",
+    "title": "Data manipulation with siuba",
+    "section": "14 string",
+    "text": "14 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n\n14.1 upper case\n\n\nCode\ndf&gt;&gt; mutate(text_new=_.text.str.upper())\n\n\n\n\n14.2 lower case\n\n\nCode\ndf&gt;&gt; mutate(text_new=_.text.str.lower())\n\n\n\n\n14.3 match\n\n\nCode\ndf&gt;&gt; mutate(text_new1=if_else(_.text== \"abc\",'T','F')\n            ,text_new2=if_else(_.text.str.startswith(\"a\"),'T','F')\n            ,text_new3=if_else(_.text.str.endswith(\"c\"),'T','F')\n            ,text_new4=if_else(_.text.str.contains(\"4\"),'T','F')\n\n)\n\n\n\n\n14.4 concatenation\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text+' is '+_.text\n)\n\n\n\n\n14.5 replace\nUse .str.replace(…, regex=True) with regular expressions to replace patterns in strings.\nFor example, the code below uses “p.”, where . is called a wildcard–which matches any character.\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text.str.replace(\"a.\", \"XX\", regex=True)\n)\n\n\n\n\n14.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.\n\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text.str.extract(\"a(.*)\")\n            ,text_new2=_.text.str.extract(\"(.*)c\")\n)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#date",
+    "href": "data manipulation/4 siuba.html#date",
+    "title": "Data manipulation with siuba",
+    "section": "15 date",
+    "text": "15 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n\n\nCode\nfrom datetime import datetime\n\ndf_date=df_dates&gt;&gt;mutate(month=_.dates.dt.month_name()\n                  ,date_format_raw = call(pd.to_datetime, _.raw)\n                  ,date_format_raw_year=_.date_format_raw.dt.year\n\n)\n\ndf_date\n\n\n\n\nCode\ndf_date.info()",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#using-siuba-with-database",
+    "href": "data manipulation/4 siuba.html#using-siuba-with-database",
+    "title": "Data manipulation with siuba",
+    "section": "16 using siuba with database",
+    "text": "16 using siuba with database\n\n16.1 set up a sqlite database, with an mtcars table.\n\n\nCode\nfrom sqlalchemy import create_engine\nfrom siuba.sql import LazyTbl\nfrom siuba import _, group_by, summarize, show_query, collect \nfrom siuba.data import mtcars\n\n# copy in to sqlite, using the pandas .to_sql() method\nengine = create_engine(\"sqlite:///:memory:\")\nmtcars.to_sql(\"mtcars\", engine, if_exists = \"replace\")\n\n\n\n\n16.2 create table\n\n\nCode\n# Create a lazy SQL DataFrame\ntbl_mtcars = LazyTbl(engine, \"mtcars\")\ntbl_mtcars\n\n\n\n\n16.3 create query\n\n\nCode\n# connect with siuba\n\ntbl_query = (tbl_mtcars\n  &gt;&gt; group_by(_.mpg)\n  &gt;&gt; summarize(avg_hp = _.hp.mean())\n  )\n\ntbl_query\n\n\n\n\n16.4 show query\n\n\nCode\n tbl_query &gt;&gt; show_query()\n\n\n\n\n16.5 Collect to DataFrame\nbecause lazy expressions,the collect function is actually running the sql.\n\n\nCode\ndata=tbl_query &gt;&gt; collect()\nprint(data)",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/4 siuba.html#reference",
+    "href": "data manipulation/4 siuba.html#reference",
+    "title": "Data manipulation with siuba",
+    "section": "17 reference:",
+    "text": "17 reference:\nhttps://siuba.org/",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with siuba"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#create-database-file-pythonsqlite.db-and-copy-tips-data-and-planets-data-into-database",
+    "href": "data manipulation/5 SQL database.html#create-database-file-pythonsqlite.db-and-copy-tips-data-and-planets-data-into-database",
+    "title": "SQL database with python",
+    "section": "1.1 create database file pythonsqlite.db and copy tips data and planets data into database",
+    "text": "1.1 create database file pythonsqlite.db and copy tips data and planets data into database\n\n\nCode\nimport sqlite3\n# Create your connection.\ndb = sqlite3.connect('pythonsqlite.db')\n\ntips.to_sql(name='tips', con=db,if_exists='replace')\nplanets.to_sql(name='planets', con=db,if_exists='replace')\n\n\ndb.close()",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#check-all-table-in-database",
+    "href": "data manipulation/5 SQL database.html#check-all-table-in-database",
+    "title": "SQL database with python",
+    "section": "1.2 check all table in database",
+    "text": "1.2 check all table in database\n\n\nCode\ndb = sqlite3.connect('pythonsqlite.db')\ntable = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\ntable\n\n\n\n\n\n\n\n\n\nname\n\n\n\n\n0\ntips\n\n\n1\nplanets",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#select",
+    "href": "data manipulation/5 SQL database.html#select",
+    "title": "SQL database with python",
+    "section": "2.1 select",
+    "text": "2.1 select\n\n\nCode\ndb = sqlite3.connect('pythonsqlite.db')\nsql=\"select * from tips LIMIT 3;\"\ntable = pd.read_sql_query(sql,db)\ntable\n\n\n\n\n\n\n\n\n\nindex\ntotal_bill\ntip\nsex\nsmoker\nday\ntime\nsize\n\n\n\n\n0\n0\n16.99\n1.01\nFemale\nNo\nSun\nDinner\n2\n\n\n1\n1\n10.34\n1.66\nMale\nNo\nSun\nDinner\n3\n\n\n2\n2\n21.01\n3.50\nMale\nNo\nSun\nDinner\n3",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#renaming-column",
+    "href": "data manipulation/5 SQL database.html#renaming-column",
+    "title": "SQL database with python",
+    "section": "2.2 Renaming column",
+    "text": "2.2 Renaming column\n\n\nCode\nsql=\"select total_bill as new_total_bill from tips\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nnew_total_bill\n\n\n\n\n0\n16.99\n\n\n1\n10.34\n\n\n2\n21.01\n\n\n3\n23.68\n\n\n4\n24.59",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#create-column",
+    "href": "data manipulation/5 SQL database.html#create-column",
+    "title": "SQL database with python",
+    "section": "2.3 create column",
+    "text": "2.3 create column\n\n\nCode\nsql=\"select total_bill as new_total_bill,total_bill from tips\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nnew_total_bill\ntotal_bill\n\n\n\n\n0\n16.99\n16.99\n\n\n1\n10.34\n10.34\n\n\n2\n21.01\n21.01\n\n\n3\n23.68\n23.68\n\n\n4\n24.59\n24.59",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#filter-rows",
+    "href": "data manipulation/5 SQL database.html#filter-rows",
+    "title": "SQL database with python",
+    "section": "2.4 Filter rows",
+    "text": "2.4 Filter rows\n\n\nCode\nsql=\"select * from tips where sex='Male'\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nindex\ntotal_bill\ntip\nsex\nsmoker\nday\ntime\nsize\n\n\n\n\n0\n1\n10.34\n1.66\nMale\nNo\nSun\nDinner\n3\n\n\n1\n2\n21.01\n3.50\nMale\nNo\nSun\nDinner\n3\n\n\n2\n3\n23.68\n3.31\nMale\nNo\nSun\nDinner\n2\n\n\n3\n5\n25.29\n4.71\nMale\nNo\nSun\nDinner\n4\n\n\n4\n6\n8.77\n2.00\nMale\nNo\nSun\nDinner\n2\n\n\n\n\n\n\n\n\n2.4.1 Filters with AND conditions\n\n\nCode\nsql=\"select * from tips where sex='Male' and size&gt;3\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nindex\ntotal_bill\ntip\nsex\nsmoker\nday\ntime\nsize\n\n\n\n\n0\n5\n25.29\n4.71\nMale\nNo\nSun\nDinner\n4\n\n\n1\n7\n26.88\n3.12\nMale\nNo\nSun\nDinner\n4\n\n\n2\n13\n18.43\n3.00\nMale\nNo\nSun\nDinner\n4\n\n\n3\n23\n39.42\n7.58\nMale\nNo\nSat\nDinner\n4\n\n\n4\n25\n17.81\n2.34\nMale\nNo\nSat\nDinner\n4\n\n\n\n\n\n\n\n\n\n2.4.2 Filters with or conditions\n\n\nCode\nsql=\"select * from tips where sex='Male' or size&gt;3\"\ntable = pd.read_sql_query(sql,db)\ntable.shape\n\n\n(169, 8)",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#append",
+    "href": "data manipulation/5 SQL database.html#append",
+    "title": "SQL database with python",
+    "section": "2.5 Append",
+    "text": "2.5 Append\n\n2.5.1 append by row\n\n\nCode\nsql=\"select * from tips UNION all select * from tips\"\ntable = pd.read_sql_query(sql,db)\ntable.shape\n\n\n(488, 8)\n\n\n\n\n2.5.2 append by column\n\n\n2.5.3 Dropping NA values\n\n\n2.5.4 keep NA values",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#group-by",
+    "href": "data manipulation/5 SQL database.html#group-by",
+    "title": "SQL database with python",
+    "section": "2.6 group by",
+    "text": "2.6 group by\n\n2.6.1 average,min,max,sum\n\n\nCode\nsql=\"select AVG(total_bill),min(total_bill),max(total_bill),sum(total_bill) from tips group by sex\"\ntable = pd.read_sql_query(sql,db)\ntable\n\n\n\n\n\n\n\n\n\nAVG(total_bill)\nmin(total_bill)\nmax(total_bill)\nsum(total_bill)\n\n\n\n\n0\n18.056897\n3.07\n44.30\n1570.95\n\n\n1\n20.744076\n7.25\n50.81\n3256.82\n\n\n\n\n\n\n\n\n\n2.6.2 count\n\n\nCode\nsql=\"select sex,count(*) from tips group by 1\"\ntable = pd.read_sql_query(sql,db)\ntable\n\n\n\n\n\n\n\n\n\nsex\ncount(*)\n\n\n\n\n0\nFemale\n87\n\n\n1\nMale\n157",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#order-rows",
+    "href": "data manipulation/5 SQL database.html#order-rows",
+    "title": "SQL database with python",
+    "section": "2.7 order rows",
+    "text": "2.7 order rows\n\n\nCode\nsql=\"select * from tips order by total_bill\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nindex\ntotal_bill\ntip\nsex\nsmoker\nday\ntime\nsize\n\n\n\n\n0\n67\n3.07\n1.00\nFemale\nYes\nSat\nDinner\n1\n\n\n1\n92\n5.75\n1.00\nFemale\nYes\nFri\nDinner\n2\n\n\n2\n111\n7.25\n1.00\nFemale\nNo\nSat\nDinner\n1\n\n\n3\n172\n7.25\n5.15\nMale\nYes\nSun\nDinner\n2\n\n\n4\n149\n7.51\n2.00\nMale\nNo\nThur\nLunch\n2\n\n\n\n\n\n\n\n\n2.7.1 Sort in descending order\n\n\nCode\nsql=\"select * from tips order by total_bill desc\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nindex\ntotal_bill\ntip\nsex\nsmoker\nday\ntime\nsize\n\n\n\n\n0\n170\n50.81\n10.00\nMale\nYes\nSat\nDinner\n3\n\n\n1\n212\n48.33\n9.00\nMale\nNo\nSat\nDinner\n4\n\n\n2\n59\n48.27\n6.73\nMale\nNo\nSat\nDinner\n4\n\n\n3\n156\n48.17\n5.00\nMale\nNo\nSun\nDinner\n6\n\n\n4\n182\n45.35\n3.50\nMale\nYes\nSun\nDinner\n3\n\n\n\n\n\n\n\n\n\n2.7.2 Arrange by multiple variables\n\n\nCode\nsql=\"select * from tips order by total_bill,tip\"\ntable = pd.read_sql_query(sql,db)\ntable.head()\n\n\n\n\n\n\n\n\n\nindex\ntotal_bill\ntip\nsex\nsmoker\nday\ntime\nsize\n\n\n\n\n0\n67\n3.07\n1.00\nFemale\nYes\nSat\nDinner\n1\n\n\n1\n92\n5.75\n1.00\nFemale\nYes\nFri\nDinner\n2\n\n\n2\n111\n7.25\n1.00\nFemale\nNo\nSat\nDinner\n1\n\n\n3\n172\n7.25\n5.15\nMale\nYes\nSun\nDinner\n2\n\n\n4\n149\n7.51\n2.00\nMale\nNo\nThur\nLunch\n2",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#join",
+    "href": "data manipulation/5 SQL database.html#join",
+    "title": "SQL database with python",
+    "section": "2.8 join",
+    "text": "2.8 join\n\n2.8.1 inner_join\n\n\n2.8.2 full join\n\n\n2.8.3 left join\n\n\n2.8.4 anti join",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#reshape-tables",
+    "href": "data manipulation/5 SQL database.html#reshape-tables",
+    "title": "SQL database with python",
+    "section": "2.9 Reshape tables",
+    "text": "2.9 Reshape tables\n\n2.9.1 Gather data long(wide to long)\n\n\n2.9.2 Spread data wide (long to wide)",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#string",
+    "href": "data manipulation/5 SQL database.html#string",
+    "title": "SQL database with python",
+    "section": "2.10 string",
+    "text": "2.10 string\n\n2.10.1 upper case\n\n\n2.10.2 lower case\n\n\n2.10.3 match\n\n\n2.10.4 concatenation\n\n\n2.10.5 replace\n\n\n2.10.6 extract",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#date",
+    "href": "data manipulation/5 SQL database.html#date",
+    "title": "SQL database with python",
+    "section": "2.11 date",
+    "text": "2.11 date",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#create-table-into-database",
+    "href": "data manipulation/5 SQL database.html#create-table-into-database",
+    "title": "SQL database with python",
+    "section": "2.12 create table into database",
+    "text": "2.12 create table into database\n\n\nCode\nsql=\"create table if not exists new_tips as select * from tips\"\ndb.execute(sql)\n\ntable = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\ntable\n\n\n\n\n\n\n\n\n\nname\n\n\n\n\n0\ntips\n\n\n1\nplanets\n\n\n2\nnew_tips",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#delete-table-in-database",
+    "href": "data manipulation/5 SQL database.html#delete-table-in-database",
+    "title": "SQL database with python",
+    "section": "2.13 delete table in database",
+    "text": "2.13 delete table in database\n\n\nCode\nsql=\"drop table if  exists new_tips\"\ndb.execute(sql)\n\ntable = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\ntable\n\n\n\n\n\n\n\n\n\nname\n\n\n\n\n0\ntips\n\n\n1\nplanets",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/5 SQL database.html#edit-table-in-database",
+    "href": "data manipulation/5 SQL database.html#edit-table-in-database",
+    "title": "SQL database with python",
+    "section": "2.14 edit table in database",
+    "text": "2.14 edit table in database\n\n\nCode\n# close database connection\ndb.close()",
+    "crumbs": [
+      "data manipulation",
+      "SQL database with python"
+    ]
   }
 ]

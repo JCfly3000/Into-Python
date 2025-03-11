@@ -1,0 +1,217 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"One year page review\"\n",
+        "subtitle: \"with whiskynote.be data\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "  eval: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---"
+      ],
+      "id": "2066e8cc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import requests\n",
+        "import os\n",
+        "from bs4 import BeautifulSoup\n",
+        "import pandas as pd\n",
+        "import time"
+      ],
+      "id": "92ef2de5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "os.system('pip show beautifulsoup4')"
+      ],
+      "id": "4f5969b0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Web scraping on www.whiskynotes.be\n",
+        "\n",
+        "# year page"
+      ],
+      "id": "43a384b7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "year_ur='https://www.whiskynotes.be/2023'"
+      ],
+      "id": "d904be0e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "![](images/clipboard-677064128.png)\n",
+        "\n",
+        "# read in html\n"
+      ],
+      "id": "646d3ef2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Send an HTTP GET request to the website\n",
+        "headers = {'User-Agent': 'My User Agent'}\n",
+        "response = requests.get(year_ur,headers=headers)"
+      ],
+      "id": "09762e15",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# success code - 200 \n",
+        "print(response) "
+      ],
+      "id": "5657ffce",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#print(response.content)"
+      ],
+      "id": "8cc515ef",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Parse the HTML code using BeautifulSoup\n",
+        "soup = BeautifulSoup(response.content, 'html.parser')"
+      ],
+      "id": "dd1fefd4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# review bottle name on one year"
+      ],
+      "id": "7a40b654"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "bottle001=soup.find_all('p')"
+      ],
+      "id": "5a4070ac",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "for i in bottle001[1:5]:\n",
+        "  i.get_text()"
+      ],
+      "id": "382fe9ab",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# review topic name on one year"
+      ],
+      "id": "ab27d7a5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "topic001=soup.select('.archive-link')"
+      ],
+      "id": "51d21200",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "for i in topic001[1:5]:\n",
+        "  i.get_text()"
+      ],
+      "id": "a1581e81",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "topic_link=soup.select('.entry-permalink')\n",
+        "\n",
+        "for link in topic_link[1:5]:\n",
+        "  link.get('href')\n"
+      ],
+      "id": "a6344f20",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:"
+      ],
+      "id": "a0283872"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

@@ -1,0 +1,266 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"One page reveiw\"\n",
+        "subtitle: \"with whiskynote.be data\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n"
+      ],
+      "id": "c67882b8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import requests\n",
+        "import os\n",
+        "from bs4 import BeautifulSoup\n",
+        "import pandas as pd\n",
+        "import time"
+      ],
+      "id": "f7e8a488",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "os.system('pip show beautifulsoup4')"
+      ],
+      "id": "4509774c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Web scraping on www.whiskynotes.be\n",
+        "\n",
+        "# review page\n",
+        "\n",
+        "\n",
+        "![](images/clipboard-714698276.png){width=\"441\"}\n"
+      ],
+      "id": "aa8bcc6e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "review_url='https://www.whiskynotes.be/2024/ardbeg/spheric-spirits-springbank-blended-malt-islay-malt/'"
+      ],
+      "id": "28b11645",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# read in html\n"
+      ],
+      "id": "d77121fb"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Send an HTTP GET request to the website\n",
+        "headers = {'User-Agent': 'My User Agent'}\n",
+        "response = requests.get(review_url,headers=headers)"
+      ],
+      "id": "1b28908d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# success code - 200 \n",
+        "print(response) "
+      ],
+      "id": "72c20f83",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#print(response.content)"
+      ],
+      "id": "cc2625b4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Parse the HTML code using BeautifulSoup\n",
+        "soup = BeautifulSoup(response.content, 'html.parser')"
+      ],
+      "id": "84801a33",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#print(soup.prettify())"
+      ],
+      "id": "d52020ac",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "soup.title"
+      ],
+      "id": "4383ad52",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "soup.p"
+      ],
+      "id": "ed435f56",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "soup.find_all('.entry-content h2')"
+      ],
+      "id": "4558ff7a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# take picture of url\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "# bottle_name"
+      ],
+      "id": "d2409e15"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "bottle_name=soup.find_all('h2',class_=\"product-main__name\")\n",
+        "bottle_name"
+      ],
+      "id": "f6cf6ffd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "bottle_name2=[]\n",
+        "\n",
+        "for i in bottle_name:\n",
+        "  name=i.text\n",
+        "  bottle_name2.append(name)\n",
+        "\n",
+        "bottle_name2"
+      ],
+      "id": "9f35e005",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# bottle_review\n",
+        "\n",
+        "\n",
+        "\n",
+        "# bottle_review_Nose\n",
+        "\n",
+        "\n",
+        "# bottle_review_Mouth\n",
+        "\n",
+        "\n",
+        "# bottle_review_Finish\n",
+        "\n",
+        "\n",
+        "# first score\n",
+        "\n",
+        "\n",
+        "\n",
+        "# all other score\n",
+        "\n",
+        "\n",
+        "\n",
+        "# combine all score\n",
+        "\n",
+        "\n",
+        "# page_published_date\n",
+        "\n",
+        "\n",
+        "# page_class\n",
+        "\n",
+        "\n",
+        "# page_title\n",
+        "\n",
+        "\n",
+        "\n",
+        "# combine all one_page_review\n",
+        "\n",
+        "\n",
+        "\n",
+        "# output\n"
+      ],
+      "id": "7f805f06"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

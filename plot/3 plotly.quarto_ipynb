@@ -1,0 +1,577 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Plotly chart\"\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "  eval: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/Plotly-logo.png){width=\"650\"}\n",
+        "\n",
+        "Plotly's Python graphing library makes interactive, publication-quality graphs. Examples of how to make line plots, scatter plots, area charts, bar charts, error bars, box plots, histograms, heatmaps, subplots, multiple-axes, polar charts, and bubble charts."
+      ],
+      "id": "7df81a63"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotly\n",
+        "print(plotly.__version__)"
+      ],
+      "id": "9d2a02b8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "import seaborn as sns\n",
+        "import plotly.express as px\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Apply the default theme\n",
+        "\n",
+        "\n",
+        "# Load an example dataset\n",
+        "tips = sns.load_dataset(\"tips\")\n",
+        "tips.head()"
+      ],
+      "id": "22aa015a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Scatter Plot"
+      ],
+      "id": "3018c62b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\")\n",
+        "fig.show()"
+      ],
+      "id": "69abb2bb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "d2344f28"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\",color=\"sex\")\n",
+        "fig.show()"
+      ],
+      "id": "ecd560ae",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## size by group"
+      ],
+      "id": "caa5acc3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\",size=\"size\")\n",
+        "fig.show()"
+      ],
+      "id": "b59f9e01",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# line Plot\n"
+      ],
+      "id": "56aa4da2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones= sns.load_dataset(\"dowjones\")\n",
+        "dowjones.head()"
+      ],
+      "id": "4f03e294",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotly.express as px\n",
+        "fig = px.line(dowjones, x=\"Date\", y=\"Price\")\n",
+        "fig.show()"
+      ],
+      "id": "0ca73776",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group\n"
+      ],
+      "id": "d9d0c992"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: true\n",
+        "import random\n",
+        "from siuba import _, mutate, filter, group_by, summarize,show_query\n",
+        "from siuba import *\n",
+        "\n",
+        "dowjones2=dowjones>>mutate(type='old')\n",
+        "\n",
+        "dowjones3=dowjones>>mutate(Price=_.Price+random.random()*200,type='new')\n",
+        "\n",
+        "dowjones4=pd.concat([dowjones2, dowjones3], ignore_index = True)>> arrange(_.Date)\n",
+        "\n",
+        "df = px.data.gapminder().query(\"continent=='Oceania'\")"
+      ],
+      "id": "9f900aa1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones4.head()"
+      ],
+      "id": "e90be262",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotly.express as px\n",
+        "\n",
+        "fig = px.line(dowjones4, x=\"Date\", y=\"Price\", color='type')\n",
+        "fig.show()"
+      ],
+      "id": "e346100f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# histogram"
+      ],
+      "id": "befb9a63"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.histogram(tips, x=\"total_bill\")\n",
+        "fig.show()"
+      ],
+      "id": "2cf9aed5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "3681c37c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.histogram(tips, x=\"total_bill\", color='sex', barmode='group')\n",
+        "fig.show()"
+      ],
+      "id": "89491452",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# bar chart"
+      ],
+      "id": "7212af16"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.bar(tips, x='sex', y='total_bill',color='sex')\n",
+        "fig.show()"
+      ],
+      "id": "4074525b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# box plot"
+      ],
+      "id": "ea922a95"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.box(tips, y=\"total_bill\")\n",
+        "fig.show()"
+      ],
+      "id": "e9dd94b7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "25603485"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.box(tips, y=\"total_bill\",x='sex',color='sex')\n",
+        "fig.show()"
+      ],
+      "id": "b6da4521",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# strip plot"
+      ],
+      "id": "22f86ca3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.strip(tips,x=\"day\", y=\"total_bill\")\n",
+        "fig.show()"
+      ],
+      "id": "48c82499",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "abae2714"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.strip(tips,x=\"day\", y=\"total_bill\",color='sex')\n",
+        "fig.show()"
+      ],
+      "id": "c6f22da6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Facet plot\n"
+      ],
+      "id": "119708a4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips, x=\"total_bill\", y=\"tip\", color=\"sex\", facet_col=\"day\")\n",
+        "fig.show()"
+      ],
+      "id": "bf62e766",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "make 3 plot per row"
+      ],
+      "id": "1ce0bd82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips, x=\"total_bill\", y=\"tip\", color=\"sex\", facet_col=\"day\",facet_col_wrap=3)\n",
+        "fig.show()"
+      ],
+      "id": "e6c1950d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# title,size, x y names\n",
+        "\n",
+        "## add title\n"
+      ],
+      "id": "d791c4cf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\", title=\"total_bill title\").update_layout(title_x=0.5)\n",
+        "fig.show()"
+      ],
+      "id": "c55adaf4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## adjust size"
+      ],
+      "id": "90ef8f70"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\")\n",
+        "\n",
+        "fig.update_layout(\n",
+        "    autosize=False\n",
+        "    ,width=200\n",
+        "    ,height=200\n",
+        "    )\n",
+        "    \n",
+        "fig.show()\n"
+      ],
+      "id": "a4b0402f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## change x y name\n"
+      ],
+      "id": "8beb8c34"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\"\n",
+        "                ,labels={\n",
+        "                     \"tip\": \"new x label)\",\n",
+        "                     \"total_bill\": \"new y label\"\n",
+        "                 }\n",
+        "\n",
+        ")\n",
+        "\n",
+        "    \n",
+        "fig.show()"
+      ],
+      "id": "ac2d423e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# applying themes:\n",
+        "\n",
+        "::: {.panel-tabset .nav-pills}\n",
+        "\n",
+        "## ggplot2 themes"
+      ],
+      "id": "b7215ee0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\",template=\"ggplot2\")\n",
+        "fig.show()"
+      ],
+      "id": "b3ea61b6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## seaborn themes"
+      ],
+      "id": "5e992706"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\",template=\"seaborn\")\n",
+        "fig.show()"
+      ],
+      "id": "51d31aea",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## plotly_dark themes"
+      ],
+      "id": "c8374447"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.scatter(tips,x=\"tip\", y=\"total_bill\",template=\"plotly_dark\")\n",
+        "fig.show()"
+      ],
+      "id": "72167559",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "# Save plot\n",
+        "\n",
+        "install package with pip install -U kaleido"
+      ],
+      "id": "7d6147f9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.line(df, x=\"year\", y=\"lifeExp\", title='Life expectancy in Canada')\n",
+        "fig.write_image(\"yourfile.png\") "
+      ],
+      "id": "c80d1137",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Animation plot only \n",
+        "\n",
+        "https://plotly.com/python/animations/\n",
+        "\n",
+        "Although Plotly Express supports animation for many chart and map types, smooth inter-frame transitions are today only possible for scatter and bar\n"
+      ],
+      "id": "633af23c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotly.express as px\n",
+        "df = px.data.gapminder()\n",
+        "px.scatter(df, x=\"gdpPercap\", y=\"lifeExp\", animation_frame=\"year\", animation_group=\"country\",\n",
+        "           size=\"pop\", color=\"continent\", hover_name=\"country\",\n",
+        "           log_x=True, size_max=55, range_x=[100,100000], range_y=[25,90])"
+      ],
+      "id": "edfcec73",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:\n",
+        "\n",
+        "https://plotly.com/python/"
+      ],
+      "id": "208407e9"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

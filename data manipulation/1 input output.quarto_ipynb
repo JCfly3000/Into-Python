@@ -1,0 +1,279 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"input & output in Python\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "Data input and ouput in python\n",
+        "\n",
+        "![](images/1_-OQi5hp-uoL_KdIydr4hew.gif){width=\"500\"}\n",
+        "\n",
+        "# input\n",
+        "\n",
+        "\n",
+        "\n",
+        "## read CSV"
+      ],
+      "id": "f1192b5d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "data=pd.read_csv('data/Book3.csv')\n",
+        "data"
+      ],
+      "id": "283f67af",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "read CSV online"
+      ],
+      "id": "89f33267"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import pandas as pd\n",
+        "url='https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-11/hotels.csv'\n",
+        "hotels=pd.read_csv(url)"
+      ],
+      "id": "6ab9a36d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## read excel\n",
+        "\n",
+        "sheet_name=0 read first sheet.\n",
+        "\n",
+        "sheet_name=1 read second sheet.\n",
+        "\n",
+        ".sheet_name='Sheet1' read 'Sheet1' sheet."
+      ],
+      "id": "bdab4827"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "data_excel=pd.read_excel('data/Book1.xlsx',sheet_name=0)\n",
+        "data_excel"
+      ],
+      "id": "9e4d9da3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## read parquet\n",
+        "\n",
+        "parquet format is one of the best for data analytic"
+      ],
+      "id": "ae8abeac"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data= pd.read_parquet(\"data/df.parquet\")\n",
+        "data.shape"
+      ],
+      "id": "97a4d239",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data.head()"
+      ],
+      "id": "6779dc88",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "read parquet zip"
+      ],
+      "id": "93074a3e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data= pd.read_parquet(\"data/df.parquet.gzip\")\n",
+        "data.shape"
+      ],
+      "id": "a622a7e0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## read feather"
+      ],
+      "id": "d0821660"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data=pd.read_feather(\"data/feather_file.feather\")\n",
+        "data.head()"
+      ],
+      "id": "084a07b8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# outout\n",
+        "\n",
+        "## write CSV"
+      ],
+      "id": "7ee35e98"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data.head().to_csv('data/out.csv', index=False)  "
+      ],
+      "id": "e97c5f83",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## write excel"
+      ],
+      "id": "b2c2201c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data_excel.to_excel('data/out.xlsx')"
+      ],
+      "id": "d910ee76",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## write parquet"
+      ],
+      "id": "608b3dce"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data.head(100).to_parquet('data/df.parquet') "
+      ],
+      "id": "27fbc95b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "output to zip format"
+      ],
+      "id": "eddcbef7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data.head(100).to_parquet('data/df.parquet.gzip',\n",
+        "              compression='gzip')  "
+      ],
+      "id": "c7dbf77e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## write feather"
+      ],
+      "id": "7c4c1c6a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data.head(100).to_feather(\"data/feather_file.feather\")"
+      ],
+      "id": "c7612fbc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Refernce\n",
+        "\n",
+        "https://medium.com/@gadhvirushiraj/the-best-file-format-for-data-science-ed756f937be8"
+      ],
+      "id": "de41228c"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

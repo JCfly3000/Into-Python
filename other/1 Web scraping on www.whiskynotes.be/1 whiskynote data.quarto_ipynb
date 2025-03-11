@@ -1,0 +1,87 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Whiskynotes.be data\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "# whiskynotes.be data\n",
+        "\n",
+        "<https://www.whiskynotes.be/>\n",
+        "\n",
+        "![](images/clipboard-2598102391.png)\n",
+        "\n",
+        "WhiskyNotes is a personal collection of impressions, written while searching for the ultimate single malt whisky. A work in progress, and a continuous exercise for the senses.\n",
+        "\n",
+        "I started it in 2008 while living in Spain for a couple of years. I had discovered whisky a few years earlier but suddenly I was cut off from festivals, shops and whisky friends in my home country. A whisky blog seemed a good way of keeping in touch. It quickly gained a following, first in Belgium but now from all over the world.\n",
+        "\n",
+        "# BeautifulSoup package\n",
+        "\n",
+        "![](https://miro.medium.com/v2/resize:fit:1200/1*muxhw09mECD24fZqJXKH1A.jpeg){width=\"500\"}\n",
+        "\n",
+        "Beautiful Soup is a Python library for pulling data out of HTML and XML files. It works with your favorite parser to provide idiomatic ways of navigating, searching, and modifying the parse tree. It commonly saves programmers hours or days of work.\n"
+      ],
+      "id": "69923ce6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import requests\n",
+        "import os\n",
+        "from bs4 import BeautifulSoup\n",
+        "import pandas as pd\n",
+        "import time"
+      ],
+      "id": "10e4056e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "os.system('pip show beautifulsoup4')"
+      ],
+      "id": "aff0aec0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:"
+      ],
+      "id": "9beb1c7e"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

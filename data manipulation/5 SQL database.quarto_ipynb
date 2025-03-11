@@ -1,0 +1,493 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"SQL database with python\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/1594917913096.png){width=\"600\"}\n",
+        "\n",
+        "# Connection with database"
+      ],
+      "id": "b82a469a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "import pandas as pd\n",
+        "import sqlite3\n",
+        "\n",
+        "tips = sns.load_dataset(\"tips\")\n",
+        "planets=sns.load_dataset('planets')"
+      ],
+      "id": "e459dc18",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## create database file pythonsqlite.db and copy tips data and planets data into database"
+      ],
+      "id": "4b6ca19e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import sqlite3\n",
+        "# Create your connection.\n",
+        "db = sqlite3.connect('pythonsqlite.db')\n",
+        "\n",
+        "tips.to_sql(name='tips', con=db,if_exists='replace')\n",
+        "planets.to_sql(name='planets', con=db,if_exists='replace')\n",
+        "\n",
+        "\n",
+        "db.close()"
+      ],
+      "id": "d32e69bb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## check all table in database"
+      ],
+      "id": "e426df5f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "db = sqlite3.connect('pythonsqlite.db')\n",
+        "table = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\n",
+        "table"
+      ],
+      "id": "7a6cd962",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# SQL\n",
+        "\n",
+        "## select"
+      ],
+      "id": "5f7e13e3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "db = sqlite3.connect('pythonsqlite.db')\n",
+        "sql=\"select * from tips LIMIT 3;\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table"
+      ],
+      "id": "70a545f7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Renaming column"
+      ],
+      "id": "256bdb49"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select total_bill as new_total_bill from tips\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "61a219f1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## create column"
+      ],
+      "id": "daa28542"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select total_bill as new_total_bill,total_bill from tips\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "3bba5a53",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Filter rows"
+      ],
+      "id": "861fa17f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips where sex='Male'\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "f35fcfbc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filters with AND conditions"
+      ],
+      "id": "323a743f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips where sex='Male' and size>3\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "f1100ec6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filters with or conditions"
+      ],
+      "id": "c2c8df31"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips where sex='Male' or size>3\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.shape"
+      ],
+      "id": "f9e1dd08",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Append\n",
+        "\n",
+        "### append by row"
+      ],
+      "id": "97be749e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips UNION all select * from tips\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.shape"
+      ],
+      "id": "9902a979",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### append by column\n",
+        "\n",
+        "### Dropping NA values\n",
+        "\n",
+        "### keep NA values\n",
+        "\n",
+        "## group by\n",
+        "\n",
+        "### average,min,max,sum"
+      ],
+      "id": "f5b4d229"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select AVG(total_bill),min(total_bill),max(total_bill),sum(total_bill) from tips group by sex\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table"
+      ],
+      "id": "028b842e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### count"
+      ],
+      "id": "5eb87639"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select sex,count(*) from tips group by 1\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table"
+      ],
+      "id": "179c57be",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## order rows"
+      ],
+      "id": "643f6ca5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips order by total_bill\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "74b1be22",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Sort in descending order"
+      ],
+      "id": "5b5ef966"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips order by total_bill desc\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "fbe7c336",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Arrange by multiple variables"
+      ],
+      "id": "49da2976"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"select * from tips order by total_bill,tip\"\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "table.head()"
+      ],
+      "id": "642e29b0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## join\n",
+        "\n",
+        "### inner_join\n",
+        "\n",
+        "### full join\n",
+        "\n",
+        "### left join\n",
+        "\n",
+        "### anti join\n",
+        "\n",
+        "## Reshape tables\n",
+        "\n",
+        "### Gather data long(wide to long)\n",
+        "\n",
+        "### Spread data wide (long to wide)\n",
+        "\n",
+        "## string\n",
+        "\n",
+        "### upper case\n",
+        "\n",
+        "### lower case\n",
+        "\n",
+        "### match\n",
+        "\n",
+        "### concatenation\n",
+        "\n",
+        "### replace\n",
+        "\n",
+        "### extract\n",
+        "\n",
+        "## date\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "## create table into database"
+      ],
+      "id": "4cc22f44"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"create table if not exists new_tips as select * from tips\"\n",
+        "db.execute(sql)\n",
+        "\n",
+        "table = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\n",
+        "table"
+      ],
+      "id": "4597a3cc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## delete table in database"
+      ],
+      "id": "33b344bc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"drop table if  exists new_tips\"\n",
+        "db.execute(sql)\n",
+        "\n",
+        "table = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\n",
+        "table"
+      ],
+      "id": "bd06b61a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## edit table in database\n"
+      ],
+      "id": "d1e51d67"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# close database connection\n",
+        "db.close()"
+      ],
+      "id": "fc89cb5a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Using SQL with Pandas"
+      ],
+      "id": "2c230bb5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from pandasql import sqldf"
+      ],
+      "id": "ff5ae515",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sql=\"SELECT * FROM tips LIMIT 5;\"\n",
+        "data=sqldf(sql)\n",
+        "data"
+      ],
+      "id": "75c23ce4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:"
+      ],
+      "id": "31d4aed3"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

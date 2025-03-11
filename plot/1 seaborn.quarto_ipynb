@@ -1,0 +1,881 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"seaborn chart\"\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "  eval: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/logo-wide-lightbg.svg)\n",
+        "\n",
+        "Seaborn is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics."
+      ],
+      "id": "edc717b0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "print(sns.__version__)"
+      ],
+      "id": "4d5ac50b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import seaborn\n",
+        "import seaborn as sns\n",
+        "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "import matplotlib\n",
+        "\n",
+        "# Apply the default theme\n",
+        "#sns.set_theme()\n",
+        "\n",
+        "# Load an example dataset\n",
+        "tips = sns.load_dataset(\"tips\")\n",
+        "tips.head()"
+      ],
+      "id": "e3ce7849",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Scatter Plot"
+      ],
+      "id": "21f82364"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.scatterplot(data=tips,x='tip',y='total_bill')"
+      ],
+      "id": "008a9eca",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "a484d196"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.scatterplot(data=tips,x='tip',y='total_bill',hue='sex')"
+      ],
+      "id": "512f7c2d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## size by group"
+      ],
+      "id": "aa2ca784"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.scatterplot(data=tips,x='tip',y='total_bill',size='size')"
+      ],
+      "id": "4a49ac1f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# line Plot"
+      ],
+      "id": "0f46d2fc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones= sns.load_dataset(\"dowjones\")\n",
+        "dowjones.head()"
+      ],
+      "id": "cf0150fe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.lineplot(data=dowjones,x='Date',y='Price')"
+      ],
+      "id": "bdc8d643",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group\n"
+      ],
+      "id": "fc2e3630"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: true\n",
+        "import random\n",
+        "from siuba import _, mutate, filter, group_by, summarize,show_query\n",
+        "from siuba import *\n",
+        "\n",
+        "dowjones2=dowjones>>mutate(type='old')\n",
+        "\n",
+        "dowjones3=dowjones>>mutate(Price=_.Price+random.random()*200,type='new')\n",
+        "\n",
+        "dowjones4=pd.concat([dowjones2, dowjones3], ignore_index = True)>> arrange(_.Date)"
+      ],
+      "id": "75b5da27",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones4.head()"
+      ],
+      "id": "0671f0c7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.lineplot(data=dowjones4,x='Date',y='Price',hue='type')"
+      ],
+      "id": "22bde425",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# histogram"
+      ],
+      "id": "deedbf6a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.histplot(data=tips,x='tip')"
+      ],
+      "id": "fb52ba30",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "dcf87ba7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.histplot(data=tips,x='tip',hue='sex',multiple=\"dodge\")"
+      ],
+      "id": "e2c97541",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# bar chart"
+      ],
+      "id": "6ead747c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.barplot(data=tips,x='sex',y='tip',errorbar=None)"
+      ],
+      "id": "8966576c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## show number"
+      ],
+      "id": "d0d72001"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ax=sns.barplot(data=tips,x='sex',y='tip',errorbar=None)\n",
+        "\n",
+        "for i in ax.containers:\n",
+        "    ax.bar_label(i,)\n"
+      ],
+      "id": "3a522244",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## horizontal bar plot "
+      ],
+      "id": "90f7c89f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ax=sns.barplot(data=tips,y='sex',x='tip',errorbar=None,orient = 'h')\n",
+        "plt.show()"
+      ],
+      "id": "1f5ea92c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# box plot"
+      ],
+      "id": "c36b20f4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.boxplot(data=tips,x='day',y='tip')"
+      ],
+      "id": "95434ad7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "ddf80094"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.boxplot(data=tips,x='day',y='tip',hue='sex')"
+      ],
+      "id": "0217d1a3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# strip plot"
+      ],
+      "id": "f01151a6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.stripplot(data=tips,x='day',y='tip')"
+      ],
+      "id": "2dc0e796",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "51bd4f33"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.stripplot(data=tips,x='day',y='tip',hue='sex',dodge=True)"
+      ],
+      "id": "9026b3fd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "join plot"
+      ],
+      "id": "b2086510"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.jointplot(data=tips,x='total_bill',y='tip',kind='reg')"
+      ],
+      "id": "a165b5fb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Facet plot"
+      ],
+      "id": "0174e641"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "g = sns.FacetGrid(data=tips, col=\"day\", hue=\"sex\")\n",
+        "\n",
+        "g.map_dataframe(sns.scatterplot, x=\"total_bill\", y=\"tip\")\n",
+        "\n",
+        "g.add_legend()"
+      ],
+      "id": "176a7002",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "make 2 plot per column"
+      ],
+      "id": "47c2ffa3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "g = sns.FacetGrid(data=tips, col=\"day\",col_wrap=2, hue=\"sex\")\n",
+        "\n",
+        "g.map_dataframe(sns.scatterplot, x=\"total_bill\", y=\"tip\")\n",
+        "\n",
+        "g.add_legend()"
+      ],
+      "id": "cdfb096a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "sub plot"
+      ],
+      "id": "357a7d36"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#sns.set()\n",
+        "\n",
+        "#define plotting region (1 rows, 2 columns)\n",
+        "fig, axes = plt.subplots(1, 2)\n",
+        "\n",
+        "\n",
+        "sns.boxplot(data=tips,x='day',y='tip',hue='sex',ax=axes[0])\n",
+        "sns.boxplot(data=tips,x='day',y='tip',ax=axes[1])"
+      ],
+      "id": "b567cb24",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# chinese 显示中文 in Mac"
+      ],
+      "id": "8c1d1c79"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# add following line\n",
+        "plt.rcParams['font.family'] = ['Arial Unicode MS'] #用来正常显示中文标签\n",
+        "plt.rcParams['axes.unicode_minus'] = False #用来正常显示负号\n",
+        "sns.set_style('whitegrid',{'font.sans-serif':['Arial Unicode MS','Arial']})\n"
+      ],
+      "id": "96c1345c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# title,size,x y name\n",
+        "\n",
+        "## add title"
+      ],
+      "id": "403f9601"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df = sns.load_dataset(\"tips\")\n",
+        "\n",
+        "ax=sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "\n",
+        "ax.set_title(\"tips box plot \")"
+      ],
+      "id": "1ea5f458",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## adjust size"
+      ],
+      "id": "f847e750"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plt.clf()\n",
+        "\n",
+        "plt.figure(figsize=(10, 6))\n",
+        "\n",
+        "ax=sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "ax.set_title(\"tips box plot \")\n",
+        "\n",
+        "plt.show()"
+      ],
+      "id": "e8d5e969",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## change x y name"
+      ],
+      "id": "1e91f922"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ax=sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "ax.set_title(\"tips box plot \")\n",
+        "ax.set(xlabel='x-axis label', ylabel='y-axis label')"
+      ],
+      "id": "bc33e0e9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# applying themes\n",
+        "\n",
+        "::: {.panel-tabset .nav-pills}\n",
+        "\n",
+        "## darkgrid themes\n",
+        "\n",
+        "If you set the set_style function without any arguments the \"darkgrid\" theme will be used by default, which adds a gray background and white grid lines."
+      ],
+      "id": "046f5c09"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "\n",
+        "df = sns.load_dataset(\"tips\")\n",
+        "\n",
+        "sns.set_theme()\n",
+        "# Equivalent to:\n",
+        "# sns.set_style(\"darkgrid\")\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)"
+      ],
+      "id": "6075a374",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## whitegrid themes\n",
+        "\n",
+        "If you want to add gray grid lines but with a white background set this theme."
+      ],
+      "id": "36b2f6ce"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "\n",
+        "df = sns.load_dataset(\"tips\")\n",
+        "sns.set_style(\"whitegrid\")\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)"
+      ],
+      "id": "5a0ab6e2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## dark themes\n",
+        "\n",
+        "The \"dark\" theme is the same as \"darkgrid\" but without the grid lines."
+      ],
+      "id": "b6f4008c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "\n",
+        "df = sns.load_dataset(\"tips\")\n",
+        "\n",
+        "sns.set_style(\"dark\")\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)"
+      ],
+      "id": "546616c7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## white themes\n",
+        "\n",
+        "The \"white\" theme is the same as \"whitegrid\" but without the gray grid lines."
+      ],
+      "id": "a3c72cff"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "\n",
+        "df = sns.load_dataset(\"tips\")\n",
+        "\n",
+        "sns.set_style(\"white\")\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)"
+      ],
+      "id": "ad000602",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## ticks themes\n",
+        "\n",
+        "The \"ticks\" theme is the same as the \"white\" theme but this theme adds ticks to the axes."
+      ],
+      "id": "39f0a450"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "\n",
+        "df = sns.load_dataset(\"tips\")\n",
+        "\n",
+        "sns.set_style(\"ticks\")\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)"
+      ],
+      "id": "41a3da9d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## fivethirtyeight themes"
+      ],
+      "id": "990c5a1c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plt.clf()\n",
+        "\n",
+        "plt.style.use('fivethirtyeight')\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "\n",
+        "plt.show()"
+      ],
+      "id": "635f4e7d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## ggplot"
+      ],
+      "id": "e8c4940c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plt.clf()\n",
+        "\n",
+        "plt.style.use('ggplot')\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "fig.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "38a50eee",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## tableau-colorblind10"
+      ],
+      "id": "f1f3011a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plt.clf()\n",
+        "plt.style.use('tableau-colorblind10')\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "fig.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "e3cf1ce4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## dark_background"
+      ],
+      "id": "e86cf32d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plt.clf()\n",
+        "plt.style.use('dark_background')\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "fig.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "196089fd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "\n",
+        "# Save plot"
+      ],
+      "id": "c81b7dc1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "\n",
+        "df = sns.load_dataset(\"tips\")\n",
+        "\n",
+        "plt.clf()\n",
+        "\n",
+        "plt.style.use('default')\n",
+        "\n",
+        "sns.boxplot(x = \"day\", y = \"total_bill\", data = df)\n",
+        "\n",
+        "# Save the plot with desired size\n",
+        "plt.savefig(\"output.png\", dpi=100, bbox_inches=\"tight\")\n"
+      ],
+      "id": "33260648",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Animation plot"
+      ],
+      "id": "86551a25"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from celluloid import Camera"
+      ],
+      "id": "152cecf5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| output: false \n",
+        "from celluloid import Camera\n",
+        "from matplotlib import pyplot as plt\n",
+        "\n",
+        "fig = plt.figure()\n",
+        "\n",
+        "camera = Camera(fig)\n",
+        "\n",
+        "a=sns.lineplot(data=dowjones4,x='Date',y='Price',hue='type')\n",
+        "\n",
+        "hands, labs = a.get_legend_handles_labels()\n",
+        "\n",
+        "new_data=dowjones4.sample(50, random_state=42)\n",
+        "\n",
+        "new_data=new_data.sort_values(by=['Date'], ascending=True)\n",
+        "\n",
+        "for i in (new_data[\"Date\"]):\n",
+        "  data=dowjones4.query('Date <= @i')\n",
+        "  #print(data)\n",
+        "  sns.lineplot(data=data,x='Date',y='Price',hue='type')\n",
+        "  plt.legend(handles=hands, labels=labs)\n",
+        "  camera.snap()\n",
+        "\n",
+        "animation = camera.animate()"
+      ],
+      "id": "cdb8e00c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from IPython.display import HTML\n",
+        "HTML(animation.to_html5_video())"
+      ],
+      "id": "ef475e54",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:\n",
+        "\n",
+        "https://seaborn.pydata.org/index.html\n",
+        "\n",
+        "https://www.youtube.com/watch?v=ooqXQ37XHMM"
+      ],
+      "id": "f8741004"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

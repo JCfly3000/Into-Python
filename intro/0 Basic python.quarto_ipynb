@@ -1,0 +1,711 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Basic Python\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/Python-logo-notext.svg.png){width=\"300\"}\n",
+        "\n",
+        "# download and install python\n",
+        "\n",
+        "## check python version"
+      ],
+      "id": "58f90351"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import sys\n",
+        "print(sys.version)"
+      ],
+      "id": "71516f74",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## delete old version python in mac\n",
+        "\n",
+        "### delete framework\n",
+        "\n",
+        "Go-\\>computer-\\>Macintosh HD-\\>Library-\\>Frameworks-\\>Python.framework-\\>Versions\n",
+        "\n",
+        "Delete the old version python folder:\n",
+        "\n",
+        "![](images/clipboard-613753018.png)\n",
+        "\n",
+        "### delete python file\n",
+        "\n",
+        "list all python file\n",
+        "\n",
+        "```{bash}\n",
+        "ls /usr/local/bin/python*\n",
+        "```\n",
+        "\n",
+        "![](images/paste-1.png)\n",
+        "\n",
+        "delete the old version\n",
+        "\n",
+        "```{bash}\n",
+        "brew uninstall python@3.11\n",
+        "```\n",
+        "\n",
+        "## set python version in Rstudio\n",
+        "\n",
+        "list all file in home path"
+      ],
+      "id": "63d29ff7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "ls -a"
+      ],
+      "id": "477fb5dd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "find .Renviron and edit to new version"
+      ],
+      "id": "98899b78"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "nano .Renviron"
+      ],
+      "id": "bab2e774",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "![](images/clipboard-2838033785.png){width=\"510\"}\n",
+        "\n",
+        "# install jupyter"
+      ],
+      "id": "dc9dd50d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "python3 -m pip install jupyter"
+      ],
+      "id": "11a12674",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# work with file\n",
+        "\n",
+        "## get current directory"
+      ],
+      "id": "d765431a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import os\n",
+        "os.getcwd()"
+      ],
+      "id": "194e9b4a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## get all file name under current directory"
+      ],
+      "id": "44b30812"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import os\n",
+        "os.listdir(os.getcwd()) "
+      ],
+      "id": "bcbf89ca",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## get file info"
+      ],
+      "id": "a99fa416"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a=os.stat('3 statistic Book.qmd')\n",
+        "a"
+      ],
+      "id": "6a3e65c2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "show st_atime"
+      ],
+      "id": "1217bc12"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import datetime as dt\n",
+        "#a.st_atime\n",
+        "dt.date.fromtimestamp(a.st_atime).strftime('%Y%m%d')"
+      ],
+      "id": "964221bd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## create folder\n",
+        "\n",
+        "create it if not exist"
+      ],
+      "id": "9a2b4eee"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "if not os.path.exists('test_folder'): \n",
+        "  os.mkdir('test_folder') "
+      ],
+      "id": "0f92552e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## delete folder"
+      ],
+      "id": "48e58c3f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "os.rmdir('test_folder')"
+      ],
+      "id": "dc8a6acf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## delete file"
+      ],
+      "id": "9236bc6d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "os.remove('test.csv')"
+      ],
+      "id": "86d191c4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## copy file"
+      ],
+      "id": "f00421cf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import shutil\n",
+        "\n",
+        "shutil.copyfile('test.csv', 'test2.csv')"
+      ],
+      "id": "291aa4ee",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## downlaod file online"
+      ],
+      "id": "f6d44f46"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import urllib.request\n",
+        "\n",
+        "url=\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-11/hotels.csv\"\n",
+        "\n",
+        "urllib.request.urlretrieve(url, \"hotels.csv\")"
+      ],
+      "id": "b89fbc88",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Condition with if/elif/else"
+      ],
+      "id": "4ece756f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a = 200\n",
+        "b = 33\n",
+        "if b > a:\n",
+        "  print(\"b is greater than a\")\n",
+        "elif a == b:\n",
+        "  print(\"a and b are equal\")\n",
+        "else:\n",
+        "  print(\"a is greater than b\")"
+      ],
+      "id": "a3fc6ae5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Loop\n",
+        "\n",
+        "## for Loop"
+      ],
+      "id": "0efeae11"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits = [\"apple\", \"banana\", \"cherry\"]\n",
+        "for x in fruits:\n",
+        "  print(x)"
+      ],
+      "id": "68618be8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## for enumerate Loop\n",
+        "\n",
+        "it will add index"
+      ],
+      "id": "1beaf9e9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits = [\"apple\", \"banana\", \"cherry\"]\n",
+        "\n",
+        "list(enumerate(fruits))"
+      ],
+      "id": "595a361a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "for index,i in enumerate(fruits):\n",
+        "  print(\"The index is:\",index)\n",
+        "  print(\"The element is:\",i)"
+      ],
+      "id": "1caaf69c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## while Loop"
+      ],
+      "id": "1f8c8a88"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "i = 1\n",
+        "while i < 4:\n",
+        "  print(i)\n",
+        "  i += 1"
+      ],
+      "id": "fda63353",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "with break statement"
+      ],
+      "id": "0cc3d8ab"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "i = 1\n",
+        "while i < 6:\n",
+        "  print(i)\n",
+        "  if i == 3:\n",
+        "    break\n",
+        "  i += 1"
+      ],
+      "id": "ef00cddd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# function\n",
+        "\n",
+        "## without Arguments"
+      ],
+      "id": "618614c9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def my_function():\n",
+        "  print(\"Hello from a function\")"
+      ],
+      "id": "8aa9e42d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "my_function()"
+      ],
+      "id": "92ce23a4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## with Arguments"
+      ],
+      "id": "43087111"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def my_function(x):\n",
+        "  print(x + \" !!!!!!!!!!!!!!!!!\")"
+      ],
+      "id": "96337294",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "my_function('hello')"
+      ],
+      "id": "5b0cbf9b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## with default Arguments"
+      ],
+      "id": "eb49f80d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def my_function(x='hello'):\n",
+        "  print(x + \" !!!!!!!!!!!!!!!!!\")"
+      ],
+      "id": "9cbd70aa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "my_function()"
+      ],
+      "id": "261099a9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## return result"
+      ],
+      "id": "fd3ddcbe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def adding_ten(x):\n",
+        "  a=x+10\n",
+        "  return(a)"
+      ],
+      "id": "1fa2973c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "result=adding_ten(3)\n",
+        "result"
+      ],
+      "id": "330d227c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## lambda function\n",
+        "\n",
+        "it a faster way to do function"
+      ],
+      "id": "a319e1c3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "lambda_adding_ten=lambda x:x+10"
+      ],
+      "id": "71cb6484",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "lambda_adding_ten(4)"
+      ],
+      "id": "08df80e4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# List Comprehension\n",
+        "\n",
+        "its a for loop in list"
+      ],
+      "id": "040470c7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits = [\"apple\", \"banana\", \"cherry\", \"kiwi\", \"mango\"]\n",
+        "\n",
+        "newlist = [x for x in fruits if \"a\" in x]\n",
+        "\n",
+        "print(newlist)"
+      ],
+      "id": "f0fbb4ab",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Package\n",
+        "\n",
+        "## install package\n",
+        "\n",
+        "The Python Package Index (PyPI).<https://pypi.org//>\n",
+        "\n",
+        "![](images/logo-large.516e776d.svg){width=\"300\"}"
+      ],
+      "id": "0c775a03"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import os\n",
+        "os.system('pip3 install scikit-learn')\n",
+        "os.system('pip3 install tensorflow')\n",
+        "os.system('pip3 install pandas')\n",
+        "os.system('pip3 install SciPy')"
+      ],
+      "id": "ebe7a810",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## check one package version"
+      ],
+      "id": "225e49f0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import os\n",
+        "os.system('pip show scikit-learn')"
+      ],
+      "id": "d3972dff",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## check all package version"
+      ],
+      "id": "f81adf6e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import os\n",
+        "os.system('pip list')"
+      ],
+      "id": "9ac72a0e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## check package install location"
+      ],
+      "id": "aa221c8a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "import site; site.getsitepackages()"
+      ],
+      "id": "01b61381",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

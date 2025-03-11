@@ -1,5 +1,5 @@
 ---
-title: "Data manipulation with siuba"
+title: "Data manipulation with siuba(not working with current pandas version)"
 author: "Tony Duan"
 
 execute:
@@ -26,22 +26,6 @@ siuba (小巴) is a port of dplyr and other R libraries with seamless support fo
 
 ![](images/2.png){width="656"}
 
-## Package download
-
-```{python}
-import sys
-print(sys.version)
-```
-
-
-```{python}
-#| eval: false
-import os
-#os.system('pip install --upgrade pandas')
-os.system('pip install siuba')
-```
-
-
 ## load package
 ```{python}
 import pandas as pd
@@ -58,10 +42,7 @@ from siuba import *
 from siuba.data import mtcars,penguins
 ```
 
-```{python}
-import os
-os.system('pip show siuba')
-```
+
 
 
 

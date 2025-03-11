@@ -1,0 +1,1157 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Data structure in Python\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/python-data-structures.png){width=\"500\"}\n",
+        "\n",
+        "\n",
+        "# bulid-in data Structures\n",
+        "\n",
+        "## singular"
+      ],
+      "id": "8945d008"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a=1\n",
+        "type(a)"
+      ],
+      "id": "2543d1f5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a=1.3\n",
+        "type(a)"
+      ],
+      "id": "eb691efb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a='hell'\n",
+        "type(a)"
+      ],
+      "id": "70c91112",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a= True\n",
+        "type(a)"
+      ],
+      "id": "1594d1d7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## list"
+      ],
+      "id": "ba920b82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a=[1,2,3]\n",
+        "\n",
+        "a"
+      ],
+      "id": "8f14d5d8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "type(a) "
+      ],
+      "id": "37b8ff0d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana','apple']"
+      ],
+      "id": "7c0b3f3a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### find length of the list with `len()`"
+      ],
+      "id": "4312be59"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "len(fruits)"
+      ],
+      "id": "8e467877",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### first 2 on the list"
+      ],
+      "id": "832912eb"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits[:2]"
+      ],
+      "id": "f8be0e9f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### last 2 on the list"
+      ],
+      "id": "1106cbb1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits[-2:]"
+      ],
+      "id": "9ecfd2d2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### find how many time in the list with `count()`"
+      ],
+      "id": "2a08b1c4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits.count('apple')"
+      ],
+      "id": "0efb4937",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### find locaiton of on the list with `index()`\n",
+        "\n",
+        "show the first 'apple' index. python list start at 0"
+      ],
+      "id": "e5b5edba"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits.index('apple')"
+      ],
+      "id": "05d1a68c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "all 'apple' in the list"
+      ],
+      "id": "ee2a1a60"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "[index for index, value in enumerate(fruits) if value == 'apple']"
+      ],
+      "id": "29d04f2b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### reverse the list"
+      ],
+      "id": "c1c4d098"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits.reverse()\n",
+        "fruits"
+      ],
+      "id": "8b49da35",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### sort the list"
+      ],
+      "id": "c24c02fe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits.sort()\n",
+        "fruits"
+      ],
+      "id": "16dc817f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### add element on the list"
+      ],
+      "id": "175d1e2b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits.append('grape')\n",
+        "fruits"
+      ],
+      "id": "840a54e9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### drop last element"
+      ],
+      "id": "340385b9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits.pop()\n",
+        "\n",
+        "fruits"
+      ],
+      "id": "3820908f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### List Comprehensions\n",
+        "\n",
+        "using loop:"
+      ],
+      "id": "d3fdfa1f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "squares = []\n",
+        "for x in range(10):\n",
+        "  squares.append(x**2)\n",
+        "  \n",
+        "squares"
+      ],
+      "id": "7705aa3d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "using List Comprehensions"
+      ],
+      "id": "07f6ad1c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "squares = [x**2 for x in range(10)]\n",
+        "squares"
+      ],
+      "id": "a552821c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### list to Tuples"
+      ],
+      "id": "b29ffd24"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tuple(squares)"
+      ],
+      "id": "e33f7f4d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### list to set "
+      ],
+      "id": "f718880e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "set(squares)"
+      ],
+      "id": "6dfa57a6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### list to dictionary \n",
+        "\n",
+        "#### one list to dictionary"
+      ],
+      "id": "dcbcfb48"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "list=['a', 1, 'b', 2, 'c', 3]\n",
+        "\n",
+        "def convert(lst):\n",
+        "   res_dict = {}\n",
+        "   for i in range(0, len(lst), 2):\n",
+        "       res_dict[lst[i]] = lst[i + 1]\n",
+        "   return res_dict\n",
+        " \n",
+        "convert(list)"
+      ],
+      "id": "2fab6446",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### two list to dictionary"
+      ],
+      "id": "04e2e7b8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import itertools\n",
+        "\n",
+        "keys = ('name', 'age', 'food')\n",
+        "\n",
+        "values = ('Monty', 42, 'spam')\n",
+        "\n",
+        "dict(zip(keys, values))"
+      ],
+      "id": "0520c3f6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Tuples"
+      ],
+      "id": "55f2e4fc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fruits = ('orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana','apple')\n",
+        "\n",
+        "fruits"
+      ],
+      "id": "5f157b55",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "type(fruits)"
+      ],
+      "id": "7479abfe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "tuple can not be modified.\n",
+        "\n",
+        "## Sets\n",
+        "\n",
+        "A set is an unordered collection with no duplicate elements."
+      ],
+      "id": "3d170522"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}\n",
+        "\n",
+        "basket"
+      ],
+      "id": "36d2f85a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "type(basket)"
+      ],
+      "id": "037cea5d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Dictionaries"
+      ],
+      "id": "53b436ad"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tel = {'jack': 4098, 'sape': 4139}\n",
+        "\n",
+        "tel"
+      ],
+      "id": "4dfeccf5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "type(tel)"
+      ],
+      "id": "db6c6c73",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tel['jack']"
+      ],
+      "id": "28a20b71",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# numpy data Structures(matrix in python)\n",
+        "\n",
+        "NumPy is the fundamental package for scientific computing in Python. It is a Python library that provides a multidimensional array object\n",
+        "\n",
+        "Python doesn't have a built-in type for matrices. However, we can treat a list of a list as a matrix"
+      ],
+      "id": "9d9bcedc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A = [[1, 4, 5, 12], \n",
+        "    [-5, 8, 9, 0],\n",
+        "    [-6, 7, 11, 19]]\n",
+        "    \n",
+        "A"
+      ],
+      "id": "fa7b9ceb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## numpy Array"
+      ],
+      "id": "daa41479"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "A2 = np.array([[1, 2, 3], [3, 4, 5]])\n",
+        "print(A2)"
+      ],
+      "id": "7d79349a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "type(A2)"
+      ],
+      "id": "c74284ea",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## shape"
+      ],
+      "id": "b452a9b5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2.shape"
+      ],
+      "id": "638cc22e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## row number"
+      ],
+      "id": "aaa8f550"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "len(A2)"
+      ],
+      "id": "543e3d9c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## total elements"
+      ],
+      "id": "29bdfc51"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2.size"
+      ],
+      "id": "bbf9b350",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## dimension "
+      ],
+      "id": "0c76b494"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2.ndim"
+      ],
+      "id": "c6b12c99",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## count numpy.ndarray"
+      ],
+      "id": "e552127b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import collections, numpy\n",
+        "a = numpy.array([0, 3, 0, 4])\n",
+        "collections.Counter(a)"
+      ],
+      "id": "115633e5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### convert list into numpy array"
+      ],
+      "id": "4eeed5d1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A = [\n",
+        "  [1, 4, 5, 12], \n",
+        "  [-5, 8, 9, 0],\n",
+        "  [-6, 7, 11, 19],\n",
+        "  [1, 4, 5, 12], \n",
+        "  [-5, 8, 9, 0],\n",
+        "  [-6, 7, 11, 19],\n",
+        "  [1, 4, 5, 12], \n",
+        "  [-5, 8, 9, 0],\n",
+        "  [-6, 7, 11, 19]\n",
+        "  ]\n",
+        "    \n",
+        "A3 = np.array(A)\n",
+        "\n",
+        "print(A3)"
+      ],
+      "id": "f358185d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### selection\n",
+        "\n",
+        "\n",
+        "#### first 5 row"
+      ],
+      "id": "657f9be6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A[:5]"
+      ],
+      "id": "d573da51",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### lst 5 row"
+      ],
+      "id": "fe93bd20"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A[:-5]"
+      ],
+      "id": "d3747c16",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### first row"
+      ],
+      "id": "48e3dfaa"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A[0]"
+      ],
+      "id": "47624efa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### first column"
+      ],
+      "id": "f89fced9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2[:,0]"
+      ],
+      "id": "9ce0a3a0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### first row and first column element"
+      ],
+      "id": "3f6b3a51"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2[0,0]"
+      ],
+      "id": "6ce961d5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2.dtype"
+      ],
+      "id": "cb1a4736",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### 2 row and 3 column"
+      ],
+      "id": "b0976a90"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A2[1,2]"
+      ],
+      "id": "afeb8d7e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### filter \n",
+        "\n",
+        "##### filter all"
+      ],
+      "id": "677a4c76"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(A3)"
+      ],
+      "id": "c054e2c5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A3>4"
+      ],
+      "id": "81ece567",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A3[A3>4]"
+      ],
+      "id": "9da45f5d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "##### filter row "
+      ],
+      "id": "8555d3e4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A3"
+      ],
+      "id": "a6b5942a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "filter secound column>5"
+      ],
+      "id": "fca10828"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "filter_val=(A3>5)[:,2]"
+      ],
+      "id": "6be3a4a7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "which only keep 2,3 row."
+      ],
+      "id": "871f7159"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "A3[filter_val,0:]"
+      ],
+      "id": "bac08992",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### create numpy array\n",
+        "\n",
+        "#### create eye"
+      ],
+      "id": "18ad7565"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "np.eye(3)"
+      ],
+      "id": "defef509",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### create zero"
+      ],
+      "id": "08f4bf61"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "np.zeros((2,3))"
+      ],
+      "id": "ace26430",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### create ones"
+      ],
+      "id": "c1cb7b86"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "np.ones((2,3))"
+      ],
+      "id": "d575e39e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### compare"
+      ],
+      "id": "58fdeaa4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Creating Array\n",
+        "a = np.array([1,2,3,4]) \n",
+        "b = np.array([3,2,5,6])"
+      ],
+      "id": "97bb5341",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Comparing two arrays\n",
+        "np.greater(a, b)"
+      ],
+      "id": "4e6f5435",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a >= b"
+      ],
+      "id": "64723367",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Comparing two arrays\n",
+        "np.less(a, b)"
+      ],
+      "id": "0dfcc035",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Comparing two arrays\n",
+        "np.equal(a, b)"
+      ],
+      "id": "9f484934",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### reshape"
+      ],
+      "id": "d83b1a83"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a=np.arange(9).reshape(3, 3)\n",
+        "\n",
+        "a"
+      ],
+      "id": "1f49d0fc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### calculation"
+      ],
+      "id": "3253e2c3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "b=a*a\n",
+        "b"
+      ],
+      "id": "88d41dcb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "b=a+a\n",
+        "b"
+      ],
+      "id": "fb13eb8e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### numpy array to dataframe"
+      ],
+      "id": "e7502bf2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "df = pd.DataFrame(b, columns=['Column_A', 'Column_B', 'Column_C'])\n",
+        "\n",
+        "df"
+      ],
+      "id": "0633db8b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# pandas series"
+      ],
+      "id": "251d8627"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Reference\n",
+        "\n",
+        "https://docs.python.org/3/tutorial/datastructures.html#\n",
+        "\n",
+        "https://numpy.org/doc/stable/user/basics.rec.html"
+      ],
+      "id": "daa8d1ff"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

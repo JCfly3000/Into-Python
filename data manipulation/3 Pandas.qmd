@@ -29,9 +29,14 @@ import pandas as pd
 print('pandas version', pd.__version__)
 ```
 
+Show package's dependencies
 ```{python}
 import os
 #os.system('pip show pandas')
+from pip._vendor import pkg_resources
+_package_name = 'pandas'
+_package = pkg_resources.working_set.by_key[_package_name]
+print([str(r) for r in _package.requires()])  # retrieve deps from setup.py
 ```
 
 
@@ -39,17 +44,10 @@ import os
 ## load package
 ```{python}
 import pandas as pd
+from pandasql import sqldf
 import numpy as np
 import matplotlib.pylab as plt
 import seaborn as sns
-
-# from siuba.data import mtcars,penguins
-# 
-# from siuba.siu import call
-# from siuba import _, mutate, filter, group_by, summarize,show_query
-# from siuba import *
-# 
-# from siuba.data import mtcars,penguins
 ```
 
 
@@ -63,11 +61,26 @@ mtcars=mtcars
 mtcars=r.mtcars
 ```
 
+```{python}
+mtcars.head(5)
+```
+
+
+row name to column
+```{python}
+mtcars.index.name = 'newhead'
+mtcars.reset_index(inplace=True)
+```
+
+```{python}
+mtcars.head(5)
+```
+
 
 ```{python}
 small_mtcars = mtcars[["cyl", "mpg",'hp']]
-
 small_mtcars=small_mtcars.head(5)
+small_mtcars
 ```
 
 
@@ -173,6 +186,7 @@ new_data
 ```{python}
 mtcars[(mtcars['gear'] ==4)]
 ```
+
 other way:
 ```{python}
 mtcars.query('gear==4')
@@ -256,20 +270,17 @@ data3
 
 ### append by column
 
-```{python}
-# not available in siuba yet
-#from siuba import bind_columns
-```
+
 
 ```{python}
 # using pandas
-# data1=small_mtcars>>select(_.mpg)
-# 
-# data2=small_mtcars>>select(_.cyl)
-# 
-# data3=pd.concat([data1, data2],axis=1)
-# 
-# data3
+data1=small_mtcars[["cyl", "mpg"]]
+
+data2=small_mtcars[['hp']]
+
+data3=pd.concat([data1, data2], axis=1).reindex(data2.index)
+
+data3
 ```
 
 
@@ -376,22 +387,9 @@ result
 ```
 
 
-### anti join
-
-keep data in left which not in right
-```{python}
-#in siuba
-# result=lhs >> anti_join(_, rhs, on="id")
-# result
-```
 
 
-keep data in right which not in left
-```{python}
-#in siuba
-# result=rhs >> anti_join(_, lhs, on="id")
-# result
-```
+
 
 
 ## Reshape tables
@@ -441,46 +439,20 @@ df
 
 ### upper case
 
-```{python}
-#df>> mutate(text_new=_.text.str.upper())
-```
+
 ### lower case
 
-```{python}
-#df>> mutate(text_new=_.text.str.lower())
-```
 ### match
 
-```{python}
-# df>> mutate(text_new1=if_else(_.text== "abc",'T','F')
-#             ,text_new2=if_else(_.text.str.startswith("a"),'T','F')
-#             ,text_new3=if_else(_.text.str.endswith("c"),'T','F')
-#             ,text_new4=if_else(_.text.str.contains("4"),'T','F')
-# 
-# )
 
-```
 
 ###  concatenation
 
-```{python}
-# df>> mutate(text_new1=_.text+' is '+_.text
-# )
-
-```
 
 
 ### replace
 
-Use .str.replace(..., regex=True) with regular expressions to replace patterns in strings.
 
-For example, the code below uses "p.", where . is called a wildcard–which matches any character.
-
-```{python}
-# df>> mutate(text_new1=_.text.str.replace("a.", "XX", regex=True)
-# )
-
-```
 ### extract
 
 Use str.extract() with a regular expression to pull out a matching piece of text.
@@ -491,12 +463,6 @@ For example the regular expression “^(.*) ” contains the following pieces:
 
 - .* has a . which matches anything, and * which modifies it to apply 0 or more times.
 
-```{python}
-# df>> mutate(text_new1=_.text.str.extract("a(.*)")
-#             ,text_new2=_.text.str.extract("(.*)c")
-# )
-
-```
 
 
 
@@ -512,17 +478,7 @@ df_dates
 ```
 
 
-```{python}
-# from datetime import datetime
-# 
-# df_date=df_dates>>mutate(month=_.dates.dt.month_name()
-#                   ,date_format_raw = call(pd.to_datetime, _.raw)
-#                   ,date_format_raw_year=_.date_format_raw.dt.year
-# 
-# )
-# 
-# df_date
-```
+
 
 
 ```{python}

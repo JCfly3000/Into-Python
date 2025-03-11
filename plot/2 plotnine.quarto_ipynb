@@ -1,0 +1,673 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"plotnine chart\"\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "  eval: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/logo-540.png){width=\"300\"}\n",
+        "\n",
+        "plotnine is an implementation of a grammar of graphics in Python based on ggplot2.\n"
+      ],
+      "id": "61733576"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotnine\n",
+        "print(plotnine.__version__)"
+      ],
+      "id": "5b9203aa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "\n",
+        "print(plotnine.__version__)"
+      ],
+      "id": "7d5384e3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "import seaborn as sns\n",
+        "import pandas as pd\n",
+        "\n",
+        "\n",
+        "# Apply the default theme\n",
+        "\n",
+        "\n",
+        "# Load an example dataset\n",
+        "tips = sns.load_dataset(\"tips\")\n",
+        "tips.head()"
+      ],
+      "id": "fe3c1555",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Scatter Plot"
+      ],
+      "id": "eccf8ab5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "084f6c81",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "af47811e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point(aes(color=\"sex\"))\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "0334db1e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## size by group"
+      ],
+      "id": "4eb8f357"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\",size=\"size\")+ geom_point()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "6c7256ca",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# line Plot\n"
+      ],
+      "id": "4de92cee"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones= sns.load_dataset(\"dowjones\")\n",
+        "dowjones.head()"
+      ],
+      "id": "401326dd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=dowjones)+aes(x=\"Date\",y=\"Price\")+ geom_line()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "30fe3b40",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: true\n",
+        "import random\n",
+        "from siuba import _, mutate, filter, group_by, summarize,show_query\n",
+        "from siuba import *\n",
+        "\n",
+        "dowjones2=dowjones>>mutate(type='old')\n",
+        "\n",
+        "dowjones3=dowjones>>mutate(Price=_.Price+random.random()*200,type='new')\n",
+        "\n",
+        "dowjones4=pd.concat([dowjones2, dowjones3], ignore_index = True)>> arrange(_.Date)"
+      ],
+      "id": "35a9a6d6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones4.head()"
+      ],
+      "id": "14f8bee9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "eb4644ff"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=dowjones4)+aes(x=\"Date\",y=\"Price\")+ geom_line(aes(color=\"type\"))\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "c81a9f48",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# histogram"
+      ],
+      "id": "03b3383a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\")+ geom_histogram()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "40bc10bb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "0fdee96c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "07bc51c2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# bar chart"
+      ],
+      "id": "47132854"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x='sex',y='tip',fill=\"sex\")+geom_col()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "addebaed",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# box plot"
+      ],
+      "id": "5072e4ff"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x='day',y='tip',fill=\"day\")+geom_boxplot()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "34c3c3d3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "5bdcd419"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x='day',y='tip',fill=\"sex\")+geom_boxplot()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "5c583df7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# strip plot"
+      ],
+      "id": "20543d82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x='day',y='tip')+geom_jitter(width=0.1)\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "0ce9dd10",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## color by group"
+      ],
+      "id": "0449a56d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x='day',y='tip',fill=\"sex\")+geom_jitter(position=position_jitterdodge())\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "90cba7eb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Facet plot"
+      ],
+      "id": "0e26af6e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point(aes(color=\"sex\"))\n",
+        "    + facet_wrap(\"day\")\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "0d663ef0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "make 3 plot per row"
+      ],
+      "id": "a52eb429"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point(aes(color=\"sex\"))\n",
+        "    + facet_wrap(\"day\",ncol = 3)\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "2f06489f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# title,size, x y names\n",
+        "\n",
+        "## add title"
+      ],
+      "id": "0d77c02e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ ggtitle(\"tip by sex\")\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "91e0ce9b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## adjust size"
+      ],
+      "id": "5fb0f69d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ ggtitle(\"tip by sex\")+ theme(figure_size=(4, 3)) \n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "53b898b7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## change x y name"
+      ],
+      "id": "edf264ec"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",y=\"total_bill\")+ geom_point()+ scale_x_continuous(name=\"new x name\")+ scale_y_continuous(name=\"new y name\")\n",
+        ")\n",
+        "\n",
+        "p\n"
+      ],
+      "id": "286e7b50",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# applying themes\n",
+        "\n",
+        "find all build in themes in https://github.com/has2k1/plotnine/tree/main/plotnine/themes\n",
+        "\n",
+        "::: {.panel-tabset .nav-pills}\n",
+        "\n",
+        "## xkcd\n"
+      ],
+      "id": "0c72905d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ theme_xkcd()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "e4662339",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## theme_538\n"
+      ],
+      "id": "8b0a78fc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ theme_538()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "f9e49554",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## theme_dark\n"
+      ],
+      "id": "8dc65b50"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ theme_dark()\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "6d6d5426",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: \n",
+        "\n",
+        "# Save plot"
+      ],
+      "id": "bd44a02e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p=(\n",
+        "    ggplot(data=tips)+aes(x=\"tip\",fill = 'sex')+ geom_histogram(position = 'dodge')+ theme_dark()\n",
+        ")\n",
+        "\n",
+        "p.save(filename = 'test3.png')"
+      ],
+      "id": "102e9603",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Animation plot"
+      ],
+      "id": "dd697e8f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine.animation import PlotnineAnimation"
+      ],
+      "id": "bf521d69",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| output: false \n",
+        "\n",
+        "new_data=dowjones4.sample(50, random_state=42)\n",
+        "\n",
+        "new_data=new_data.sort_values(by=['Date'], ascending=True)\n",
+        "\n",
+        "#write a function that creates all the plots\n",
+        "def plot(x):\n",
+        "    df2 = dowjones4.query('Date <= @x')\n",
+        "\n",
+        "    p = (ggplot(df2,\n",
+        "               aes(x = 'Date', y = 'Price'))\n",
+        "         + geom_line(aes(color=\"type\"))\n",
+        "         # Specify the limits for the x and y aesthetics\n",
+        "         #+ scale_x_continuous(limits=(dowjones4.Date.min(), dowjones4.Date.max()))\n",
+        "         #+ scale_y_continuous(limits=(dowjones4.Price.min(), dowjones4.Price.max()))\n",
+        "         + theme(subplots_adjust={'right': 0.85}) # Make space for the legend\n",
+        "        )\n",
+        "    return(p)\n",
+        "\n",
+        "\n",
+        "plots = (plot(i) for i in (new_data[\"Date\"]))\n"
+      ],
+      "id": "42eabc66",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from matplotlib import rc\n",
+        "\n",
+        "rc(\"animation\", html=\"html5\")\n",
+        "\n",
+        "#create the animation\n",
+        "animation = PlotnineAnimation(plots, interval=300, repeat_delay=500)\n",
+        "animation"
+      ],
+      "id": "7f338044",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:\n",
+        "\n",
+        "https://plotnine.org/"
+      ],
+      "id": "2fb6c030"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

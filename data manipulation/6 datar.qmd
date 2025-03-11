@@ -1,0 +1,56 @@
+---
+title: "Data manipulation with datar"
+author: "Tony Duan"
+
+execute:
+  warning: false
+  error: false
+  eval: false
+   
+format:
+  html:
+    toc: true
+    toc-location: right
+    code-fold: show
+    code-tools: true
+    number-sections: true
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+---
+
+
+
+```{bash}
+#| eval: false
+pip install -U datar
+pip install -U datar-numpy
+
+```
+
+# import pacakge
+
+
+```{python}
+from datar import f
+from datar.dplyr import mutate, filter_, if_else
+from datar.tibble import tibble
+from datar.data import mtcars
+```
+
+```{python}
+df = tibble(
+    x=range(4),  # or c[:4]  (from datar.base import c)
+    y=['zero', 'one', 'two', 'three']
+)
+```
+
+```{python}
+dat = group_by(mtcars, f.cyl)
+```
+
+
+
+
+# reference:
+
+https://github.com/pwwang/datar/
