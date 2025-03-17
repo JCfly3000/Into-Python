@@ -4,7 +4,7 @@
     "href": "data manipulation/3 Pandas.html",
     "title": "Data manipulation with Pandas",
     "section": "",
-    "text": "pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.\nCode\nimport pandas as pd\nprint('pandas version', pd.__version__)\n\n\npandas version 2.2.3\nShow package’s dependencies ::: {.cell}\n:::",
+    "text": "because siuba only work with python 3.11 for now\n\n\nCode\nSys.setenv(RETICULATE_PYTHON = \"/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11\")\nlibrary(reticulate)\nuse_python(\"/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11\")\n\n\n\n\nCode\nrepl_python()\n\n\nexit\n\n\n\n\nCode\nfrom platform import python_version\nprint(python_version())\n\n\n3.11.9\n\n\n\npandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.\nShow package’s dependencies\n\n\nCode\nimport os\n#os.system('pip show pandas')\nfrom pip._vendor import pkg_resources\n_package_name = 'pandas'\n_package = pkg_resources.working_set.by_key[_package_name]\nprint([str(r) for r in _package.requires()])  # retrieve deps from setup.py\n\n\n['python-dateutil&gt;=2.8.2', 'pytz&gt;=2020.1', 'tzdata&gt;=2022.1', 'numpy&gt;=1.21.0; python_version &gt;= \"3.10\"', 'numpy&gt;=1.23.2; python_version &gt;= \"3.11\"']",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -25,8 +25,8 @@
     "objectID": "data manipulation/3 Pandas.html#get-info-on-the-data",
     "href": "data manipulation/3 Pandas.html#get-info-on-the-data",
     "title": "Data manipulation with Pandas",
-    "section": "0.2 get info on the data",
-    "text": "0.2 get info on the data\n\n\nCode\nsmall_mtcars.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 5 entries, 0 to 4\nData columns (total 3 columns):\n #   Column  Non-Null Count  Dtype  \n---  ------  --------------  -----  \n 0   cyl     5 non-null      float64\n 1   mpg     5 non-null      float64\n 2   hp      5 non-null      float64\ndtypes: float64(3)\nmemory usage: 252.0 bytes",
+    "section": "3.1 get info on the data",
+    "text": "3.1 get info on the data\n\n\nCode\nsmall_mtcars.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 5 entries, 0 to 4\nData columns (total 3 columns):\n #   Column  Non-Null Count  Dtype  \n---  ------  --------------  -----  \n 0   cyl     5 non-null      float64\n 1   mpg     5 non-null      float64\n 2   hp      5 non-null      float64\ndtypes: float64(3)\nmemory usage: 252.0 bytes",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -47,8 +47,8 @@
     "objectID": "data manipulation/3 Pandas.html#drop-column",
     "href": "data manipulation/3 Pandas.html#drop-column",
     "title": "Data manipulation with Pandas",
-    "section": "0.4 drop column",
-    "text": "0.4 drop column\n\n\nCode\nsmall_mtcars.drop('cyl', axis=1)\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0",
+    "section": "4.3 drop column",
+    "text": "4.3 drop column\n\n\nCode\nsmall_mtcars.drop('cyl', axis=1)\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -58,8 +58,8 @@
     "objectID": "data manipulation/3 Pandas.html#renaming-column",
     "href": "data manipulation/3 Pandas.html#renaming-column",
     "title": "Data manipulation with Pandas",
-    "section": "0.5 Renaming column",
-    "text": "0.5 Renaming column\n\n\nCode\nsmall_mtcars.rename(columns={'mpg':\"new_name_mpg\", 'cyl':'new_name_cyl'})\n\n\n   new_name_cyl  new_name_mpg     hp\n0           6.0          21.0  110.0\n1           6.0          21.0  110.0\n2           4.0          22.8   93.0\n3           6.0          21.4  110.0\n4           8.0          18.7  175.0",
+    "section": "4.4 Renaming column",
+    "text": "4.4 Renaming column\n\n\nCode\nsmall_mtcars.rename(columns={'mpg':\"new_name_mpg\", 'cyl':'new_name_cyl'})\n\n\n   new_name_cyl  new_name_mpg     hp\n0           6.0          21.0  110.0\n1           6.0          21.0  110.0\n2           4.0          22.8   93.0\n3           6.0          21.4  110.0\n4           8.0          18.7  175.0",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -69,8 +69,8 @@
     "objectID": "data manipulation/3 Pandas.html#create-column",
     "href": "data manipulation/3 Pandas.html#create-column",
     "title": "Data manipulation with Pandas",
-    "section": "0.6 Create column",
-    "text": "0.6 Create column\n\n0.6.1 Mutate\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\n\nsmall_mtcars['mpg3']  = np.where(small_mtcars['mpg']&gt; 20, \"long\", \"short\")\n\n\nsmall_mtcars['mpg4'] =np.where(small_mtcars[\"mpg\"]&lt;19, \"short\",\n                   np.where(small_mtcars[\"mpg\"]&lt;=22, \"Medium\",\n                   np.where(small_mtcars[\"mpg\"]&gt;22, \"long\",\"else\")))\n\n\nsmall_mtcars\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n2  4.0  22.8   93.0  23.8   long    long\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short\n\n\n\n\n0.6.2 Transmute,create column and only keep this column\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\nnew_data=small_mtcars[['mpg2']]\n\nnew_data\n\n\n   mpg2\n0  22.0\n1  22.0\n2  23.8\n3  22.4\n4  19.7",
+    "section": "4.5 Create column",
+    "text": "4.5 Create column\n\n4.5.1 Mutate\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\n\nsmall_mtcars['mpg3']  = np.where(small_mtcars['mpg']&gt; 20, \"long\", \"short\")\n\n\nsmall_mtcars['mpg4'] =np.where(small_mtcars[\"mpg\"]&lt;19, \"short\",\n                   np.where(small_mtcars[\"mpg\"]&lt;=22, \"Medium\",\n                   np.where(small_mtcars[\"mpg\"]&gt;22, \"long\",\"else\")))\n\n\nsmall_mtcars\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n2  4.0  22.8   93.0  23.8   long    long\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short\n\n\n\n\n4.5.2 Transmute,create column and only keep this column\n\n\nCode\nsmall_mtcars['mpg2'] = small_mtcars['mpg']+1\n\nnew_data=small_mtcars[['mpg2']]\n\nnew_data\n\n\n   mpg2\n0  22.0\n1  22.0\n2  23.8\n3  22.4\n4  19.7",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -80,8 +80,8 @@
     "objectID": "data manipulation/3 Pandas.html#filter-rows",
     "href": "data manipulation/3 Pandas.html#filter-rows",
     "title": "Data manipulation with Pandas",
-    "section": "0.7 Filter rows",
-    "text": "0.7 Filter rows\n\n\nCode\nmtcars[(mtcars['gear'] ==4)]\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2       Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n7        Merc 240D  24.4  4.0  146.7   62.0  ...  20.00  1.0  0.0   4.0   2.0\n8         Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n17        Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n18     Honda Civic  30.4  4.0   75.7   52.0  ...  18.52  1.0  1.0   4.0   2.0\n19  Toyota Corolla  33.9  4.0   71.1   65.0  ...  19.90  1.0  1.0   4.0   1.0\n25       Fiat X1-9  27.3  4.0   79.0   66.0  ...  18.90  1.0  1.0   4.0   1.0\n31      Volvo 142E  21.4  4.0  121.0  109.0  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('gear==4')\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2       Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n7        Merc 240D  24.4  4.0  146.7   62.0  ...  20.00  1.0  0.0   4.0   2.0\n8         Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n17        Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n18     Honda Civic  30.4  4.0   75.7   52.0  ...  18.52  1.0  1.0   4.0   2.0\n19  Toyota Corolla  33.9  4.0   71.1   65.0  ...  19.90  1.0  1.0   4.0   1.0\n25       Fiat X1-9  27.3  4.0   79.0   66.0  ...  18.90  1.0  1.0   4.0   1.0\n31      Volvo 142E  21.4  4.0  121.0  109.0  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 12 columns]\n\n:::\n\n0.7.1 Filters with AND conditions\n\n\nCode\nmtcars[(mtcars['cyl'] &gt;4)&(mtcars['gear'] ==5) ]\n\n\n           newhead   mpg  cyl   disp     hp  ...  qsec   vs   am  gear  carb\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.5  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.5  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.6  0.0  1.0   5.0   8.0\n\n[3 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl&gt;4 and gear==5')\n\n\n           newhead   mpg  cyl   disp     hp  ...  qsec   vs   am  gear  carb\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.5  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.5  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.6  0.0  1.0   5.0   8.0\n\n[3 rows x 12 columns]\n\n:::\n\n\n0.7.2 Filters with OR conditions\n\n\nCode\nmtcars[(mtcars['cyl'] ==6) |(mtcars['gear'] ==5) ]\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n3   Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n5          Valiant  18.1  6.0  225.0  105.0  ...  20.22  1.0  0.0   3.0   1.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n26   Porsche 914-2  26.0  4.0  120.3   91.0  ...  16.70  0.0  1.0   5.0   2.0\n27    Lotus Europa  30.4  4.0   95.1  113.0  ...  16.90  1.0  1.0   5.0   2.0\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.50  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl==6 or gear==5')\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n3   Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n5          Valiant  18.1  6.0  225.0  105.0  ...  20.22  1.0  0.0   3.0   1.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n26   Porsche 914-2  26.0  4.0  120.3   91.0  ...  16.70  0.0  1.0   5.0   2.0\n27    Lotus Europa  30.4  4.0   95.1  113.0  ...  16.90  1.0  1.0   5.0   2.0\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.50  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 12 columns]\n\n:::\n\n\n0.7.3 filter row with index\n\n0.7.3.1 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[1 rows x 12 columns]\n\n\n\n\n0.7.3.2 1 and 5tj rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0          Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[2 rows x 12 columns]\n\n\n\n\n0.7.3.3 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n          newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0       Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1   Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2      Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3  Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n\n[4 rows x 12 columns]\n\n\n\n\n0.7.3.4 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)\n\n\n                newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n29         Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n15  Lincoln Continental  10.4  8.0  460.0  215.0  ...  17.82  0.0  0.0   3.0   4.0\n24     Pontiac Firebird  19.2  8.0  400.0  175.0  ...  17.05  0.0  0.0   3.0   2.0\n17             Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n8              Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n\n[5 rows x 12 columns]",
+    "section": "8.1 Filter rows",
+    "text": "8.1 Filter rows\n\n\nCode\nmtcars[(mtcars['gear'] ==4)]\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2       Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n7        Merc 240D  24.4  4.0  146.7   62.0  ...  20.00  1.0  0.0   4.0   2.0\n8         Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n17        Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n18     Honda Civic  30.4  4.0   75.7   52.0  ...  18.52  1.0  1.0   4.0   2.0\n19  Toyota Corolla  33.9  4.0   71.1   65.0  ...  19.90  1.0  1.0   4.0   1.0\n25       Fiat X1-9  27.3  4.0   79.0   66.0  ...  18.90  1.0  1.0   4.0   1.0\n31      Volvo 142E  21.4  4.0  121.0  109.0  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('gear==4')\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2       Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n7        Merc 240D  24.4  4.0  146.7   62.0  ...  20.00  1.0  0.0   4.0   2.0\n8         Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n17        Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n18     Honda Civic  30.4  4.0   75.7   52.0  ...  18.52  1.0  1.0   4.0   2.0\n19  Toyota Corolla  33.9  4.0   71.1   65.0  ...  19.90  1.0  1.0   4.0   1.0\n25       Fiat X1-9  27.3  4.0   79.0   66.0  ...  18.90  1.0  1.0   4.0   1.0\n31      Volvo 142E  21.4  4.0  121.0  109.0  ...  18.60  1.0  1.0   4.0   2.0\n\n[12 rows x 12 columns]\n\n:::\n\n8.1.1 Filters with AND conditions\n\n\nCode\nmtcars[(mtcars['cyl'] &gt;4)&(mtcars['gear'] ==5) ]\n\n\n           newhead   mpg  cyl   disp     hp  ...  qsec   vs   am  gear  carb\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.5  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.5  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.6  0.0  1.0   5.0   8.0\n\n[3 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl&gt;4 and gear==5')\n\n\n           newhead   mpg  cyl   disp     hp  ...  qsec   vs   am  gear  carb\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.5  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.5  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.6  0.0  1.0   5.0   8.0\n\n[3 rows x 12 columns]\n\n:::\n\n\n8.1.2 Filters with OR conditions\n\n\nCode\nmtcars[(mtcars['cyl'] ==6) |(mtcars['gear'] ==5) ]\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n3   Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n5          Valiant  18.1  6.0  225.0  105.0  ...  20.22  1.0  0.0   3.0   1.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n26   Porsche 914-2  26.0  4.0  120.3   91.0  ...  16.70  0.0  1.0   5.0   2.0\n27    Lotus Europa  30.4  4.0   95.1  113.0  ...  16.90  1.0  1.0   5.0   2.0\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.50  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 12 columns]\n\n\nother way: ::: {.cell}\n\nCode\nmtcars.query('cyl==6 or gear==5')\n\n\n           newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0        Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1    Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n3   Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n5          Valiant  18.1  6.0  225.0  105.0  ...  20.22  1.0  0.0   3.0   1.0\n9         Merc 280  19.2  6.0  167.6  123.0  ...  18.30  1.0  0.0   4.0   4.0\n10       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n26   Porsche 914-2  26.0  4.0  120.3   91.0  ...  16.70  0.0  1.0   5.0   2.0\n27    Lotus Europa  30.4  4.0   95.1  113.0  ...  16.90  1.0  1.0   5.0   2.0\n28  Ford Pantera L  15.8  8.0  351.0  264.0  ...  14.50  0.0  1.0   5.0   4.0\n29    Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n30   Maserati Bora  15.0  8.0  301.0  335.0  ...  14.60  0.0  1.0   5.0   8.0\n\n[11 rows x 12 columns]\n\n:::\n\n\n8.1.3 filter row with index\n\n8.1.3.1 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[1 rows x 12 columns]\n\n\n\n\n8.1.3.2 1 and 5tj rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n             newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0          Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n4  Hornet Sportabout  18.7  8.0  360.0  175.0  ...  17.02  0.0  0.0   3.0   2.0\n\n[2 rows x 12 columns]\n\n\n\n\n8.1.3.3 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n          newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0       Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1   Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2      Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3  Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n\n[4 rows x 12 columns]\n\n\n\n\n8.1.3.4 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)\n\n\n                newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n29         Ferrari Dino  19.7  6.0  145.0  175.0  ...  15.50  0.0  1.0   5.0   6.0\n15  Lincoln Continental  10.4  8.0  460.0  215.0  ...  17.82  0.0  0.0   3.0   4.0\n24     Pontiac Firebird  19.2  8.0  400.0  175.0  ...  17.05  0.0  0.0   3.0   2.0\n17             Fiat 128  32.4  4.0   78.7   66.0  ...  19.47  1.0  1.0   4.0   1.0\n8              Merc 230  22.8  4.0  140.8   95.0  ...  22.90  1.0  0.0   4.0   2.0\n\n[5 rows x 12 columns]",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -91,8 +91,8 @@
     "objectID": "data manipulation/3 Pandas.html#append",
     "href": "data manipulation/3 Pandas.html#append",
     "title": "Data manipulation with Pandas",
-    "section": "0.8 Append",
-    "text": "0.8 Append\n\n0.8.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n          newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0       Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1   Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2      Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3  Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n4       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n\n[5 rows x 12 columns]\n\n\n\n\n0.8.2 append by column\n\n\nCode\n# using pandas\ndata1=small_mtcars[[\"cyl\", \"mpg\"]]\n\ndata2=small_mtcars[['hp']]\n\ndata3=pd.concat([data1, data2], axis=1).reindex(data2.index)\n\ndata3\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\n\n\n0.8.3 Dropping NA values\n\n\n0.8.4 keep NA values",
+    "section": "8.2 Append",
+    "text": "8.2 Append\n\n8.2.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n          newhead   mpg  cyl   disp     hp  ...   qsec   vs   am  gear  carb\n0       Mazda RX4  21.0  6.0  160.0  110.0  ...  16.46  0.0  1.0   4.0   4.0\n1   Mazda RX4 Wag  21.0  6.0  160.0  110.0  ...  17.02  0.0  1.0   4.0   4.0\n2      Datsun 710  22.8  4.0  108.0   93.0  ...  18.61  1.0  1.0   4.0   1.0\n3  Hornet 4 Drive  21.4  6.0  258.0  110.0  ...  19.44  1.0  0.0   3.0   1.0\n4       Merc 280C  17.8  6.0  167.6  123.0  ...  18.90  1.0  0.0   4.0   4.0\n\n[5 rows x 12 columns]\n\n\n\n\n8.2.2 append by column\n\n\nCode\n# using pandas\ndata1=small_mtcars[[\"cyl\", \"mpg\"]]\n\ndata2=small_mtcars[['hp']]\n\ndata3=pd.concat([data1, data2], axis=1).reindex(data2.index)\n\ndata3\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\n\n\n8.2.3 Dropping NA values\n\n\n8.2.4 keep NA values",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -102,8 +102,8 @@
     "objectID": "data manipulation/3 Pandas.html#group-by",
     "href": "data manipulation/3 Pandas.html#group-by",
     "title": "Data manipulation with Pandas",
-    "section": "0.9 group by",
-    "text": "0.9 group by\n\n0.9.1 average,min,max,sum\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].mean()\n\n\ncyl\n4.0     82.636364\n6.0    122.285714\n8.0    209.214286\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].min()\n\n\ncyl\n4.0     52.0\n6.0    105.0\n8.0    150.0\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].max()\n\n\ncyl\n4.0    113.0\n6.0    175.0\n8.0    335.0\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].sum()\n\n\ncyl\n4.0     909.0\n6.0     856.0\n8.0    2929.0\nName: hp, dtype: float64\n\n\n\n\n0.9.2 count record and count distinct record\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].count()\n\n\ncyl\n4.0    11\n6.0     7\n8.0    14\nName: hp, dtype: int64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].nunique()\n\n\ncyl\n4.0    10\n6.0     4\n8.0     9\nName: hp, dtype: int64",
+    "section": "8.3 group by",
+    "text": "8.3 group by\n\n8.3.1 average,min,max,sum\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].mean()\n\n\ncyl\n4.0     82.636364\n6.0    122.285714\n8.0    209.214286\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].min()\n\n\ncyl\n4.0     52.0\n6.0    105.0\n8.0    150.0\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].max()\n\n\ncyl\n4.0    113.0\n6.0    175.0\n8.0    335.0\nName: hp, dtype: float64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].sum()\n\n\ncyl\n4.0     909.0\n6.0     856.0\n8.0    2929.0\nName: hp, dtype: float64\n\n\n\n\n8.3.2 count record and count distinct record\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].count()\n\n\ncyl\n4.0    11\n6.0     7\n8.0    14\nName: hp, dtype: int64\n\n\n\n\nCode\nmtcars.groupby(\"cyl\")[\"hp\"].nunique()\n\n\ncyl\n4.0    10\n6.0     4\n8.0     9\nName: hp, dtype: int64",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -113,8 +113,8 @@
     "objectID": "data manipulation/3 Pandas.html#order-rows",
     "href": "data manipulation/3 Pandas.html#order-rows",
     "title": "Data manipulation with Pandas",
-    "section": "0.10 order rows",
-    "text": "0.10 order rows\n\n\nCode\nsmall_mtcars.sort_values('hp')\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n2  4.0  22.8   93.0  23.8   long    long\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short\n\n\n\n0.10.1 Sort in descending order\n\n\nCode\nsmall_mtcars.sort_values('hp',ascending=False)\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n4  8.0  18.7  175.0  19.7  short   short\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n2  4.0  22.8   93.0  23.8   long    long\n\n\n\n\n0.10.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars.sort_values(by=['cyl','mpg'])\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n2  4.0  22.8   93.0  23.8   long    long\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short",
+    "section": "8.4 order rows",
+    "text": "8.4 order rows\n\n\nCode\nsmall_mtcars.sort_values('hp')\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n2  4.0  22.8   93.0  23.8   long    long\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short\n\n\n\n8.4.1 Sort in descending order\n\n\nCode\nsmall_mtcars.sort_values('hp',ascending=False)\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n4  8.0  18.7  175.0  19.7  short   short\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n2  4.0  22.8   93.0  23.8   long    long\n\n\n\n\n8.4.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars.sort_values(by=['cyl','mpg'])\n\n\n   cyl   mpg     hp  mpg2   mpg3    mpg4\n2  4.0  22.8   93.0  23.8   long    long\n0  6.0  21.0  110.0  22.0   long  Medium\n1  6.0  21.0  110.0  22.0   long  Medium\n3  6.0  21.4  110.0  22.4   long  Medium\n4  8.0  18.7  175.0  19.7  short   short",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -124,8 +124,8 @@
     "objectID": "data manipulation/3 Pandas.html#join",
     "href": "data manipulation/3 Pandas.html#join",
     "title": "Data manipulation with Pandas",
-    "section": "0.11 join",
-    "text": "0.11 join\n\n\nCode\n\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n   id    val\n0   1  lhs.1\n1   2  lhs.2\n2   3  lhs.3\n\n\n\n\nCode\nrhs\n\n\n   id    val\n0   1  rhs.1\n1   2  rhs.2\n2   4  rhs.3\n\n\n\n0.11.1 inner_join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='inner')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n\n\n\n\n0.11.2 full join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='outer')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n3   4    NaN  rhs.3\n\n\n\n\n0.11.3 left join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='left')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN",
+    "section": "8.5 join",
+    "text": "8.5 join\n\n\nCode\n\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n   id    val\n0   1  lhs.1\n1   2  lhs.2\n2   3  lhs.3\n\n\n\n\nCode\nrhs\n\n\n   id    val\n0   1  rhs.1\n1   2  rhs.2\n2   4  rhs.3\n\n\n\n8.5.1 inner_join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='inner')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n\n\n\n\n8.5.2 full join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='outer')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN\n3   4    NaN  rhs.3\n\n\n\n\n8.5.3 left join\n\n\nCode\nresult=pd.merge(lhs, rhs, on='id', how='left')\nresult\n\n\n   id  val_x  val_y\n0   1  lhs.1  rhs.1\n1   2  lhs.2  rhs.2\n2   3  lhs.3    NaN",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -135,8 +135,8 @@
     "objectID": "data manipulation/3 Pandas.html#reshape-tables",
     "href": "data manipulation/3 Pandas.html#reshape-tables",
     "title": "Data manipulation with Pandas",
-    "section": "0.12 Reshape tables",
-    "text": "0.12 Reshape tables\n\n\nCode\ncosts = pd.DataFrame({\n    'id': [1,2],\n    'price_x': [.1, .2],\n    'price_y': [.4, .5],\n    'price_z': [.7, .8]\n})\n\ncosts\n\n\n   id  price_x  price_y  price_z\n0   1      0.1      0.4      0.7\n1   2      0.2      0.5      0.8\n\n\n\n0.12.1 Gather data long(wide to long)\n\n\nCode\n# selecting each variable manually\nlong_date=pd.melt(costs,id_vars=['id'], value_vars=['price_x', 'price_y','price_z'])\n\nlong_date\n\n\n   id variable  value\n0   1  price_x    0.1\n1   2  price_x    0.2\n2   1  price_y    0.4\n3   2  price_y    0.5\n4   1  price_z    0.7\n5   2  price_z    0.8\n\n\nCode\n#costs &gt;&gt; gather('measure', 'value', _.price_x, _.price_y, _.price_z)\n\n\n\n\n0.12.2 Spread data wide (long to wide)\n\n\nCode\nlong_date.pivot(index=\"id\", columns=\"variable\", values=\"value\")\n\n\nvariable  price_x  price_y  price_z\nid                                 \n1             0.1      0.4      0.7\n2             0.2      0.5      0.8",
+    "section": "8.6 Reshape tables",
+    "text": "8.6 Reshape tables\n\n\nCode\ncosts = pd.DataFrame({\n    'id': [1,2],\n    'price_x': [.1, .2],\n    'price_y': [.4, .5],\n    'price_z': [.7, .8]\n})\n\ncosts\n\n\n   id  price_x  price_y  price_z\n0   1      0.1      0.4      0.7\n1   2      0.2      0.5      0.8\n\n\n\n8.6.1 Gather data long(wide to long)\n\n\nCode\n# selecting each variable manually\nlong_date=pd.melt(costs,id_vars=['id'], value_vars=['price_x', 'price_y','price_z'])\n\nlong_date\n\n\n   id variable  value\n0   1  price_x    0.1\n1   2  price_x    0.2\n2   1  price_y    0.4\n3   2  price_y    0.5\n4   1  price_z    0.7\n5   2  price_z    0.8\n\n\nCode\n#costs &gt;&gt; gather('measure', 'value', _.price_x, _.price_y, _.price_z)\n\n\n\n\n8.6.2 Spread data wide (long to wide)\n\n\nCode\nlong_date.pivot(index=\"id\", columns=\"variable\", values=\"value\")\n\n\nvariable  price_x  price_y  price_z\nid                                 \n1             0.1      0.4      0.7\n2             0.2      0.5      0.8",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -146,8 +146,8 @@
     "objectID": "data manipulation/3 Pandas.html#string",
     "href": "data manipulation/3 Pandas.html#string",
     "title": "Data manipulation with Pandas",
-    "section": "0.13 string",
-    "text": "0.13 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n    text  num\n0    abc    3\n1    DDD    4\n2  1243c    7\n3   aeEe    8\n\n\n\n0.13.1 upper case\n\n\n0.13.2 lower case\n\n\n0.13.3 match\n\n\n0.13.4 concatenation\n\n\n0.13.5 replace\n\n\n0.13.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.",
+    "section": "8.7 string",
+    "text": "8.7 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n    text  num\n0    abc    3\n1    DDD    4\n2  1243c    7\n3   aeEe    8\n\n\n\n8.7.1 upper case\n\n\n8.7.2 lower case\n\n\n8.7.3 match\n\n\n8.7.4 concatenation\n\n\n8.7.5 replace\n\n\n8.7.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -157,8 +157,8 @@
     "objectID": "data manipulation/3 Pandas.html#date",
     "href": "data manipulation/3 Pandas.html#date",
     "title": "Data manipulation with Pandas",
-    "section": "0.14 date",
-    "text": "0.14 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n       dates                  raw\n0 2021-01-02  2023-04-05 06:07:08\n1 2021-02-03  2024-05-06 07:08:09\n\n\n\n\nCode\ndf_dates.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2 entries, 0 to 1\nData columns (total 2 columns):\n #   Column  Non-Null Count  Dtype         \n---  ------  --------------  -----         \n 0   dates   2 non-null      datetime64[ns]\n 1   raw     2 non-null      object        \ndtypes: datetime64[ns](1), object(1)\nmemory usage: 164.0+ bytes",
+    "section": "8.8 date",
+    "text": "8.8 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n       dates                  raw\n0 2021-01-02  2023-04-05 06:07:08\n1 2021-02-03  2024-05-06 07:08:09\n\n\n\n\nCode\ndf_dates.info()\n\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2 entries, 0 to 1\nData columns (total 2 columns):\n #   Column  Non-Null Count  Dtype         \n---  ------  --------------  -----         \n 0   dates   2 non-null      datetime64[ns]\n 1   raw     2 non-null      object        \ndtypes: datetime64[ns](1), object(1)\nmemory usage: 164.0+ bytes",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -168,8 +168,8 @@
     "objectID": "data manipulation/3 Pandas.html#dataframe-to-numpy-array",
     "href": "data manipulation/3 Pandas.html#dataframe-to-numpy-array",
     "title": "Data manipulation with Pandas",
-    "section": "0.15 dataframe to numpy array",
-    "text": "0.15 dataframe to numpy array\n\n\nCode\ndf_dates.to_numpy()\n\n\narray([[Timestamp('2021-01-02 00:00:00'), '2023-04-05 06:07:08'],\n       [Timestamp('2021-02-03 00:00:00'), '2024-05-06 07:08:09']],\n      dtype=object)",
+    "section": "8.9 dataframe to numpy array",
+    "text": "8.9 dataframe to numpy array\n\n\nCode\ndf_dates.to_numpy()\n\n\narray([[Timestamp('2021-01-02 00:00:00'), '2023-04-05 06:07:08'],\n       [Timestamp('2021-02-03 00:00:00'), '2024-05-06 07:08:09']],\n      dtype=object)",
     "crumbs": [
       "data manipulation",
       "Data manipulation with Pandas"
@@ -578,7 +578,7 @@
     "href": "intro/0 Basic python.html#check-python-version",
     "title": "Basic Python",
     "section": "1.1 check python version",
-    "text": "1.1 check python version\n\n\nCode\nimport sys\nprint(sys.version)\n\n\n3.13.2 (v3.13.2:4f8bb3947cf, Feb  4 2025, 11:51:10) [Clang 15.0.0 (clang-1500.3.9.4)]",
+    "text": "1.1 check python version\n\n\nCode\nimport sys\nprint(sys.version)\n\n\n3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
     "crumbs": [
       "Intro",
       "Basic Python"
@@ -622,7 +622,7 @@
     "href": "intro/0 Basic python.html#get-all-file-name-under-current-directory",
     "title": "Basic Python",
     "section": "3.2 get all file name under current directory",
-    "text": "3.2 get all file name under current directory\n\n\nCode\nimport os\nos.listdir(os.getcwd()) \n\n\n['.Rhistory',\n 'test_folder',\n '.DS_Store',\n 'images',\n '0 Basic python.qmd',\n 'hotels.csv',\n '.RData',\n '3 statistic Book.qmd',\n '1 Python Book.qmd',\n '2 Data Book.qmd',\n 'data',\n '0 Basic python.quarto_ipynb']",
+    "text": "3.2 get all file name under current directory\n\n\nCode\nimport os\nimport pandas as pd\nnameList=os.listdir(os.getcwd()) \nsize_list=[]\nfor file in (nameList):\n  #print((os.stat(file).st_size)/1000000)\n  size_list.append((os.stat(file).st_size)/1000000)\n  \n\nfile_size=pd.DataFrame(list(zip(nameList, size_list)),\ncolumns=['file','size_MB'])\nfile_size  \n\n\n\n\n\n\n\n\n\nfile\nsize_MB\n\n\n\n\n0\n.Rhistory\n0.002805\n\n\n1\ntest_folder\n0.000064\n\n\n2\n.DS_Store\n0.008196\n\n\n3\nimages\n0.000960\n\n\n4\n0 Basic python.qmd\n0.004885\n\n\n5\nhotels.csv\n16.855599\n\n\n6\n.RData\n0.002595\n\n\n7\n3 statistic Book.qmd\n0.000453\n\n\n8\n1 Python Book.qmd\n0.000644\n\n\n9\n2 Data Book.qmd\n0.001405\n\n\n10\ndata\n0.000096\n\n\n11\n0 Basic python.quarto_ipynb\n0.016782",
     "crumbs": [
       "Intro",
       "Basic Python"
@@ -633,7 +633,7 @@
     "href": "intro/0 Basic python.html#get-file-info",
     "title": "Basic Python",
     "section": "3.3 get file info",
-    "text": "3.3 get file info\n\n\nCode\na=os.stat('3 statistic Book.qmd')\na\n\n\nos.stat_result(st_mode=33188, st_ino=69773616, st_dev=16777229, st_nlink=1, st_uid=501, st_gid=20, st_size=453, st_atime=1740969674, st_mtime=1712419159, st_ctime=1740969673)\n\n\nshow st_atime\n\n\nCode\nimport datetime as dt\n#a.st_atime\ndt.date.fromtimestamp(a.st_atime).strftime('%Y%m%d')\n\n\n'20250303'",
+    "text": "3.3 get file info\n\n\nCode\nimport os\na=os.stat('3 statistic Book.qmd')\na\n\n\nos.stat_result(st_mode=33188, st_ino=69773616, st_dev=16777234, st_nlink=1, st_uid=501, st_gid=20, st_size=453, st_atime=1741980776, st_mtime=1712419159, st_ctime=1740969673)\n\n\nshow st_atime\n\n\nCode\nimport datetime as dt\n#a.st_atime\ndt.date.fromtimestamp(a.st_atime).strftime('%Y%m%d')\n\n\n'20250315'",
     "crumbs": [
       "Intro",
       "Basic Python"
@@ -809,7 +809,7 @@
     "href": "intro/0 Basic python.html#check-all-package-version",
     "title": "Basic Python",
     "section": "8.3 check all package version",
-    "text": "8.3 check all package version\n\n\nCode\nimport os\nos.system('pip list')\n\n\nPackage                   Version\n------------------------- --------------\nanyio                     4.8.0\nappnope                   0.1.4\nargon2-cffi               23.1.0\nargon2-cffi-bindings      21.2.0\narrow                     1.3.0\nasttokens                 3.0.0\nasync-lru                 2.0.4\nattrs                     25.1.0\nbabel                     2.17.0\nbeautifulsoup4            4.13.3\nbleach                    6.2.0\ncertifi                   2025.1.31\ncffi                      1.17.1\ncharset-normalizer        3.4.1\ncomm                      0.2.2\ncontourpy                 1.3.1\ncycler                    0.12.1\ndebugpy                   1.8.12\ndecorator                 5.2.1\ndefusedxml                0.7.1\nexecuting                 2.2.0\nfastjsonschema            2.21.1\nfonttools                 4.56.0\nfqdn                      1.5.1\nh11                       0.14.0\nhttpcore                  1.0.7\nhttpx                     0.28.1\nidna                      3.10\nipykernel                 6.29.5\nipython                   9.0.0\nipython_pygments_lexers   1.1.1\nipywidgets                8.1.5\nisoduration               20.11.0\njedi                      0.19.2\nJinja2                    3.1.5\njson5                     0.10.0\njsonpointer               3.0.0\njsonschema                4.23.0\njsonschema-specifications 2024.10.1\njupyter                   1.1.1\njupyter_client            8.6.3\njupyter-console           6.6.3\njupyter_core              5.7.2\njupyter-events            0.12.0\njupyter-lsp               2.2.5\njupyter_server            2.15.0\njupyter_server_terminals  0.5.3\njupyterlab                4.3.5\njupyterlab_pygments       0.3.0\njupyterlab_server         2.27.3\njupyterlab_widgets        3.0.13\nkiwisolver                1.4.8\nMarkupSafe                3.0.2\nmatplotlib                3.10.1\nmatplotlib-inline         0.1.7\nmistune                   3.1.2\nmizani                    0.13.1\nnarwhals                  1.28.0\nnbclient                  0.10.2\nnbconvert                 7.16.6\nnbformat                  5.10.4\nnest-asyncio              1.6.0\nnotebook                  7.3.2\nnotebook_shim             0.2.4\nnumpy                     2.2.3\noverrides                 7.7.0\npackaging                 24.2\npandas                    2.2.3\npandasql                  0.7.3\npandocfilters             1.5.1\nparso                     0.8.4\npatsy                     1.0.1\npexpect                   4.9.0\npillow                    11.1.0\npip                       25.0.1\nplatformdirs              4.3.6\nplotly                    6.0.0\nplotnine                  0.14.5\nprometheus_client         0.21.1\nprompt_toolkit            3.0.50\npsutil                    7.0.0\nptyprocess                0.7.0\npure_eval                 0.2.3\npycparser                 2.22\nPygments                  2.19.1\npyparsing                 3.2.1\npython-dateutil           2.9.0.post0\npython-json-logger        3.2.1\npytz                      2025.1\nPyYAML                    6.0.2\npyzmq                     26.2.1\nreferencing               0.36.2\nrequests                  2.32.3\nrfc3339-validator         0.1.4\nrfc3986-validator         0.1.1\nrpds-py                   0.23.1\nscipy                     1.15.2\nseaborn                   0.13.2\nSend2Trash                1.8.3\nsetuptools                75.8.2\nsix                       1.17.0\nsniffio                   1.3.1\nsoupsieve                 2.6\nSQLAlchemy                2.0.38\nstack-data                0.6.3\nstatsmodels               0.14.4\nterminado                 0.18.1\ntinycss2                  1.4.0\ntornado                   6.4.2\ntraitlets                 5.14.3\ntypes-python-dateutil     2.9.0.20241206\ntyping_extensions         4.12.2\ntzdata                    2025.1\nuri-template              1.3.0\nurllib3                   2.3.0\nwcwidth                   0.2.13\nwebcolors                 24.11.1\nwebencodings              0.5.1\nwebsocket-client          1.8.0\nwidgetsnbextension        4.0.13\n\n\n0",
+    "text": "8.3 check all package version\n\n\nCode\nimport os\nos.system('pip list')\n\n\nPackage                      Version\n---------------------------- -----------\nabsl-py                      2.1.0\naccelerate                   1.5.1\nappnope                      0.1.4\nasttokens                    3.0.0\nastunparse                   1.6.3\nattrs                        25.3.0\nbabel                        2.17.0\nbitsandbytes                 0.42.0\ncertifi                      2025.1.31\ncharset-normalizer           3.4.1\ncomm                         0.2.2\ncommonmark                   0.9.1\ncontourpy                    1.3.1\ncycler                       0.12.1\ndebugpy                      1.8.13\ndecorator                    5.2.1\nexecuting                    2.2.0\nfaicons                      0.2.2\nfastjsonschema               2.21.1\nfilelock                     3.17.0\nflatbuffers                  25.2.10\nfonttools                    4.56.0\nfsspec                       2025.3.0\ngast                         0.6.0\ngoogle-pasta                 0.2.0\ngreat-tables                 0.17.0\ngrpcio                       1.71.0\nh5py                         3.13.0\nhtmltools                    0.6.0\nhuggingface-hub              0.29.3\nidna                         3.10\nimportlib_metadata           8.6.1\nimportlib_resources          6.5.2\nipykernel                    6.29.5\nipython                      9.0.2\nipython_pygments_lexers      1.1.1\njax                          0.4.26\njax-metal                    0.1.0\njaxlib                       0.4.26\njedi                         0.19.2\nJinja2                       3.1.6\njsonschema                   4.23.0\njsonschema-specifications    2024.10.1\njupyter_client               8.6.3\njupyter_core                 5.7.2\nkeras                        3.9.0\nkiwisolver                   1.4.8\nlibclang                     18.1.1\nMarkdown                     3.7\nmarkdown-it-py               3.0.0\nMarkupSafe                   3.0.2\nmatplotlib                   3.10.1\nmatplotlib-inline            0.1.7\nmdurl                        0.1.2\nml-dtypes                    0.3.2\nmpmath                       1.3.0\nnamex                        0.0.8\nnbclient                     0.10.2\nnbformat                     5.10.4\nnest-asyncio                 1.6.0\nnetworkx                     3.4.2\nnumpy                        1.26.4\nopt_einsum                   3.4.0\noptree                       0.14.1\npackaging                    24.2\npandas                       2.0.3\npandasql                     0.7.3\nparso                        0.8.4\npexpect                      4.9.0\npillow                       11.1.0\npip                          25.0.1\npipdeptree                   2.25.1\nplatformdirs                 4.3.6\nprompt_toolkit               3.0.50\nprotobuf                     4.25.6\npsutil                       7.0.0\nptyprocess                   0.7.0\npure_eval                    0.2.3\npydub                        0.25.1\nPygments                     2.19.1\npyparsing                    3.2.1\npython-dateutil              2.9.0.post0\npytz                         2025.1\nPyYAML                       6.0.2\npyzmq                        26.3.0\nreferencing                  0.36.2\nregex                        2024.11.6\nrequests                     2.32.3\nrich                         13.9.4\nrpds-py                      0.23.1\nsafetensors                  0.5.3\nscipy                        1.15.2\nseaborn                      0.13.2\nsentencepiece                0.2.0\nsetuptools                   65.5.0\nsiuba                        0.4.4\nsix                          1.17.0\nSQLAlchemy                   2.0.39\nstack-data                   0.6.3\nsympy                        1.13.1\ntensorboard                  2.16.2\ntensorboard-data-server      0.7.2\ntensorflow                   2.16.2\ntensorflow-io-gcs-filesystem 0.37.1\ntermcolor                    2.5.0\ntf_keras                     2.16.0\ntokenizers                   0.21.0\ntorch                        2.6.0\ntorchaudio                   2.6.0\ntorchvision                  0.21.0\ntornado                      6.4.2\ntqdm                         4.67.1\ntraitlets                    5.14.3\ntransformers                 4.49.0\ntyping_extensions            4.12.2\ntzdata                       2025.1\nurllib3                      2.3.0\nwcwidth                      0.2.13\nWerkzeug                     3.1.3\nwheel                        0.45.1\nwrapt                        1.17.2\nzipp                         3.21.0\n\n\n0",
     "crumbs": [
       "Intro",
       "Basic Python"
@@ -866,28 +866,28 @@
     "href": "index.html",
     "title": "About",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n\n1 + 1\n\n[1] 2\n\n\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\n\n\n Back to top"
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2\n\n\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n Back to top"
   },
   {
     "objectID": "data manipulation/4 siuba.html",
     "href": "data manipulation/4 siuba.html",
-    "title": "Data manipulation with siuba",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
     "section": "",
     "text": "siuba (小巴) is a port of dplyr and other R libraries with seamless support for pandas and SQL",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#comparison-with-different-python-dataframe-package",
     "href": "data manipulation/4 siuba.html#comparison-with-different-python-dataframe-package",
-    "title": "Data manipulation with siuba",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
     "section": "1 Comparison with different python dataframe package",
     "text": "1 Comparison with different python dataframe package",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
@@ -904,166 +904,166 @@
   {
     "objectID": "data manipulation/4 siuba.html#load-package",
     "href": "data manipulation/4 siuba.html#load-package",
-    "title": "Data manipulation with siuba",
-    "section": "3 load package",
-    "text": "3 load package\n\n\nCode\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pylab as plt\nimport seaborn as sns\n\n\n\nfrom siuba.siu import call\nfrom siuba import _, mutate, filter, group_by, summarize,show_query\nfrom siuba import *\n\nfrom siuba.data import mtcars,penguins\n\n\n\n\nCode\nimport os\nos.system('pip show siuba')\n\n\n\n\nCode\nsmall_mtcars = mtcars &gt;&gt; select(_.cyl, _.mpg, _.hp)&gt;&gt; head(5)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "2 load package",
+    "text": "2 load package\n\n\nCode\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pylab as plt\nimport seaborn as sns\n\n\n\nfrom siuba.siu import call\nfrom siuba import _, mutate, filter, group_by, summarize,show_query\nfrom siuba import *\n\nfrom siuba.data import mtcars,penguins\n\n\n\n\nCode\nsmall_mtcars = mtcars &gt;&gt; select(_.cyl, _.mpg, _.hp)&gt;&gt; head(5)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#select-column",
     "href": "data manipulation/4 siuba.html#select-column",
-    "title": "Data manipulation with siuba",
-    "section": "4 select column",
-    "text": "4 select column\n\n4.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n\n\n4.2 select columns by name\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.cyl, _.mpg)\n\n\n\n\n4.3 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.contains(\"p\"))\n\n\n\n\n4.4 select columns by index\n\n4.4.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars &gt;&gt; select(0,2)\n\n\n\n\n4.4.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars &gt;&gt; select(_[0:3])",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "3 select column",
+    "text": "3 select column\n\n3.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n\n\n3.2 select columns by name\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.cyl, _.mpg)\n\n\n\n\n3.3 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.contains(\"p\"))\n\n\n\n\n3.4 select columns by index\n\n3.4.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars &gt;&gt; select(0,2)\n\n\n\n\n3.4.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars &gt;&gt; select(_[0:3])",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#drop-column",
     "href": "data manipulation/4 siuba.html#drop-column",
-    "title": "Data manipulation with siuba",
-    "section": "5 drop column",
-    "text": "5 drop column\n\n\nCode\nsmall_mtcars &gt;&gt; select(~_.cyl)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "4 drop column",
+    "text": "4 drop column\n\n\nCode\nsmall_mtcars &gt;&gt; select(~_.cyl)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#renaming-column",
     "href": "data manipulation/4 siuba.html#renaming-column",
-    "title": "Data manipulation with siuba",
-    "section": "6 Renaming column",
-    "text": "6 Renaming column\n\n\nCode\nsmall_mtcars &gt;&gt; rename(new_name_mpg = _.mpg)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "5 Renaming column",
+    "text": "5 Renaming column\n\n\nCode\nsmall_mtcars &gt;&gt; rename(new_name_mpg = _.mpg)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#create-column",
     "href": "data manipulation/4 siuba.html#create-column",
-    "title": "Data manipulation with siuba",
-    "section": "7 Create column",
-    "text": "7 Create column\n\n7.1 Mutate\n\n\nCode\nmtcars.head()&gt;&gt; mutate(gear2 = _.gear+1\n                      ,gear3=if_else(_.gear &gt; 3, \"long\", \"short\")\n                       ,qsec2=case_when({\n                                          _.qsec &lt;= 17: \"short\",\n                                          _.qsec &lt;= 18: \"Medium\",\n                                          True: \"long\"\n                                                     })\n                       )\n\n\n\n\n7.2 Transmute,create column and only keep this column\n\n\nCode\nmtcars.head()&gt;&gt; transmute(gear2 = _.gear+1)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "6 Create column",
+    "text": "6 Create column\n\n6.1 Mutate\n\n\nCode\nmtcars.head()&gt;&gt; mutate(gear2 = _.gear+1\n                      ,gear3=if_else(_.gear &gt; 3, \"long\", \"short\")\n                       ,qsec2=case_when({\n                                          _.qsec &lt;= 17: \"short\",\n                                          _.qsec &lt;= 18: \"Medium\",\n                                          True: \"long\"\n                                                     })\n                       )\n\n\n\n\n6.2 Transmute,create column and only keep this column\n\n\nCode\nmtcars.head()&gt;&gt; transmute(gear2 = _.gear+1)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#filter-rows",
     "href": "data manipulation/4 siuba.html#filter-rows",
-    "title": "Data manipulation with siuba",
-    "section": "8 Filter rows",
-    "text": "8 Filter rows\n\n\nCode\nmtcars&gt;&gt; filter(_.gear ==4)\n\n\n\n8.1 Filters with AND conditions\n\n\nCode\nmtcars &gt;&gt; filter((_.cyl &gt;4) & (_.gear == 5))\n\n\n\n\n8.2 Filters with OR conditions\n\n\nCode\nmtcars &gt;&gt; filter((_.cyl == 6) | (_.gear == 5))\n\n\n\n\n8.3 filter row with index\n\n8.3.1 first 3\n\n\nCode\nsmall_mtcars&gt;&gt;head(3)\n\n\n\n\n8.3.2 last 3\n\n\nCode\n# not in siuba, in pandas\nsmall_mtcars.tail(3)\n\n\n\n\n8.3.3 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n\n\n8.3.4 1 and 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n\n\n8.3.5 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n\n\n8.3.6 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "7 Filter rows",
+    "text": "7 Filter rows\n\n\nCode\nmtcars&gt;&gt; filter(_.gear ==4)\n\n\n\n7.1 Filters with AND conditions\n\n\nCode\nmtcars &gt;&gt; filter((_.cyl &gt;4) & (_.gear == 5))\n\n\n\n\n7.2 Filters with OR conditions\n\n\nCode\nmtcars &gt;&gt; filter((_.cyl == 6) | (_.gear == 5))\n\n\n\n\n7.3 filter row with index\n\n7.3.1 first 3\n\n\nCode\nsmall_mtcars&gt;&gt;head(3)\n\n\n\n\n7.3.2 last 3\n\n\nCode\n# not in siuba, in pandas\nsmall_mtcars.tail(3)\n\n\n\n\n7.3.3 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[4]]\n\n\n\n\n7.3.4 1 and 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[[0,4]]\n\n\n\n\n7.3.5 1 to 5th rows\n\n\nCode\n# not in siuba, in pandas\nmtcars.iloc[0:4]\n\n\n\n\n7.3.6 get ramdon 5 rows\n\n\nCode\nmtcars.sample(5, random_state=42)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#append",
     "href": "data manipulation/4 siuba.html#append",
-    "title": "Data manipulation with siuba",
-    "section": "9 Append",
-    "text": "9 Append\n\n9.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n\n\n9.2 append by column\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_columns\n\n\n\n\nCode\n# using pandas\ndata1=small_mtcars&gt;&gt;select(_.mpg)\n\ndata2=small_mtcars&gt;&gt;select(_.cyl)\n\ndata3=pd.concat([data1, data2],axis=1)\n\ndata3\n\n\n\n\n9.3 Dropping NA values\n\n\n9.4 keep NA values",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "8 Append",
+    "text": "8 Append\n\n8.1 append by row\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_rows\n\n\n\n\nCode\n# using pandas\n\n# get 1 to 4 rows\ndata1=mtcars.iloc[0:4]\n\n# get 9 rows\ndata2=mtcars.iloc[10:11]\n\ndata3=pd.concat([data1, data2], ignore_index = True,axis=0)\n\ndata3\n\n\n\n\n8.2 append by column\n\n\nCode\n# not available in siuba yet\n#from siuba import bind_columns\n\n\n\n\nCode\n# using pandas\ndata1=small_mtcars&gt;&gt;select(_.mpg)\n\ndata2=small_mtcars&gt;&gt;select(_.cyl)\n\ndata3=pd.concat([data1, data2],axis=1)\n\ndata3\n\n\n\n\n8.3 Dropping NA values\n\n\n8.4 keep NA values",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#group-by",
     "href": "data manipulation/4 siuba.html#group-by",
-    "title": "Data manipulation with siuba",
-    "section": "10 group by",
-    "text": "10 group by\n\n10.1 average,min,max,sum\n\n\nCode\ntbl_query = (mtcars\n  &gt;&gt; group_by(_.cyl)\n  &gt;&gt; summarize(avg_hp = _.hp.mean()\n              ,min_hp=_.hp.min()\n              ,max_hp=_.hp.max()\n              ,totol_disp=_.disp.sum()\n  )\n  )\n\ntbl_query\n\n\n\n\n10.2 count record and count distinct record\n\n\nCode\nmtcars &gt;&gt; group_by(_.cyl)  &gt;&gt; summarize(n = _.shape[0])\n\n\n\n\nCode\nmtcars &gt;&gt; group_by(_.cyl)  &gt;&gt; summarize(n = _.hp.nunique())",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "9 group by",
+    "text": "9 group by\n\n9.1 average,min,max,sum\n\n\nCode\ntbl_query = (mtcars\n  &gt;&gt; group_by(_.cyl)\n  &gt;&gt; summarize(avg_hp = _.hp.mean()\n              ,min_hp=_.hp.min()\n              ,max_hp=_.hp.max()\n              ,totol_disp=_.disp.sum()\n  )\n  )\n\ntbl_query\n\n\n\n\n9.2 count record and count distinct record\n\n\nCode\nmtcars &gt;&gt; group_by(_.cyl)  &gt;&gt; summarize(n = _.shape[0])\n\n\n\n\nCode\nmtcars &gt;&gt; group_by(_.cyl)  &gt;&gt; summarize(n = _.hp.nunique())",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#order-rows",
     "href": "data manipulation/4 siuba.html#order-rows",
-    "title": "Data manipulation with siuba",
-    "section": "11 order rows",
-    "text": "11 order rows\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(_.hp)\n\n\n\n11.1 Sort in descending order\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(-_.hp)\n\n\n\n\n11.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(_.cyl, -_.mpg)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "10 order rows",
+    "text": "10 order rows\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(_.hp)\n\n\n\n10.1 Sort in descending order\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(-_.hp)\n\n\n\n\n10.2 Arrange by multiple variables\n\n\nCode\nsmall_mtcars &gt;&gt; arrange(_.cyl, -_.mpg)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#join",
     "href": "data manipulation/4 siuba.html#join",
-    "title": "Data manipulation with siuba",
-    "section": "12 join",
-    "text": "12 join\n\n\nCode\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n\n\nCode\nrhs\n\n\n\n12.1 inner_join\n\n\nCode\nresult=lhs &gt;&gt; inner_join(_, rhs, on=\"id\")\nresult\n\n\n\n\n12.2 full join\n\n\nCode\nresult=rhs &gt;&gt; full_join(_, lhs, on=\"id\")\nresult\n\n\n\n\n12.3 left join\n\n\nCode\nresult=lhs &gt;&gt; left_join(_, rhs, on=\"id\")\nresult\n\n\n\n\n12.4 anti join\nkeep data in left which not in right\n\n\nCode\nresult=lhs &gt;&gt; anti_join(_, rhs, on=\"id\")\nresult\n\n\nkeep data in right which not in left\n\n\nCode\nresult=rhs &gt;&gt; anti_join(_, lhs, on=\"id\")\nresult",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "11 join",
+    "text": "11 join\n\n\nCode\nlhs = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\nrhs = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n\n\n\n\nCode\nlhs\n\n\n\n\nCode\nrhs\n\n\n\n11.1 inner_join\n\n\nCode\nresult=lhs &gt;&gt; inner_join(_, rhs, on=\"id\")\nresult\n\n\n\n\n11.2 full join\n\n\nCode\nresult=rhs &gt;&gt; full_join(_, lhs, on=\"id\")\nresult\n\n\n\n\n11.3 left join\n\n\nCode\nresult=lhs &gt;&gt; left_join(_, rhs, on=\"id\")\nresult\n\n\n\n\n11.4 anti join\nkeep data in left which not in right\n\n\nCode\nresult=lhs &gt;&gt; anti_join(_, rhs, on=\"id\")\nresult\n\n\nkeep data in right which not in left\n\n\nCode\nresult=rhs &gt;&gt; anti_join(_, lhs, on=\"id\")\nresult",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#reshape-tables",
     "href": "data manipulation/4 siuba.html#reshape-tables",
-    "title": "Data manipulation with siuba",
-    "section": "13 Reshape tables",
-    "text": "13 Reshape tables\n\n\nCode\ncosts = pd.DataFrame({\n    'id': [1,2],\n    'price_x': [.1, .2],\n    'price_y': [.4, .5],\n    'price_z': [.7, .8]\n})\n\ncosts\n\n\n\n13.1 Gather data long(wide to long)\nBelow 3 method will give same result\n\n\nCode\n# selecting each variable manually\ncosts &gt;&gt; gather('measure', 'value', _.price_x, _.price_y, _.price_z)\n\n\nother way:\n\n\nCode\n# selecting variables using a slice\ncosts &gt;&gt; gather('measure', 'value', _[\"price_x\":\"price_z\"])\n\n\nother way:\n\n\nCode\n# selecting by excluding id\ncosts &gt;&gt; gather('measure', 'value', -_.id)\n\n\n\n\n13.2 Spread data wide(long to wide)\n\n\nCode\ncosts_long= costs&gt;&gt; gather('measure', 'value', -_.id)\ncosts_long\n\n\n\n\nCode\ncosts_long&gt;&gt; spread('measure', 'value')",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "12 Reshape tables",
+    "text": "12 Reshape tables\n\n\nCode\ncosts = pd.DataFrame({\n    'id': [1,2],\n    'price_x': [.1, .2],\n    'price_y': [.4, .5],\n    'price_z': [.7, .8]\n})\n\ncosts\n\n\n\n12.1 Gather data long(wide to long)\nBelow 3 method will give same result\n\n\nCode\n# selecting each variable manually\ncosts &gt;&gt; gather('measure', 'value', _.price_x, _.price_y, _.price_z)\n\n\nother way:\n\n\nCode\n# selecting variables using a slice\ncosts &gt;&gt; gather('measure', 'value', _[\"price_x\":\"price_z\"])\n\n\nother way:\n\n\nCode\n# selecting by excluding id\ncosts &gt;&gt; gather('measure', 'value', -_.id)\n\n\n\n\n12.2 Spread data wide(long to wide)\n\n\nCode\ncosts_long= costs&gt;&gt; gather('measure', 'value', -_.id)\ncosts_long\n\n\n\n\nCode\ncosts_long&gt;&gt; spread('measure', 'value')",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#string",
     "href": "data manipulation/4 siuba.html#string",
-    "title": "Data manipulation with siuba",
-    "section": "14 string",
-    "text": "14 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n\n14.1 upper case\n\n\nCode\ndf&gt;&gt; mutate(text_new=_.text.str.upper())\n\n\n\n\n14.2 lower case\n\n\nCode\ndf&gt;&gt; mutate(text_new=_.text.str.lower())\n\n\n\n\n14.3 match\n\n\nCode\ndf&gt;&gt; mutate(text_new1=if_else(_.text== \"abc\",'T','F')\n            ,text_new2=if_else(_.text.str.startswith(\"a\"),'T','F')\n            ,text_new3=if_else(_.text.str.endswith(\"c\"),'T','F')\n            ,text_new4=if_else(_.text.str.contains(\"4\"),'T','F')\n\n)\n\n\n\n\n14.4 concatenation\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text+' is '+_.text\n)\n\n\n\n\n14.5 replace\nUse .str.replace(…, regex=True) with regular expressions to replace patterns in strings.\nFor example, the code below uses “p.”, where . is called a wildcard–which matches any character.\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text.str.replace(\"a.\", \"XX\", regex=True)\n)\n\n\n\n\n14.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.\n\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text.str.extract(\"a(.*)\")\n            ,text_new2=_.text.str.extract(\"(.*)c\")\n)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "13 string",
+    "text": "13 string\n\n\nCode\ndf = pd.DataFrame({'text': ['abc', 'DDD','1243c','aeEe'], 'num': [3, 4,7,8]})\n\ndf\n\n\n\n13.1 upper case\n\n\nCode\ndf&gt;&gt; mutate(text_new=_.text.str.upper())\n\n\n\n\n13.2 lower case\n\n\nCode\ndf&gt;&gt; mutate(text_new=_.text.str.lower())\n\n\n\n\n13.3 match\n\n\nCode\ndf&gt;&gt; mutate(text_new1=if_else(_.text== \"abc\",'T','F')\n            ,text_new2=if_else(_.text.str.startswith(\"a\"),'T','F')\n            ,text_new3=if_else(_.text.str.endswith(\"c\"),'T','F')\n            ,text_new4=if_else(_.text.str.contains(\"4\"),'T','F')\n\n)\n\n\n\n\n13.4 concatenation\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text+' is '+_.text\n)\n\n\n\n\n13.5 replace\nUse .str.replace(…, regex=True) with regular expressions to replace patterns in strings.\nFor example, the code below uses “p.”, where . is called a wildcard–which matches any character.\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text.str.replace(\"a.\", \"XX\", regex=True)\n)\n\n\n\n\n13.6 extract\nUse str.extract() with a regular expression to pull out a matching piece of text.\nFor example the regular expression “^(.*) ” contains the following pieces:\n\na matches the literal letter “a”\n.* has a . which matches anything, and * which modifies it to apply 0 or more times.\n\n\n\nCode\ndf&gt;&gt; mutate(text_new1=_.text.str.extract(\"a(.*)\")\n            ,text_new2=_.text.str.extract(\"(.*)c\")\n)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#date",
     "href": "data manipulation/4 siuba.html#date",
-    "title": "Data manipulation with siuba",
-    "section": "15 date",
-    "text": "15 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n\n\nCode\nfrom datetime import datetime\n\ndf_date=df_dates&gt;&gt;mutate(month=_.dates.dt.month_name()\n                  ,date_format_raw = call(pd.to_datetime, _.raw)\n                  ,date_format_raw_year=_.date_format_raw.dt.year\n\n)\n\ndf_date\n\n\n\n\nCode\ndf_date.info()",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "14 date",
+    "text": "14 date\n\n\nCode\ndf_dates = pd.DataFrame({\n    \"dates\": pd.to_datetime([\"2021-01-02\", \"2021-02-03\"]),\n    \"raw\": [\"2023-04-05 06:07:08\", \"2024-05-06 07:08:09\"],\n})\ndf_dates\n\n\n\n\nCode\nfrom datetime import datetime\n\ndf_date=df_dates&gt;&gt;mutate(month=_.dates.dt.month_name()\n                  ,date_format_raw = call(pd.to_datetime, _.raw)\n                  ,date_format_raw_year=_.date_format_raw.dt.year\n\n)\n\ndf_date\n\n\n\n\nCode\ndf_date.info()",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#using-siuba-with-database",
     "href": "data manipulation/4 siuba.html#using-siuba-with-database",
-    "title": "Data manipulation with siuba",
-    "section": "16 using siuba with database",
-    "text": "16 using siuba with database\n\n16.1 set up a sqlite database, with an mtcars table.\n\n\nCode\nfrom sqlalchemy import create_engine\nfrom siuba.sql import LazyTbl\nfrom siuba import _, group_by, summarize, show_query, collect \nfrom siuba.data import mtcars\n\n# copy in to sqlite, using the pandas .to_sql() method\nengine = create_engine(\"sqlite:///:memory:\")\nmtcars.to_sql(\"mtcars\", engine, if_exists = \"replace\")\n\n\n\n\n16.2 create table\n\n\nCode\n# Create a lazy SQL DataFrame\ntbl_mtcars = LazyTbl(engine, \"mtcars\")\ntbl_mtcars\n\n\n\n\n16.3 create query\n\n\nCode\n# connect with siuba\n\ntbl_query = (tbl_mtcars\n  &gt;&gt; group_by(_.mpg)\n  &gt;&gt; summarize(avg_hp = _.hp.mean())\n  )\n\ntbl_query\n\n\n\n\n16.4 show query\n\n\nCode\n tbl_query &gt;&gt; show_query()\n\n\n\n\n16.5 Collect to DataFrame\nbecause lazy expressions,the collect function is actually running the sql.\n\n\nCode\ndata=tbl_query &gt;&gt; collect()\nprint(data)",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "15 using siuba with database",
+    "text": "15 using siuba with database\n\n15.1 set up a sqlite database, with an mtcars table.\n\n\nCode\nfrom sqlalchemy import create_engine\nfrom siuba.sql import LazyTbl\nfrom siuba import _, group_by, summarize, show_query, collect \nfrom siuba.data import mtcars\n\n# copy in to sqlite, using the pandas .to_sql() method\nengine = create_engine(\"sqlite:///:memory:\")\nmtcars.to_sql(\"mtcars\", engine, if_exists = \"replace\")\n\n\n\n\n15.2 create table\n\n\nCode\n# Create a lazy SQL DataFrame\ntbl_mtcars = LazyTbl(engine, \"mtcars\")\ntbl_mtcars\n\n\n\n\n15.3 create query\n\n\nCode\n# connect with siuba\n\ntbl_query = (tbl_mtcars\n  &gt;&gt; group_by(_.mpg)\n  &gt;&gt; summarize(avg_hp = _.hp.mean())\n  )\n\ntbl_query\n\n\n\n\n15.4 show query\n\n\nCode\n tbl_query &gt;&gt; show_query()\n\n\n\n\n15.5 Collect to DataFrame\nbecause lazy expressions,the collect function is actually running the sql.\n\n\nCode\ndata=tbl_query &gt;&gt; collect()\nprint(data)",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
     "objectID": "data manipulation/4 siuba.html#reference",
     "href": "data manipulation/4 siuba.html#reference",
-    "title": "Data manipulation with siuba",
-    "section": "17 reference:",
-    "text": "17 reference:\nhttps://siuba.org/",
+    "title": "Data manipulation with siuba(not working with current pandas version)",
+    "section": "16 reference:",
+    "text": "16 reference:\nhttps://siuba.org/",
     "crumbs": [
       "data manipulation",
-      "Data manipulation with siuba"
+      "Data manipulation with siuba(not working with current pandas version)"
     ]
   },
   {
@@ -1240,6 +1240,196 @@
     "crumbs": [
       "data manipulation",
       "SQL database with python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#get-column-names",
+    "href": "data manipulation/3 Pandas.html#get-column-names",
+    "title": "Data manipulation with Pandas",
+    "section": "4.1 get column names",
+    "text": "4.1 get column names\n\n\nCode\nlist(small_mtcars)\n\n\n['cyl', 'mpg', 'hp']",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/3 Pandas.html#select-by-name",
+    "href": "data manipulation/3 Pandas.html#select-by-name",
+    "title": "Data manipulation with Pandas",
+    "section": "4.2 select by name",
+    "text": "4.2 select by name\n\npandassiuba\n\n\n\n\nCode\nsmall_mtcars [[\"cyl\", \"mpg\",'hp']]\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\nother way:\n\n\nCode\nsmall_mtcars.filter(items=['cyl', 'mpg','hp'])\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\n\n\n\n\nCode\nsmall_mtcars &gt;&gt; select(_.cyl, _.mpg, _.hp)\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0\n3  6.0  21.4  110.0\n4  8.0  18.7  175.0\n\n\n\n\n\n\n4.2.1 select columns by name match with ‘p’\n\n\nCode\nsmall_mtcars.loc[:,small_mtcars.columns.str.contains(\"p\")]\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0\n\n\nother way:\n\n\nCode\nsmall_mtcars.filter(regex='p.*', axis=1)\n\n\n    mpg     hp\n0  21.0  110.0\n1  21.0  110.0\n2  22.8   93.0\n3  21.4  110.0\n4  18.7  175.0\n\n\n\n\n4.2.2 select columns by index\n\n4.2.2.1 select first and 3rd columns\n\n\nCode\nsmall_mtcars.iloc[[0,2]]\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n2  4.0  22.8   93.0\n\n\n\n\n4.2.2.2 select first to 3rd columns\n\n\nCode\nsmall_mtcars[0:3]\n\n\n   cyl   mpg     hp\n0  6.0  21.0  110.0\n1  6.0  21.0  110.0\n2  4.0  22.8   93.0",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with Pandas"
+    ]
+  },
+  {
+    "objectID": "data manipulation/6 datar.html",
+    "href": "data manipulation/6 datar.html",
+    "title": "Data manipulation with datar",
+    "section": "",
+    "text": "#| eval: false\npip install -U datar\npip install -U datar-numpy\n\n\n1 import pacakge\n\n\nCode\nfrom datar import f\nfrom datar.dplyr import mutate, filter_, if_else\nfrom datar.tibble import tibble\nfrom datar.data import mtcars\n\n\n\n\nCode\ndf = tibble(\n    x=range(4),  # or c[:4]  (from datar.base import c)\n    y=['zero', 'one', 'two', 'three']\n)\n\n\n\n\nCode\ndat = group_by(mtcars, f.cyl)\n\n\n\n\n2 reference:\nhttps://github.com/pwwang/datar/\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "data manipulation",
+      "Data manipulation with datar"
+    ]
+  },
+  {
+    "objectID": "hashover/CONTRIBUTING.html",
+    "href": "hashover/CONTRIBUTING.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "When sending a “Pull Request”, committing code, or otherwise sending, submitting, or transmitting code in any other way, please place a GNU Affero General Public License notice or any compatible license notice at the top of the code (if one isn’t already present) and assign your contribution’s copyright to yourself or “Jacob Barkdull”. This gives me the necessary rights to distribute your contribution in HashOver under the GNU Affero General Public License.\nHashOver is partially written in JavaScript, plain, standard, non-jQuery JavaScript. If your contribution improves or adds new functionality to the JavaScipt portions of HashOver, your contribution must also be written in plain, standard, non-jQuery JavaScript. Contributions using or assuming the presence of jQuery, Underscore, AngularJS, Prototype, React, Node.js, or any other abstraction layer, library, and/or framework will be rejected.\n\n\nHashOver version 1.0 consists of code written by one person over the course of five years, come March the 29th 2014. Moreover, HashOver 1.0 was my first serious use of JavaScript and my first PHP project of such complexity. Those two facts should trigger obvious concerns about HashOver’s performance, efficiency, and security. With that in mind, version 2.0 will be the next release, and will focus on improving nothing but the following areas.\n\nSecurity\nPerformance\nCode efficiency\nDeployment\nData storage format\nBackwards and forwards compatibility\nOperating system support\nAesthetics and graphics\nGraphic scalability on high-density displays\nCode readability\nBug fixes\n\nThis means the possibility of new features in version 2.0 is next to nil, and contributions via GitHub and/or e-mail that add new features will be rejected, at least for the time being. Improvements to existing functionality and aesthetics will be accepted. New features will be accepted and available in version 2.x releases."
+  },
+  {
+    "objectID": "hashover/CONTRIBUTING.html#focus-of-this-release",
+    "href": "hashover/CONTRIBUTING.html#focus-of-this-release",
+    "title": "Contributing",
+    "section": "",
+    "text": "HashOver version 1.0 consists of code written by one person over the course of five years, come March the 29th 2014. Moreover, HashOver 1.0 was my first serious use of JavaScript and my first PHP project of such complexity. Those two facts should trigger obvious concerns about HashOver’s performance, efficiency, and security. With that in mind, version 2.0 will be the next release, and will focus on improving nothing but the following areas.\n\nSecurity\nPerformance\nCode efficiency\nDeployment\nData storage format\nBackwards and forwards compatibility\nOperating system support\nAesthetics and graphics\nGraphic scalability on high-density displays\nCode readability\nBug fixes\n\nThis means the possibility of new features in version 2.0 is next to nil, and contributions via GitHub and/or e-mail that add new features will be rejected, at least for the time being. Improvements to existing functionality and aesthetics will be accepted. New features will be accepted and available in version 2.x releases."
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#singular",
+    "href": "data manipulation/2 data structure in Python .html#singular",
+    "title": "Data structure in Python",
+    "section": "1.1 singular",
+    "text": "1.1 singular\n\n\nCode\na=1\ntype(a)\n\n\nint\n\n\n\n\nCode\na=1.3\ntype(a)\n\n\nfloat\n\n\n\n\nCode\na='hell'\ntype(a)\n\n\nstr\n\n\n\n\nCode\na= True\ntype(a)\n\n\nbool",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#list",
+    "href": "data manipulation/2 data structure in Python .html#list",
+    "title": "Data structure in Python",
+    "section": "1.2 list",
+    "text": "1.2 list\n\n\nCode\na=[1,2,3]\n\na\n\n\n[1, 2, 3]\n\n\n\n\nCode\ntype(a) \n\n\nlist\n\n\n\n\nCode\nfruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana','apple']\n\n\n\n1.2.1 find length of the list with len()\n\n\nCode\nlen(fruits)\n\n\n8\n\n\n\n\n1.2.2 first 2 on the list\n\n\nCode\nfruits[:2]\n\n\n['orange', 'apple']\n\n\n\n\n1.2.3 last 2 on the list\n\n\nCode\nfruits[-2:]\n\n\n['banana', 'apple']\n\n\n\n\n1.2.4 find how many time in the list with count()\n\n\nCode\nfruits.count('apple')\n\n\n3\n\n\n\n\n1.2.5 find locaiton of on the list with index()\nshow the first ‘apple’ index. python list start at 0\n\n\nCode\nfruits.index('apple')\n\n\n1\n\n\nall ‘apple’ in the list\n\n\nCode\n[index for index, value in enumerate(fruits) if value == 'apple']\n\n\n[1, 5, 7]\n\n\n\n\n1.2.6 reverse the list\n\n\nCode\nfruits.reverse()\nfruits\n\n\n['apple', 'banana', 'apple', 'kiwi', 'banana', 'pear', 'apple', 'orange']\n\n\n\n\n1.2.7 sort the list\n\n\nCode\nfruits.sort()\nfruits\n\n\n['apple', 'apple', 'apple', 'banana', 'banana', 'kiwi', 'orange', 'pear']\n\n\n\n\n1.2.8 add element on the list\n\n\nCode\nfruits.append('grape')\nfruits\n\n\n['apple',\n 'apple',\n 'apple',\n 'banana',\n 'banana',\n 'kiwi',\n 'orange',\n 'pear',\n 'grape']\n\n\n\n\n1.2.9 drop last element\n\n\nCode\nfruits.pop()\n\nfruits\n\n\n['apple', 'apple', 'apple', 'banana', 'banana', 'kiwi', 'orange', 'pear']\n\n\n\n\n1.2.10 List Comprehensions\nusing loop:\n\n\nCode\nsquares = []\nfor x in range(10):\n  squares.append(x**2)\n  \nsquares\n\n\n[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n\n\nusing List Comprehensions\n\n\nCode\nsquares = [x**2 for x in range(10)]\nsquares\n\n\n[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n\n\n\n\n1.2.11 list to Tuples\n\n\nCode\ntuple(squares)\n\n\n(0, 1, 4, 9, 16, 25, 36, 49, 64, 81)\n\n\n\n\n1.2.12 list to set\n\n\nCode\nset(squares)\n\n\n{0, 1, 4, 9, 16, 25, 36, 49, 64, 81}\n\n\n\n\n1.2.13 list to dictionary\n\n1.2.13.1 one list to dictionary\n\n\nCode\nlist=['a', 1, 'b', 2, 'c', 3]\n\ndef convert(lst):\n   res_dict = {}\n   for i in range(0, len(lst), 2):\n       res_dict[lst[i]] = lst[i + 1]\n   return res_dict\n \nconvert(list)\n\n\n{'a': 1, 'b': 2, 'c': 3}\n\n\n\n\n1.2.13.2 two list to dictionary\n\n\nCode\nimport itertools\n\nkeys = ('name', 'age', 'food')\n\nvalues = ('Monty', 42, 'spam')\n\ndict(zip(keys, values))\n\n\n{'name': 'Monty', 'age': 42, 'food': 'spam'}",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#tuples",
+    "href": "data manipulation/2 data structure in Python .html#tuples",
+    "title": "Data structure in Python",
+    "section": "1.3 Tuples",
+    "text": "1.3 Tuples\n\n\nCode\nfruits = ('orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana','apple')\n\nfruits\n\n\n('orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana', 'apple')\n\n\n\n\nCode\ntype(fruits)\n\n\ntuple\n\n\ntuple can not be modified.",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#sets",
+    "href": "data manipulation/2 data structure in Python .html#sets",
+    "title": "Data structure in Python",
+    "section": "1.4 Sets",
+    "text": "1.4 Sets\nA set is an unordered collection with no duplicate elements.\n\n\nCode\nbasket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}\n\nbasket\n\n\n{'apple', 'banana', 'orange', 'pear'}\n\n\n\n\nCode\ntype(basket)\n\n\nset",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#dictionaries",
+    "href": "data manipulation/2 data structure in Python .html#dictionaries",
+    "title": "Data structure in Python",
+    "section": "1.5 Dictionaries",
+    "text": "1.5 Dictionaries\n\n\nCode\ntel = {'jack': 4098, 'sape': 4139}\n\ntel\n\n\n{'jack': 4098, 'sape': 4139}\n\n\n\n\nCode\ntype(tel)\n\n\ndict\n\n\n\n\nCode\ntel['jack']\n\n\n4098",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#numpy-array",
+    "href": "data manipulation/2 data structure in Python .html#numpy-array",
+    "title": "Data structure in Python",
+    "section": "2.1 numpy Array",
+    "text": "2.1 numpy Array\n\n\nCode\nimport numpy as np\n\nA2 = np.array([[1, 2, 3], [3, 4, 5]])\nprint(A2)\n\n\n[[1 2 3]\n [3 4 5]]\n\n\n\n\nCode\ntype(A2)\n\n\nnumpy.ndarray",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#shape",
+    "href": "data manipulation/2 data structure in Python .html#shape",
+    "title": "Data structure in Python",
+    "section": "2.2 shape",
+    "text": "2.2 shape\n\n\nCode\nA2.shape\n\n\n(2, 3)",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#row-number",
+    "href": "data manipulation/2 data structure in Python .html#row-number",
+    "title": "Data structure in Python",
+    "section": "2.3 row number",
+    "text": "2.3 row number\n\n\nCode\nlen(A2)\n\n\n2",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#total-elements",
+    "href": "data manipulation/2 data structure in Python .html#total-elements",
+    "title": "Data structure in Python",
+    "section": "2.4 total elements",
+    "text": "2.4 total elements\n\n\nCode\nA2.size\n\n\n6",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#dimension",
+    "href": "data manipulation/2 data structure in Python .html#dimension",
+    "title": "Data structure in Python",
+    "section": "2.5 dimension",
+    "text": "2.5 dimension\n\n\nCode\nA2.ndim\n\n\n2",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "data manipulation/2 data structure in Python .html#count-numpy.ndarray",
+    "href": "data manipulation/2 data structure in Python .html#count-numpy.ndarray",
+    "title": "Data structure in Python",
+    "section": "2.6 count numpy.ndarray",
+    "text": "2.6 count numpy.ndarray\n\n\nCode\nimport collections, numpy\na = numpy.array([0, 3, 0, 4])\ncollections.Counter(a)\n\n\nCounter({np.int64(0): 2, np.int64(3): 1, np.int64(4): 1})\n\n\n\n2.6.1 convert list into numpy array\n\n\nCode\nA = [\n  [1, 4, 5, 12], \n  [-5, 8, 9, 0],\n  [-6, 7, 11, 19],\n  [1, 4, 5, 12], \n  [-5, 8, 9, 0],\n  [-6, 7, 11, 19],\n  [1, 4, 5, 12], \n  [-5, 8, 9, 0],\n  [-6, 7, 11, 19]\n  ]\n    \nA3 = np.array(A)\n\nprint(A3)\n\n\n[[ 1  4  5 12]\n [-5  8  9  0]\n [-6  7 11 19]\n [ 1  4  5 12]\n [-5  8  9  0]\n [-6  7 11 19]\n [ 1  4  5 12]\n [-5  8  9  0]\n [-6  7 11 19]]\n\n\n\n\n2.6.2 selection\n\n2.6.2.1 first 5 row\n\n\nCode\nA[:5]\n\n\n[[1, 4, 5, 12], [-5, 8, 9, 0], [-6, 7, 11, 19], [1, 4, 5, 12], [-5, 8, 9, 0]]\n\n\n\n\n2.6.2.2 lst 5 row\n\n\nCode\nA[:-5]\n\n\n[[1, 4, 5, 12], [-5, 8, 9, 0], [-6, 7, 11, 19], [1, 4, 5, 12]]\n\n\n\n\n2.6.2.3 first row\n\n\nCode\nA[0]\n\n\n[1, 4, 5, 12]\n\n\n\n\n2.6.2.4 first column\n\n\nCode\nA2[:,0]\n\n\narray([1, 3])\n\n\n\n\n2.6.2.5 first row and first column element\n\n\nCode\nA2[0,0]\n\n\nnp.int64(1)\n\n\n\n\nCode\nA2.dtype\n\n\ndtype('int64')\n\n\n\n\n2.6.2.6 2 row and 3 column\n\n\nCode\nA2[1,2]\n\n\nnp.int64(5)\n\n\n\n\n2.6.2.7 filter\n\n2.6.2.7.1 filter all\n\n\nCode\nprint(A3)\n\n\n[[ 1  4  5 12]\n [-5  8  9  0]\n [-6  7 11 19]\n [ 1  4  5 12]\n [-5  8  9  0]\n [-6  7 11 19]\n [ 1  4  5 12]\n [-5  8  9  0]\n [-6  7 11 19]]\n\n\n\n\nCode\nA3&gt;4\n\n\narray([[False, False,  True,  True],\n       [False,  True,  True, False],\n       [False,  True,  True,  True],\n       [False, False,  True,  True],\n       [False,  True,  True, False],\n       [False,  True,  True,  True],\n       [False, False,  True,  True],\n       [False,  True,  True, False],\n       [False,  True,  True,  True]])\n\n\n\n\nCode\nA3[A3&gt;4]\n\n\narray([ 5, 12,  8,  9,  7, 11, 19,  5, 12,  8,  9,  7, 11, 19,  5, 12,  8,\n        9,  7, 11, 19])\n\n\n\n\n2.6.2.7.2 filter row\n\n\nCode\nA3\n\n\narray([[ 1,  4,  5, 12],\n       [-5,  8,  9,  0],\n       [-6,  7, 11, 19],\n       [ 1,  4,  5, 12],\n       [-5,  8,  9,  0],\n       [-6,  7, 11, 19],\n       [ 1,  4,  5, 12],\n       [-5,  8,  9,  0],\n       [-6,  7, 11, 19]])\n\n\nfilter secound column&gt;5\n\n\nCode\nfilter_val=(A3&gt;5)[:,2]\n\n\nwhich only keep 2,3 row.\n\n\nCode\nA3[filter_val,0:]\n\n\narray([[-5,  8,  9,  0],\n       [-6,  7, 11, 19],\n       [-5,  8,  9,  0],\n       [-6,  7, 11, 19],\n       [-5,  8,  9,  0],\n       [-6,  7, 11, 19]])\n\n\n\n\n\n\n2.6.3 create numpy array\n\n2.6.3.1 create eye\n\n\nCode\nnp.eye(3)\n\n\narray([[1., 0., 0.],\n       [0., 1., 0.],\n       [0., 0., 1.]])\n\n\n\n\n2.6.3.2 create zero\n\n\nCode\nnp.zeros((2,3))\n\n\narray([[0., 0., 0.],\n       [0., 0., 0.]])\n\n\n\n\n2.6.3.3 create ones\n\n\nCode\nnp.ones((2,3))\n\n\narray([[1., 1., 1.],\n       [1., 1., 1.]])\n\n\n\n\n\n2.6.4 compare\n\n\nCode\n# Creating Array\na = np.array([1,2,3,4]) \nb = np.array([3,2,5,6])\n\n\n\n\nCode\n# Comparing two arrays\nnp.greater(a, b)\n\n\narray([False, False, False, False])\n\n\n\n\nCode\na &gt;= b\n\n\narray([False,  True, False, False])\n\n\n\n\nCode\n# Comparing two arrays\nnp.less(a, b)\n\n\narray([ True, False,  True,  True])\n\n\n\n\nCode\n# Comparing two arrays\nnp.equal(a, b)\n\n\narray([False,  True, False, False])\n\n\n\n\n2.6.5 reshape\n\n\nCode\na=np.arange(9).reshape(3, 3)\n\na\n\n\narray([[0, 1, 2],\n       [3, 4, 5],\n       [6, 7, 8]])\n\n\n\n\n2.6.6 calculation\n\n\nCode\nb=a*a\nb\n\n\narray([[ 0,  1,  4],\n       [ 9, 16, 25],\n       [36, 49, 64]])\n\n\n\n\nCode\nb=a+a\nb\n\n\narray([[ 0,  2,  4],\n       [ 6,  8, 10],\n       [12, 14, 16]])\n\n\n\n\n2.6.7 numpy array to dataframe\n\n\nCode\nimport pandas as pd\ndf = pd.DataFrame(b, columns=['Column_A', 'Column_B', 'Column_C'])\n\ndf\n\n\n\n\n\n\n\n\n\nColumn_A\nColumn_B\nColumn_C\n\n\n\n\n0\n0\n2\n4\n\n\n1\n6\n8\n10\n\n\n2\n12\n14\n16",
+    "crumbs": [
+      "data manipulation",
+      "Data structure in Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#show-one-pacakge-packages-dependencies",
+    "href": "intro/0 Basic python.html#show-one-pacakge-packages-dependencies",
+    "title": "Basic Python",
+    "section": "8.5 show one pacakge package’s dependencies",
+    "text": "8.5 show one pacakge package’s dependencies\n\n\nCode\n!pip install pipdeptree\n\n\n\n\nCode\n!pipdeptree --packages siuba\n\n\nsiuba==0.4.4\n├── pandas [required: &gt;=0.24.0,&lt;2.1.0, installed: 2.0.3]\n│   ├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   │   └── six [required: &gt;=1.5, installed: 1.17.0]\n│   ├── pytz [required: &gt;=2020.1, installed: 2025.1]\n│   ├── tzdata [required: &gt;=2022.1, installed: 2025.1]\n│   ├── numpy [required: &gt;=1.21.0, installed: 1.26.4]\n│   └── numpy [required: &gt;=1.23.2, installed: 1.26.4]\n├── numpy [required: &gt;=1.12.0, installed: 1.26.4]\n├── SQLAlchemy [required: &gt;=1.2.19, installed: 2.0.39]\n│   └── typing_extensions [required: &gt;=4.6.0, installed: 4.12.2]\n└── PyYAML [required: &gt;=3.0.0, installed: 6.0.2]\n\n\n\n\nCode\n!pipdeptree --packages pandas\n\n\npandas==2.0.3\n├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   └── six [required: &gt;=1.5, installed: 1.17.0]\n├── pytz [required: &gt;=2020.1, installed: 2025.1]\n├── tzdata [required: &gt;=2022.1, installed: 2025.1]\n├── numpy [required: &gt;=1.21.0, installed: 1.26.4]\n└── numpy [required: &gt;=1.23.2, installed: 1.26.4]",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
+    ]
+  },
+  {
+    "objectID": "intro/0 Basic python.html#show-all-pacakge-packages-dependencies",
+    "href": "intro/0 Basic python.html#show-all-pacakge-packages-dependencies",
+    "title": "Basic Python",
+    "section": "8.6 show all pacakge package’s dependencies",
+    "text": "8.6 show all pacakge package’s dependencies\n\n\nCode\n!pipdeptree\n\n\naccelerate==1.5.1\n├── numpy [required: &gt;=1.17,&lt;3.0.0, installed: 1.26.4]\n├── packaging [required: &gt;=20.0, installed: 24.2]\n├── psutil [required: Any, installed: 7.0.0]\n├── PyYAML [required: Any, installed: 6.0.2]\n├── torch [required: &gt;=2.0.0, installed: 2.6.0]\n│   ├── filelock [required: Any, installed: 3.17.0]\n│   ├── typing_extensions [required: &gt;=4.10.0, installed: 4.12.2]\n│   ├── networkx [required: Any, installed: 3.4.2]\n│   ├── Jinja2 [required: Any, installed: 3.1.6]\n│   │   └── MarkupSafe [required: &gt;=2.0, installed: 3.0.2]\n│   ├── fsspec [required: Any, installed: 2025.3.0]\n│   └── sympy [required: ==1.13.1, installed: 1.13.1]\n│       └── mpmath [required: &gt;=1.1.0,&lt;1.4, installed: 1.3.0]\n├── huggingface-hub [required: &gt;=0.21.0, installed: 0.29.3]\n│   ├── filelock [required: Any, installed: 3.17.0]\n│   ├── fsspec [required: &gt;=2023.5.0, installed: 2025.3.0]\n│   ├── packaging [required: &gt;=20.9, installed: 24.2]\n│   ├── PyYAML [required: &gt;=5.1, installed: 6.0.2]\n│   ├── requests [required: Any, installed: 2.32.3]\n│   │   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 3.4.1]\n│   │   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.10]\n│   │   ├── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 2.3.0]\n│   │   └── certifi [required: &gt;=2017.4.17, installed: 2025.1.31]\n│   ├── tqdm [required: &gt;=4.42.1, installed: 4.67.1]\n│   └── typing_extensions [required: &gt;=3.7.4.3, installed: 4.12.2]\n└── safetensors [required: &gt;=0.4.3, installed: 0.5.3]\nbitsandbytes==0.42.0\n└── scipy [required: Any, installed: 1.15.2]\n    └── numpy [required: &gt;=1.23.5,&lt;2.5, installed: 1.26.4]\ngreat-tables==0.17.0\n├── commonmark [required: &gt;=0.9.1, installed: 0.9.1]\n├── faicons [required: &gt;=0.2.2, installed: 0.2.2]\n│   └── htmltools [required: &gt;=0.1.4.9002, installed: 0.6.0]\n│       ├── typing_extensions [required: &gt;=3.10.0.0, installed: 4.12.2]\n│       └── packaging [required: &gt;=20.9, installed: 24.2]\n├── htmltools [required: &gt;=0.4.1, installed: 0.6.0]\n│   ├── typing_extensions [required: &gt;=3.10.0.0, installed: 4.12.2]\n│   └── packaging [required: &gt;=20.9, installed: 24.2]\n├── importlib_metadata [required: Any, installed: 8.6.1]\n│   └── zipp [required: &gt;=3.20, installed: 3.21.0]\n├── typing_extensions [required: &gt;=3.10.0.0, installed: 4.12.2]\n├── numpy [required: &gt;=1.22.4, installed: 1.26.4]\n├── babel [required: &gt;=2.13.1, installed: 2.17.0]\n└── importlib_resources [required: Any, installed: 6.5.2]\nipykernel==6.29.5\n├── appnope [required: Any, installed: 0.1.4]\n├── comm [required: &gt;=0.1.1, installed: 0.2.2]\n│   └── traitlets [required: &gt;=4, installed: 5.14.3]\n├── debugpy [required: &gt;=1.6.5, installed: 1.8.13]\n├── ipython [required: &gt;=7.23.1, installed: 9.0.2]\n│   ├── decorator [required: Any, installed: 5.2.1]\n│   ├── ipython_pygments_lexers [required: Any, installed: 1.1.1]\n│   │   └── Pygments [required: Any, installed: 2.19.1]\n│   ├── jedi [required: &gt;=0.16, installed: 0.19.2]\n│   │   └── parso [required: &gt;=0.8.4,&lt;0.9.0, installed: 0.8.4]\n│   ├── matplotlib-inline [required: Any, installed: 0.1.7]\n│   │   └── traitlets [required: Any, installed: 5.14.3]\n│   ├── pexpect [required: &gt;4.3, installed: 4.9.0]\n│   │   └── ptyprocess [required: &gt;=0.5, installed: 0.7.0]\n│   ├── prompt_toolkit [required: &gt;=3.0.41,&lt;3.1.0, installed: 3.0.50]\n│   │   └── wcwidth [required: Any, installed: 0.2.13]\n│   ├── Pygments [required: &gt;=2.4.0, installed: 2.19.1]\n│   ├── stack-data [required: Any, installed: 0.6.3]\n│   │   ├── executing [required: &gt;=1.2.0, installed: 2.2.0]\n│   │   ├── asttokens [required: &gt;=2.1.0, installed: 3.0.0]\n│   │   └── pure_eval [required: Any, installed: 0.2.3]\n│   ├── traitlets [required: &gt;=5.13.0, installed: 5.14.3]\n│   └── typing_extensions [required: &gt;=4.6, installed: 4.12.2]\n├── jupyter_client [required: &gt;=6.1.12, installed: 8.6.3]\n│   ├── jupyter_core [required: &gt;=4.12,!=5.0.*, installed: 5.7.2]\n│   │   ├── platformdirs [required: &gt;=2.5, installed: 4.3.6]\n│   │   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n│   ├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   │   └── six [required: &gt;=1.5, installed: 1.17.0]\n│   ├── pyzmq [required: &gt;=23.0, installed: 26.3.0]\n│   ├── tornado [required: &gt;=6.2, installed: 6.4.2]\n│   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n├── jupyter_core [required: &gt;=4.12,!=5.0.*, installed: 5.7.2]\n│   ├── platformdirs [required: &gt;=2.5, installed: 4.3.6]\n│   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n├── matplotlib-inline [required: &gt;=0.1, installed: 0.1.7]\n│   └── traitlets [required: Any, installed: 5.14.3]\n├── nest-asyncio [required: Any, installed: 1.6.0]\n├── packaging [required: Any, installed: 24.2]\n├── psutil [required: Any, installed: 7.0.0]\n├── pyzmq [required: &gt;=24, installed: 26.3.0]\n├── tornado [required: &gt;=6.1, installed: 6.4.2]\n└── traitlets [required: &gt;=5.4.0, installed: 5.14.3]\njax-metal==0.1.0\n├── wheel [required: ~=0.35, installed: 0.45.1]\n├── six [required: &gt;=1.15.0, installed: 1.17.0]\n├── jax [required: &gt;=0.4.26, installed: 0.4.26]\n│   ├── ml-dtypes [required: &gt;=0.2.0, installed: 0.3.2]\n│   │   ├── numpy [required: &gt;1.20, installed: 1.26.4]\n│   │   ├── numpy [required: &gt;=1.21.2, installed: 1.26.4]\n│   │   └── numpy [required: &gt;=1.23.3, installed: 1.26.4]\n│   ├── numpy [required: &gt;=1.22, installed: 1.26.4]\n│   ├── opt_einsum [required: Any, installed: 3.4.0]\n│   ├── scipy [required: &gt;=1.9, installed: 1.15.2]\n│   │   └── numpy [required: &gt;=1.23.5,&lt;2.5, installed: 1.26.4]\n│   └── numpy [required: &gt;=1.23.2, installed: 1.26.4]\n└── jaxlib [required: &gt;=0.4.26, installed: 0.4.26]\n    ├── scipy [required: &gt;=1.9, installed: 1.15.2]\n    │   └── numpy [required: &gt;=1.23.5,&lt;2.5, installed: 1.26.4]\n    ├── numpy [required: &gt;=1.22, installed: 1.26.4]\n    └── ml-dtypes [required: &gt;=0.2.0, installed: 0.3.2]\n        ├── numpy [required: &gt;1.20, installed: 1.26.4]\n        ├── numpy [required: &gt;=1.21.2, installed: 1.26.4]\n        └── numpy [required: &gt;=1.23.3, installed: 1.26.4]\nnbclient==0.10.2\n├── jupyter_client [required: &gt;=6.1.12, installed: 8.6.3]\n│   ├── jupyter_core [required: &gt;=4.12,!=5.0.*, installed: 5.7.2]\n│   │   ├── platformdirs [required: &gt;=2.5, installed: 4.3.6]\n│   │   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n│   ├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   │   └── six [required: &gt;=1.5, installed: 1.17.0]\n│   ├── pyzmq [required: &gt;=23.0, installed: 26.3.0]\n│   ├── tornado [required: &gt;=6.2, installed: 6.4.2]\n│   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n├── jupyter_core [required: &gt;=4.12,!=5.0.*, installed: 5.7.2]\n│   ├── platformdirs [required: &gt;=2.5, installed: 4.3.6]\n│   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n├── nbformat [required: &gt;=5.1, installed: 5.10.4]\n│   ├── fastjsonschema [required: &gt;=2.15, installed: 2.21.1]\n│   ├── jsonschema [required: &gt;=2.6, installed: 4.23.0]\n│   │   ├── attrs [required: &gt;=22.2.0, installed: 25.3.0]\n│   │   ├── jsonschema-specifications [required: &gt;=2023.03.6, installed: 2024.10.1]\n│   │   │   └── referencing [required: &gt;=0.31.0, installed: 0.36.2]\n│   │   │       ├── attrs [required: &gt;=22.2.0, installed: 25.3.0]\n│   │   │       ├── rpds-py [required: &gt;=0.7.0, installed: 0.23.1]\n│   │   │       └── typing_extensions [required: &gt;=4.4.0, installed: 4.12.2]\n│   │   ├── referencing [required: &gt;=0.28.4, installed: 0.36.2]\n│   │   │   ├── attrs [required: &gt;=22.2.0, installed: 25.3.0]\n│   │   │   ├── rpds-py [required: &gt;=0.7.0, installed: 0.23.1]\n│   │   │   └── typing_extensions [required: &gt;=4.4.0, installed: 4.12.2]\n│   │   └── rpds-py [required: &gt;=0.7.1, installed: 0.23.1]\n│   ├── jupyter_core [required: &gt;=4.12,!=5.0.*, installed: 5.7.2]\n│   │   ├── platformdirs [required: &gt;=2.5, installed: 4.3.6]\n│   │   └── traitlets [required: &gt;=5.3, installed: 5.14.3]\n│   └── traitlets [required: &gt;=5.1, installed: 5.14.3]\n└── traitlets [required: &gt;=5.4, installed: 5.14.3]\npandasql==0.7.3\n├── numpy [required: Any, installed: 1.26.4]\n├── pandas [required: Any, installed: 2.0.3]\n│   ├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   │   └── six [required: &gt;=1.5, installed: 1.17.0]\n│   ├── pytz [required: &gt;=2020.1, installed: 2025.1]\n│   ├── tzdata [required: &gt;=2022.1, installed: 2025.1]\n│   ├── numpy [required: &gt;=1.21.0, installed: 1.26.4]\n│   └── numpy [required: &gt;=1.23.2, installed: 1.26.4]\n└── SQLAlchemy [required: Any, installed: 2.0.39]\n    └── typing_extensions [required: &gt;=4.6.0, installed: 4.12.2]\npipdeptree==2.25.1\n├── packaging [required: &gt;=24.1, installed: 24.2]\n└── pip [required: &gt;=24.2, installed: 25.0.1]\npydub==0.25.1\nseaborn==0.13.2\n├── numpy [required: &gt;=1.20,!=1.24.0, installed: 1.26.4]\n├── pandas [required: &gt;=1.2, installed: 2.0.3]\n│   ├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   │   └── six [required: &gt;=1.5, installed: 1.17.0]\n│   ├── pytz [required: &gt;=2020.1, installed: 2025.1]\n│   ├── tzdata [required: &gt;=2022.1, installed: 2025.1]\n│   ├── numpy [required: &gt;=1.21.0, installed: 1.26.4]\n│   └── numpy [required: &gt;=1.23.2, installed: 1.26.4]\n└── matplotlib [required: &gt;=3.4,!=3.6.1, installed: 3.10.1]\n    ├── contourpy [required: &gt;=1.0.1, installed: 1.3.1]\n    │   └── numpy [required: &gt;=1.23, installed: 1.26.4]\n    ├── cycler [required: &gt;=0.10, installed: 0.12.1]\n    ├── fonttools [required: &gt;=4.22.0, installed: 4.56.0]\n    ├── kiwisolver [required: &gt;=1.3.1, installed: 1.4.8]\n    ├── numpy [required: &gt;=1.23, installed: 1.26.4]\n    ├── packaging [required: &gt;=20.0, installed: 24.2]\n    ├── pillow [required: &gt;=8, installed: 11.1.0]\n    ├── pyparsing [required: &gt;=2.3.1, installed: 3.2.1]\n    └── python-dateutil [required: &gt;=2.7, installed: 2.9.0.post0]\n        └── six [required: &gt;=1.5, installed: 1.17.0]\nsentencepiece==0.2.0\nsiuba==0.4.4\n├── pandas [required: &gt;=0.24.0,&lt;2.1.0, installed: 2.0.3]\n│   ├── python-dateutil [required: &gt;=2.8.2, installed: 2.9.0.post0]\n│   │   └── six [required: &gt;=1.5, installed: 1.17.0]\n│   ├── pytz [required: &gt;=2020.1, installed: 2025.1]\n│   ├── tzdata [required: &gt;=2022.1, installed: 2025.1]\n│   ├── numpy [required: &gt;=1.21.0, installed: 1.26.4]\n│   └── numpy [required: &gt;=1.23.2, installed: 1.26.4]\n├── numpy [required: &gt;=1.12.0, installed: 1.26.4]\n├── SQLAlchemy [required: &gt;=1.2.19, installed: 2.0.39]\n│   └── typing_extensions [required: &gt;=4.6.0, installed: 4.12.2]\n└── PyYAML [required: &gt;=3.0.0, installed: 6.0.2]\ntf_keras==2.16.0\n└── tensorflow [required: &gt;=2.16,&lt;2.17, installed: 2.16.2]\n    ├── absl-py [required: &gt;=1.0.0, installed: 2.1.0]\n    ├── astunparse [required: &gt;=1.6.0, installed: 1.6.3]\n    │   ├── wheel [required: &gt;=0.23.0,&lt;1.0, installed: 0.45.1]\n    │   └── six [required: &gt;=1.6.1,&lt;2.0, installed: 1.17.0]\n    ├── flatbuffers [required: &gt;=23.5.26, installed: 25.2.10]\n    ├── gast [required: &gt;=0.2.1,!=0.5.2,!=0.5.1,!=0.5.0, installed: 0.6.0]\n    ├── google-pasta [required: &gt;=0.1.1, installed: 0.2.0]\n    │   └── six [required: Any, installed: 1.17.0]\n    ├── h5py [required: &gt;=3.10.0, installed: 3.13.0]\n    │   └── numpy [required: &gt;=1.19.3, installed: 1.26.4]\n    ├── libclang [required: &gt;=13.0.0, installed: 18.1.1]\n    ├── ml-dtypes [required: ~=0.3.1, installed: 0.3.2]\n    │   ├── numpy [required: &gt;1.20, installed: 1.26.4]\n    │   ├── numpy [required: &gt;=1.21.2, installed: 1.26.4]\n    │   └── numpy [required: &gt;=1.23.3, installed: 1.26.4]\n    ├── opt_einsum [required: &gt;=2.3.2, installed: 3.4.0]\n    ├── packaging [required: Any, installed: 24.2]\n    ├── protobuf [required: &gt;=3.20.3,&lt;5.0.0dev,!=4.21.5,!=4.21.4,!=4.21.3,!=4.21.2,!=4.21.1,!=4.21.0, installed: 4.25.6]\n    ├── requests [required: &gt;=2.21.0,&lt;3, installed: 2.32.3]\n    │   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 3.4.1]\n    │   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.10]\n    │   ├── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 2.3.0]\n    │   └── certifi [required: &gt;=2017.4.17, installed: 2025.1.31]\n    ├── setuptools [required: Any, installed: 65.5.0]\n    ├── six [required: &gt;=1.12.0, installed: 1.17.0]\n    ├── termcolor [required: &gt;=1.1.0, installed: 2.5.0]\n    ├── typing_extensions [required: &gt;=3.6.6, installed: 4.12.2]\n    ├── wrapt [required: &gt;=1.11.0, installed: 1.17.2]\n    ├── grpcio [required: &gt;=1.24.3,&lt;2.0, installed: 1.71.0]\n    ├── tensorboard [required: &gt;=2.16,&lt;2.17, installed: 2.16.2]\n    │   ├── absl-py [required: &gt;=0.4, installed: 2.1.0]\n    │   ├── grpcio [required: &gt;=1.48.2, installed: 1.71.0]\n    │   ├── Markdown [required: &gt;=2.6.8, installed: 3.7]\n    │   ├── numpy [required: &gt;=1.12.0, installed: 1.26.4]\n    │   ├── protobuf [required: &gt;=3.19.6,!=4.24.0, installed: 4.25.6]\n    │   ├── setuptools [required: &gt;=41.0.0, installed: 65.5.0]\n    │   ├── six [required: &gt;1.9, installed: 1.17.0]\n    │   ├── tensorboard-data-server [required: &gt;=0.7.0,&lt;0.8.0, installed: 0.7.2]\n    │   └── Werkzeug [required: &gt;=1.0.1, installed: 3.1.3]\n    │       └── MarkupSafe [required: &gt;=2.1.1, installed: 3.0.2]\n    ├── keras [required: &gt;=3.0.0, installed: 3.9.0]\n    │   ├── absl-py [required: Any, installed: 2.1.0]\n    │   ├── numpy [required: Any, installed: 1.26.4]\n    │   ├── rich [required: Any, installed: 13.9.4]\n    │   │   ├── markdown-it-py [required: &gt;=2.2.0, installed: 3.0.0]\n    │   │   │   └── mdurl [required: ~=0.1, installed: 0.1.2]\n    │   │   └── Pygments [required: &gt;=2.13.0,&lt;3.0.0, installed: 2.19.1]\n    │   ├── namex [required: Any, installed: 0.0.8]\n    │   ├── h5py [required: Any, installed: 3.13.0]\n    │   │   └── numpy [required: &gt;=1.19.3, installed: 1.26.4]\n    │   ├── optree [required: Any, installed: 0.14.1]\n    │   │   └── typing_extensions [required: &gt;=4.5.0, installed: 4.12.2]\n    │   ├── ml-dtypes [required: Any, installed: 0.3.2]\n    │   │   ├── numpy [required: &gt;1.20, installed: 1.26.4]\n    │   │   ├── numpy [required: &gt;=1.21.2, installed: 1.26.4]\n    │   │   └── numpy [required: &gt;=1.23.3, installed: 1.26.4]\n    │   └── packaging [required: Any, installed: 24.2]\n    ├── tensorflow-io-gcs-filesystem [required: &gt;=0.23.1, installed: 0.37.1]\n    └── numpy [required: &gt;=1.23.5,&lt;2.0.0, installed: 1.26.4]\ntorchaudio==2.6.0\n└── torch [required: ==2.6.0, installed: 2.6.0]\n    ├── filelock [required: Any, installed: 3.17.0]\n    ├── typing_extensions [required: &gt;=4.10.0, installed: 4.12.2]\n    ├── networkx [required: Any, installed: 3.4.2]\n    ├── Jinja2 [required: Any, installed: 3.1.6]\n    │   └── MarkupSafe [required: &gt;=2.0, installed: 3.0.2]\n    ├── fsspec [required: Any, installed: 2025.3.0]\n    └── sympy [required: ==1.13.1, installed: 1.13.1]\n        └── mpmath [required: &gt;=1.1.0,&lt;1.4, installed: 1.3.0]\ntorchvision==0.21.0\n├── numpy [required: Any, installed: 1.26.4]\n├── torch [required: ==2.6.0, installed: 2.6.0]\n│   ├── filelock [required: Any, installed: 3.17.0]\n│   ├── typing_extensions [required: &gt;=4.10.0, installed: 4.12.2]\n│   ├── networkx [required: Any, installed: 3.4.2]\n│   ├── Jinja2 [required: Any, installed: 3.1.6]\n│   │   └── MarkupSafe [required: &gt;=2.0, installed: 3.0.2]\n│   ├── fsspec [required: Any, installed: 2025.3.0]\n│   └── sympy [required: ==1.13.1, installed: 1.13.1]\n│       └── mpmath [required: &gt;=1.1.0,&lt;1.4, installed: 1.3.0]\n└── pillow [required: &gt;=5.3.0,!=8.3.*, installed: 11.1.0]\ntransformers==4.49.0\n├── filelock [required: Any, installed: 3.17.0]\n├── huggingface-hub [required: &gt;=0.26.0,&lt;1.0, installed: 0.29.3]\n│   ├── filelock [required: Any, installed: 3.17.0]\n│   ├── fsspec [required: &gt;=2023.5.0, installed: 2025.3.0]\n│   ├── packaging [required: &gt;=20.9, installed: 24.2]\n│   ├── PyYAML [required: &gt;=5.1, installed: 6.0.2]\n│   ├── requests [required: Any, installed: 2.32.3]\n│   │   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 3.4.1]\n│   │   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.10]\n│   │   ├── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 2.3.0]\n│   │   └── certifi [required: &gt;=2017.4.17, installed: 2025.1.31]\n│   ├── tqdm [required: &gt;=4.42.1, installed: 4.67.1]\n│   └── typing_extensions [required: &gt;=3.7.4.3, installed: 4.12.2]\n├── numpy [required: &gt;=1.17, installed: 1.26.4]\n├── packaging [required: &gt;=20.0, installed: 24.2]\n├── PyYAML [required: &gt;=5.1, installed: 6.0.2]\n├── regex [required: !=2019.12.17, installed: 2024.11.6]\n├── requests [required: Any, installed: 2.32.3]\n│   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 3.4.1]\n│   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.10]\n│   ├── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 2.3.0]\n│   └── certifi [required: &gt;=2017.4.17, installed: 2025.1.31]\n├── tokenizers [required: &gt;=0.21,&lt;0.22, installed: 0.21.0]\n│   └── huggingface-hub [required: &gt;=0.16.4,&lt;1.0, installed: 0.29.3]\n│       ├── filelock [required: Any, installed: 3.17.0]\n│       ├── fsspec [required: &gt;=2023.5.0, installed: 2025.3.0]\n│       ├── packaging [required: &gt;=20.9, installed: 24.2]\n│       ├── PyYAML [required: &gt;=5.1, installed: 6.0.2]\n│       ├── requests [required: Any, installed: 2.32.3]\n│       │   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 3.4.1]\n│       │   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.10]\n│       │   ├── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 2.3.0]\n│       │   └── certifi [required: &gt;=2017.4.17, installed: 2025.1.31]\n│       ├── tqdm [required: &gt;=4.42.1, installed: 4.67.1]\n│       └── typing_extensions [required: &gt;=3.7.4.3, installed: 4.12.2]\n├── safetensors [required: &gt;=0.4.1, installed: 0.5.3]\n└── tqdm [required: &gt;=4.27, installed: 4.67.1]",
+    "crumbs": [
+      "Intro",
+      "Basic Python"
     ]
   }
 ]

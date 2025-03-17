@@ -16,6 +16,30 @@ format:
     code-block-border-left: "#31BAE9"
 ---
 
+
+# Set up Python:Using python 3.11 instead of 3.13 
+
+because siuba only work with python 3.11 for now
+
+```{r}
+Sys.setenv(RETICULATE_PYTHON = "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11")
+library(reticulate)
+use_python("/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11")
+```
+
+```{r}
+repl_python()
+```
+
+```{python}
+from platform import python_version
+print(python_version())
+```
+
+
+
+
+
 ![](images/Pandas_logo.svg.png){width="600"}
 
 
@@ -23,13 +47,9 @@ pandas is a fast, powerful, flexible and easy to use open source data analysis a
 built on top of the Python programming language.
 
 
-```{python}
-
-import pandas as pd
-print('pandas version', pd.__version__)
-```
 
 Show package's dependencies
+
 ```{python}
 import os
 #os.system('pip show pandas')
@@ -39,15 +59,25 @@ _package = pkg_resources.working_set.by_key[_package_name]
 print([str(r) for r in _package.requires()])  # retrieve deps from setup.py
 ```
 
+# install pacakge
 
+```{python}
+#| eval: false
+!pip3.11 install siuba seaborn pandasql nbformat nbclient
+```
 
-## load package
+# load package
 ```{python}
 import pandas as pd
 from pandasql import sqldf
 import numpy as np
 import matplotlib.pylab as plt
 import seaborn as sns
+
+from siuba.siu import call
+from siuba import _, mutate, filter, group_by, summarize,show_query
+from siuba import *
+from siuba.data import mtcars,penguins
 ```
 
 
@@ -67,6 +97,7 @@ mtcars.head(5)
 
 
 row name to column
+
 ```{python}
 mtcars.index.name = 'newhead'
 mtcars.reset_index(inplace=True)
@@ -92,24 +123,36 @@ small_mtcars.info()
 
 
 
-## select column
+# select column
 
-### get column names
+## get column names
 
 ```{python}
 list(small_mtcars)
 ```
 
-### select by name
+## select by name
 
+::: panel-tabset
+
+### pandas
 ```{python}
 small_mtcars [["cyl", "mpg",'hp']]
 ```
+
 other way:
+
 ```{python}
 small_mtcars.filter(items=['cyl', 'mpg','hp'])
 ```
 
+### siuba
+
+```{python}
+small_mtcars >> select(_.cyl, _.mpg, _.hp)
+```
+
+:::
 
 ### select columns by name match with 'p'
 
@@ -118,6 +161,7 @@ small_mtcars.loc[:,small_mtcars.columns.str.contains("p")]
 ```
 
 other way:
+
 ```{python}
 small_mtcars.filter(regex='p.*', axis=1)
 ```
@@ -137,21 +181,48 @@ small_mtcars.iloc[[0,2]]
 small_mtcars[0:3]
 ```
 
-## drop column
+# drop column
+
+::: panel-tabset
+
+## pandas
 
 ```{python}
 small_mtcars.drop('cyl', axis=1)
 ```
 
-## Renaming column
+## siuba
+
+```{python}
+small_mtcars>>select(-_.cyl)
+```
+
+::: 
+
+# Renaming column
+
+::: panel-tabset
+
+## pandas
 
 ```{python}
 small_mtcars.rename(columns={'mpg':"new_name_mpg", 'cyl':'new_name_cyl'})
 ```
 
-## Create column
 
-### Mutate
+## siuba
+
+```{python}
+small_mtcars>> rename(new_name_mpg=_.mpg)
+```
+::: 
+
+
+# Create column
+
+::: panel-tabset
+
+## pandas
 ```{python}
 
 small_mtcars['mpg2'] = small_mtcars['mpg']+1
@@ -168,7 +239,19 @@ small_mtcars['mpg4'] =np.where(small_mtcars["mpg"]<19, "short",
 small_mtcars
 ```
 
-### Transmute,create column and only keep this column
+## siuba
+
+```{python}
+small_mtcars >>  mutate(mpg2 = _.mpg+1
+                      ,mpg3=if_else(_.mpg > 20, "long", "short")
+                      )
+```
+
+:::
+
+
+
+# Transmute,create column and only keep this column
 
 ```{python}
 small_mtcars['mpg2'] = small_mtcars['mpg']+1

@@ -92,12 +92,27 @@ os.getcwd()
 
 ```{python}
 import os
-os.listdir(os.getcwd()) 
+import pandas as pd
+nameList=os.listdir(os.getcwd()) 
+size_list=[]
+for file in (nameList):
+  #print((os.stat(file).st_size)/1000000)
+  size_list.append((os.stat(file).st_size)/1000000)
+  
+
+file_size=pd.DataFrame(list(zip(nameList, size_list)),
+columns=['file','size_MB'])
+file_size  
+  
 ```
+
+
+
 
 ## get file info
 
 ```{python}
+import os
 a=os.stat('3 statistic Book.qmd')
 a
 ```
@@ -323,3 +338,32 @@ os.system('pip list')
 #| eval: false
 import site; site.getsitepackages()
 ```
+
+
+## show one pacakge package's dependencies
+
+
+```{python}
+#| eval: false
+!pip install pipdeptree
+```
+
+
+```{python}
+!pipdeptree --packages siuba
+```
+
+```{python}
+!pipdeptree --packages pandas
+```
+
+
+## show all pacakge package's dependencies
+
+
+
+```{python}
+!pipdeptree
+```
+
+
