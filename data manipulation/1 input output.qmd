@@ -82,6 +82,17 @@ data=pd.read_feather("data/feather_file.feather")
 data.head()
 ```
 
+
+## txt
+
+```{python}
+f = open("txt_example.txt", "r")
+a=f.read()
+print(a)
+```
+
+
+
 # outout
 
 ## write CSV
@@ -114,6 +125,27 @@ data.head(100).to_parquet('data/df.parquet.gzip',
 ```{python}
 data.head(100).to_feather("data/feather_file.feather")
 ```
+
+
+## write txt
+
+```{python}
+a_txt='''
+Testing
+
+Testing,  Testing.
+Testing
+'''
+
+print(a_txt)
+```
+
+```{python}
+f = open("myfile.txt", "w")
+f.write(a_txt)
+f.close()
+```
+
 
 # Refernce
 

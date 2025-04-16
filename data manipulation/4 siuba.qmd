@@ -25,6 +25,15 @@ siuba (小巴) is a port of dplyr and other R libraries with seamless support fo
 
 
 ![](images/2.png){width="656"}
+Using python 3.11 
+
+```{r}
+Sys.setenv(RETICULATE_PYTHON = "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11")
+library(reticulate)
+use_python("/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11")
+```
+
+
 
 ## load package
 ```{python}
