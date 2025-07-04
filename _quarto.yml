@@ -36,6 +36,7 @@ website:
       - sidebar:intro
       - sidebar:bar0  
       - sidebar:bar1
+      - sidebar:bar2
       - sidebar:bar7
 
   sidebar:
@@ -65,7 +66,12 @@ website:
       contents: plot
 
 
-
+    - id: bar2
+      title: "Publish"
+      style: "floating"
+      background: light
+      collapse-level: 2
+      contents: Publish
 
 
     - id: bar7

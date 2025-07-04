@@ -18,28 +18,51 @@ format:
 
 ![](images/Python-logo-notext.svg.png){width="300"}
 
-# download and install python
+# Download and Install Python
 
-## check python version
+
+## change version in quarto
+
+```{r}
+library(reticulate)
+py_require(c('pandas','pipdeptree'))
+use_python("/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13")
+```
+
+
+## Check Python Version
 
 ```{python}
+# Import the sys module to access system-specific parameters and functions
 import sys
+# Print the Python version to the console
 print(sys.version)
 ```
 
-## delete old version python in mac
+
+
+```{python}
+# Import the python_version function from the platform module
+from platform import python_version
+# Print the Python version
+print(python_version())
+```
+
+
+
+## Delete Old Python Version on Mac
 
 ### delete framework
 
 Go-\>computer-\>Macintosh HD-\>Library-\>Frameworks-\>Python.framework-\>Versions
 
-Delete the old version python folder:
+Delete the old version Python folder:
 
 ![](images/clipboard-613753018.png)
 
 ### delete python file
 
-list all python file
+list all Python files
 
 ```{bash}
 ls /usr/local/bin/python*
@@ -50,12 +73,13 @@ ls /usr/local/bin/python*
 delete the old version
 
 ```{bash}
+#| eval: false
 brew uninstall python@3.11
 ```
 
-## set python version in Rstudio
+## Set Python Version in RStudio
 
-list all file in home path
+list all files in home path
 
 ```{python filename="Terminal"}
 #| eval: false
@@ -71,268 +95,377 @@ nano .Renviron
 
 ![](images/clipboard-2838033785.png){width="510"}
 
-# install jupyter
+# Install Jupyter
 
 ```{python filename="Terminal"}
 #| eval: false
 python3 -m pip install jupyter
 ```
 
-# work with file
+# Basic Data Types
 
-## get current directory
+Python has several built-in data types to store different kinds of values. Understanding these fundamental types is crucial for writing effective Python code.
+
+## Numbers
+
+Python supports various numerical types, including integers (whole numbers) and floating-point numbers (numbers with decimal points).
+
+### Integers
+Integers are whole numbers, positive or negative, without a decimal point.
+```python
+# Example of an integer
+my_integer = 10
+print(f"Value: {my_integer}, Type: {type(my_integer)}")
+```
+
+### Floating-Point Numbers
+Floating-point numbers (floats) are numbers that have a decimal point.
+```python
+# Example of a floating-point number
+my_float = 10.5
+print(f"Value: {my_float}, Type: {type(my_float)}")
+```
+
+## Strings
+
+Strings are sequences of characters, used for text. They are enclosed in single quotes (`'`) or double quotes (`"`).
+
+```python
+# Example of a string
+my_string = "Hello, Python!"
+print(f"Value: {my_string}, Type: {type(my_string)}")
+```
+
+## Booleans
+
+Booleans represent one of two values: `True` or `False`. They are primarily used in conditional statements and loops.
+
+```{python}
+# Example of a boolean
+my_boolean = True
+print(f"Value: {my_boolean}, Type: {type(my_boolean)}")
+```
+
+# Work with Files
+
+## Get Current Directory
 
 ```{python}
 #| eval: false
+# Import the os module, which provides a way of using operating system dependent functionality
 import os
+# Get the current working directory
 os.getcwd()
 ```
 
-## get all file name under current directory
+## Get All File Names Under Current Directory
 
 ```{python}
+# Import the os module for interacting with the operating system
 import os
+# Import the pandas library for data manipulation
 import pandas as pd
+# Get a list of all files and directories in the current working directory
 nameList=os.listdir(os.getcwd()) 
+# Create an empty list to store file sizes
 size_list=[]
+# Loop through each file in the nameList
 for file in (nameList):
-  #print((os.stat(file).st_size)/1000000)
+  # Get the size of the file in megabytes and append it to the size_list
   size_list.append((os.stat(file).st_size)/1000000)
   
 
+# Create a pandas DataFrame from the file names and sizes
 file_size=pd.DataFrame(list(zip(nameList, size_list)),
 columns=['file','size_MB'])
-file_size  
-  
+# Display the DataFrame
+file_size
 ```
 
 
 
 
-## get file info
+## Get File Info
 
 ```{python}
+# Import the os module
 import os
+# Get file status information for '3 statistic Book.qmd'
 a=os.stat('3 statistic Book.qmd')
+# Print the file status
 a
 ```
 
-show st_atime
+show `st_atime`
 
 ```{python}
+# Import the datetime module
 import datetime as dt
-#a.st_atime
+# Get the last access time of the file and format it as YYYYMMDD
 dt.date.fromtimestamp(a.st_atime).strftime('%Y%m%d')
 ```
 
-## create folder
+## Create Folder
 
-create it if not exist
+create it if it does not exist
 
 ```{python}
 #| eval: false
+# Check if the folder 'test_folder' does not exist
 if not os.path.exists('test_folder'): 
+  # Create the folder
   os.mkdir('test_folder') 
 ```
 
-## delete folder
+## Delete Folder
 
 ```{python}
 #| eval: false
+# Import the os module
+import os
+# Delete the folder 'test_folder'
 os.rmdir('test_folder')
 ```
 
-## delete file
+## Delete File
 
 ```{python}
 #| eval: false
+# Import the os module
+import os
+# Delete the file 'test.csv'
 os.remove('test.csv')
 ```
 
-## copy file
+## Copy File
 
 ```{python}
 #| eval: false
+# Import the shutil module, which provides a higher-level interface for file operations
 import shutil
 
+# Copy the file 'test.csv' to 'test2.csv'
 shutil.copyfile('test.csv', 'test2.csv')
 ```
 
-## downlaod file online
+## Download File Online
 
 ```{python}
 #| eval: false
+# Import the urllib.request module for working with URLs
 import urllib.request
 
+# Define the URL of the file to download
 url="https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-11/hotels.csv"
 
+# Download the file from the URL and save it as 'hotels.csv'
 urllib.request.urlretrieve(url, "hotels.csv")
 ```
 
-# Condition with if/elif/else
+# Conditional Statements with if/elif/else
 
 ```{python}
+# Assign values to variables a and b
 a = 200
 b = 33
+# Check if b is greater than a
 if b > a:
+  # If b is greater than a, print this message
   print("b is greater than a")
+# If b is not greater than a, check if a and b are equal
 elif a == b:
+  # If a and b are equal, print this message
   print("a and b are equal")
+# If neither of the above conditions are true, execute the else block
 else:
+  # Print this message because a is greater than b
   print("a is greater than b")
 ```
 
-# Loop
+# Loops
 
 ## for Loop
 
 ```{python}
+# Create a list of fruits
 fruits = ["apple", "banana", "cherry"]
+# Iterate through the fruits list
 for x in fruits:
+  # Print each fruit
   print(x)
 ```
 
-## for enumerate Loop
+## For Enumerate Loop
 
-it will add index
+it will add an index
 
 ```{python}
+# Create a list of fruits
 fruits = ["apple", "banana", "cherry"]
 
+# Use enumerate to get both the index and value of each fruit
 list(enumerate(fruits))
 ```
 
 ```{python}
+# Iterate through the fruits list with index
 for index,i in enumerate(fruits):
+  # Print the index
   print("The index is:",index)
+  # Print the element
   print("The element is:",i)
 ```
 
 ## while Loop
 
 ```{python}
+# Initialize a counter variable
 i = 1
+# Loop as long as i is less than 4
 while i < 4:
+  # Print the value of i
   print(i)
+  # Increment i by 1
   i += 1
 ```
 
-with break statement
+With a break statement
 
 ```{python}
+# Initialize a counter variable
 i = 1
+# Loop as long as i is less than 6
 while i < 6:
+  # Print the value of i
   print(i)
+  # If i is equal to 3, break out of the loop
   if i == 3:
     break
+  # Increment i by 1
   i += 1
 ```
 
-# function
+# Functions
 
-## without Arguments
+## Without Arguments
 
 ```{python}
+# Define a function named my_function
 def my_function():
+  # Print a message inside the function
   print("Hello from a function")
 ```
 
 ```{python}
+# Call the my_function
 my_function()
 ```
 
-## with Arguments
+## With Arguments
 
 ```{python}
+# Define a function named my_function that takes one argument, x
 def my_function(x):
+  # Print the argument x concatenated with a string of exclamation marks
   print(x + " !!!!!!!!!!!!!!!!!")
 ```
 
 ```{python}
+# Call the my_function with the argument 'hello'
 my_function('hello')
 ```
 
-## with default Arguments
+## With Default Arguments
 
 ```{python}
+# Define a function named my_function that takes one argument, x, with a default value of 'hello'
 def my_function(x='hello'):
+  # Print the argument x concatenated with a string of exclamation marks
   print(x + " !!!!!!!!!!!!!!!!!")
 ```
 
 ```{python}
+# Call the my_function without any arguments, so it will use the default value for x
 my_function()
 ```
 
-## return result
+## Return Result
 
 ```{python}
+# Define a function named adding_ten that takes one argument, x
 def adding_ten(x):
+  # Add 10 to x and store the result in a
   a=x+10
+  # Return the value of a
   return(a)
 ```
 
 ```{python}
+# Call the adding_ten function with the argument 3 and store the result in the variable result
 result=adding_ten(3)
+# Print the value of result
 result
 ```
 
-## lambda function
+## Lambda Function
 
-it a faster way to do function
+it is a faster way to define a function
 
 ```{python}
+# Define a lambda function named lambda_adding_ten that takes one argument, x, and returns x + 10
 lambda_adding_ten=lambda x:x+10
 ```
 
 ```{python}
+# Call the lambda_adding_ten function with the argument 4
 lambda_adding_ten(4)
 ```
 
 # List Comprehension
 
-its a for loop in list
+it's a for loop in a list
 
 ```{python}
+# Create a list of fruits
 fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
 
+# Create a new list containing only fruits that have the letter "a" in their name
 newlist = [x for x in fruits if "a" in x]
 
+# Print the new list
 print(newlist)
 ```
 
-# Package
+# Packages
 
-## install package
+## Install Package
 
 The Python Package Index (PyPI).<https://pypi.org//>
 
 ![](images/logo-large.516e776d.svg){width="300"}
 
+
+
+## Check One Package Version
+
 ```{python}
-#| eval: false
+# Import the os module
 import os
-os.system('pip3 install scikit-learn')
-os.system('pip3 install tensorflow')
-os.system('pip3 install pandas')
-os.system('pip3 install SciPy')
+# Execute the shell command 'pip show pandas' to display information about the pandas package
+os.system('pip show pandas')
 ```
 
-## check one package version
+## Check All Package Versions
 
 ```{python}
+# Import the os module
 import os
-os.system('pip show scikit-learn')
-```
-
-## check all package version
-
-```{python}
-import os
+# Execute the shell command 'pip list' to display a list of all installed packages and their versions
 os.system('pip list')
 
 ```
 
-## check package install location
+## Check Package Install Location
 
 ```{python}
 #| eval: false
@@ -340,30 +473,27 @@ import site; site.getsitepackages()
 ```
 
 
-## show one pacakge package's dependencies
+## Show One Package's Dependencies
+
 
 
 ```{python}
-#| eval: false
-!pip install pipdeptree
+# Import the os module
+import os
+# Execute the shell command 'pipdeptree --packages pandas' to display the dependency tree for the pandas package
+os.system('pipdeptree --packages pandas')
+
 ```
 
-
-```{python}
-!pipdeptree --packages siuba
-```
-
-```{python}
-!pipdeptree --packages pandas
-```
-
-
-## show all pacakge package's dependencies
-
+## Show All Package's Dependencies
 
 
 ```{python}
-!pipdeptree
+# Import the os module
+import os
+# Execute the shell command 'pipdeptree' to display the dependency tree for all installed packages
+os.system('!pipdeptree')
+
 ```
 
 

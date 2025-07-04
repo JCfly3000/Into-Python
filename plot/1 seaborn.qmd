@@ -1,9 +1,9 @@
 ---
-title: "seaborn chart"
+title: "Seaborn Chart"
 execute:
   warning: false
   error: false
-  eval: false
+
 format:
   html:
     toc: true
@@ -15,424 +15,421 @@ format:
     code-block-border-left: "#31BAE9"
 ---
 
+
 ![](images/logo-wide-lightbg.svg)
 
-Seaborn is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics.
+```{r}
+library(reticulate)
+py_require(c('celluloid','seaborn','IPython'))
+```
+
+
+
+# Introduction to Seaborn
+
+Seaborn is a Python data visualization library based on Matplotlib. It provides a high-level interface for creating attractive and informative statistical graphics. This document demonstrates how to create various plots using Seaborn, customize their appearance, and save them.
 
 ```{python}
 import seaborn as sns
 print(sns.__version__)
 ```
 
-
-
-
 ```{python}
-# Import seaborn
+# Import necessary libraries
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 
-# Apply the default theme
-#sns.set_theme()
-
 # Load an example dataset
 tips = sns.load_dataset("tips")
 tips.head()
 ```
+
 # Scatter Plot
 
+A scatter plot is used to display the relationship between two continuous variables. Each point on the plot represents an observation in the dataset.
+
 ```{python}
-sns.scatterplot(data=tips,x='tip',y='total_bill')
+sns.scatterplot(data=tips, x='tip', y='total_bill')
 ```
 
-## color by group
+## Color by Group
+
+You can color the points in a scatter plot based on a categorical variable to visualize relationships within different groups.
 
 ```{python}
-sns.scatterplot(data=tips,x='tip',y='total_bill',hue='sex')
+sns.scatterplot(data=tips, x='tip', y='total_bill', hue='sex')
 ```
 
-## size by group
+## Size by Group
+
+Similarly, the size of the points can be varied based on a numerical or categorical variable.
 
 ```{python}
-sns.scatterplot(data=tips,x='tip',y='total_bill',size='size')
+sns.scatterplot(data=tips, x='tip', y='total_bill', size='size')
 ```
 
-# line Plot
+# Line Plot
+
+A line plot is ideal for visualizing the trend of a continuous variable over a continuous interval or time.
 
 ```{python}
-
-dowjones= sns.load_dataset("dowjones")
+dowjones = sns.load_dataset("dowjones")
 dowjones.head()
-
 ```
-
-
 
 ```{python}
-sns.lineplot(data=dowjones,x='Date',y='Price')
+sns.lineplot(data=dowjones, x='Date', y='Price')
 ```
 
-## color by group
+## Line Plot with Dots
+You can also add markers to the line plot to highlight the data points.
+```{python}
+sns.lineplot(data=dowjones, x='Date', y='Price', marker='o')
+```
 
+## Color by Group
+
+Different lines can be plotted for different categories to compare trends.
 
 ```{python}
 #| code-fold: true
 import random
-from siuba import _, mutate, filter, group_by, summarize,show_query
-from siuba import *
 
-dowjones2=dowjones>>mutate(type='old')
+# Create datasets for comparison
+dowjones2 = dowjones.copy()
+dowjones2['type'] = 'old'
 
-dowjones3=dowjones>>mutate(Price=_.Price+random.random()*200,type='new')
+dowjones3 = dowjones.copy()
+dowjones3['Price'] = dowjones3['Price'] + random.random() * 200
+dowjones3['type'] = 'new'
 
-dowjones4=pd.concat([dowjones2, dowjones3], ignore_index = True)>> arrange(_.Date)
-
+dowjones4 = pd.concat([dowjones2, dowjones3], ignore_index=True)
+dowjones4 = dowjones4.sort_values('Date').reset_index(drop=True)
 ```
 
 ```{python}
 dowjones4.head()
-
 ```
 
 ```{python}
-sns.lineplot(data=dowjones4,x='Date',y='Price',hue='type')
+sns.lineplot(data=dowjones4, x='Date', y='Price', hue='type')
 ```
 
+# Histogram
 
-
-# histogram
+A histogram is used to represent the distribution of a single numerical variable.
 
 ```{python}
-sns.histplot(data=tips,x='tip')
+sns.histplot(data=tips, x='tip')
 ```
 
+## Color by Group
 
-## color by group
+Histograms can be grouped by a categorical variable to compare distributions.
 
 ```{python}
-sns.histplot(data=tips,x='tip',hue='sex',multiple="dodge")
+sns.histplot(data=tips, x='tip', hue='sex', multiple="dodge")
 ```
 
-# bar chart
+# Bar Chart
+
+A bar chart represents categorical data with rectangular bars. The lengths of the bars are proportional to the values they represent.
 
 ```{python}
-sns.barplot(data=tips,x='sex',y='tip',errorbar=None)
+sns.barplot(data=tips, x='sex', y='tip', errorbar=None)
 ```
-## show number
+
+## Show Number on Bars
+
+You can display the value of each bar directly on the plot.
 
 ```{python}
-
-ax=sns.barplot(data=tips,x='sex',y='tip',errorbar=None)
+ax = sns.barplot(data=tips, x='sex', y='tip', errorbar=None)
 
 for i in ax.containers:
     ax.bar_label(i,)
-    
 ```
 
-## horizontal bar plot 
+## Horizontal Bar Plot
+
+Bar charts can also be plotted horizontally.
 
 ```{python}
-
-ax=sns.barplot(data=tips,y='sex',x='tip',errorbar=None,orient = 'h')
+ax = sns.barplot(data=tips, y='sex', x='tip', errorbar=None, orient='h')
 plt.show()
-
 ```
 
-# box plot
+# Box Plot
+
+A box plot displays the five-number summary of a set of data: minimum, first quartile, median, third quartile, and maximum.
 
 ```{python}
-sns.boxplot(data=tips,x='day',y='tip')
+sns.boxplot(data=tips, x='day', y='tip')
 ```
 
-## color by group
+## Color by Group
+
+Box plots can be grouped by a categorical variable to compare the distributions.
 
 ```{python}
-sns.boxplot(data=tips,x='day',y='tip',hue='sex')
+sns.boxplot(data=tips, x='day', y='tip', hue='sex')
 ```
 
-# strip plot
+# Strip Plot
+
+A strip plot is a scatter plot where one of the variables is categorical. It is useful for visualizing the distribution of data points.
 
 ```{python}
-sns.stripplot(data=tips,x='day',y='tip')
+sns.stripplot(data=tips, x='day', y='tip')
 ```
 
-## color by group
+## Color by Group
+
+Strip plots can also be grouped by a categorical variable.
 
 ```{python}
-sns.stripplot(data=tips,x='day',y='tip',hue='sex',dodge=True)
+sns.stripplot(data=tips, x='day', y='tip', hue='sex', dodge=True)
 ```
 
-join plot
+# Joint Plot
+
+A joint plot shows the relationship between two variables along with their individual distributions.
 
 ```{python}
-sns.jointplot(data=tips,x='total_bill',y='tip',kind='reg')
+sns.jointplot(data=tips, x='total_bill', y='tip', kind='reg')
 ```
 
+# Facet Plot
 
-
-# Facet plot
+Facet plots allow you to create multiple plots based on the subsets of your data.
 
 ```{python}
 g = sns.FacetGrid(data=tips, col="day", hue="sex")
-
 g.map_dataframe(sns.scatterplot, x="total_bill", y="tip")
-
 g.add_legend()
-
 ```
 
-make 2 plot per column
+## Two Plots per Column
+
+You can wrap the columns of the facet grid to control the layout.
 
 ```{python}
-g = sns.FacetGrid(data=tips, col="day",col_wrap=2, hue="sex")
-
+g = sns.FacetGrid(data=tips, col="day", col_wrap=2, hue="sex")
 g.map_dataframe(sns.scatterplot, x="total_bill", y="tip")
-
 g.add_legend()
-
 ```
 
-sub plot
+# Subplots
+
+You can create a figure with multiple subplots to display several plots at once.
 
 ```{python}
-#sns.set()
-
-#define plotting region (1 rows, 2 columns)
 fig, axes = plt.subplots(1, 2)
 
-
-sns.boxplot(data=tips,x='day',y='tip',hue='sex',ax=axes[0])
-sns.boxplot(data=tips,x='day',y='tip',ax=axes[1])
-```
-# chinese 显示中文 in Mac
-
-```{python}
-# add following line
-plt.rcParams['font.family'] = ['Arial Unicode MS'] #用来正常显示中文标签
-plt.rcParams['axes.unicode_minus'] = False #用来正常显示负号
-sns.set_style('whitegrid',{'font.sans-serif':['Arial Unicode MS','Arial']})
-
-
+sns.boxplot(data=tips, x='day', y='tip', hue='sex', ax=axes[0])
+sns.boxplot(data=tips, x='day', y='tip', ax=axes[1])
 ```
 
+# Displaying Chinese Characters on macOS
 
-# title,size,x y name
+To display Chinese characters correctly in plots on macOS, you need to set the font family to one that supports them.
 
-## add title
 ```{python}
+# Add the following line
+plt.rcParams['font.family'] = ['Arial Unicode MS'] # To display Chinese labels correctly
+plt.rcParams['axes.unicode_minus'] = False # To display the minus sign correctly
+sns.set_style('whitegrid', {'font.sans-serif': ['Arial Unicode MS', 'Arial']})
+```
 
+# Customizing Title, Size, and Axis Labels
+
+## Add Title
+
+You can add a title to your plot to describe its content.
+
+```{python}
 df = sns.load_dataset("tips")
-
-ax=sns.boxplot(x = "day", y = "total_bill", data = df)
-
-ax.set_title("tips box plot ")
+ax = sns.boxplot(x="day", y="total_bill", data=df)
+ax.set_title("Tips Box Plot")
 ```
 
-## adjust size
+## Adjust Size
+
+The size of the plot can be adjusted to fit your needs.
+
 ```{python}
 plt.clf()
-
 plt.figure(figsize=(10, 6))
-
-ax=sns.boxplot(x = "day", y = "total_bill", data = df)
-ax.set_title("tips box plot ")
-
+ax = sns.boxplot(x="day", y="total_bill", data=df)
+ax.set_title("Tips Box Plot")
 plt.show()
-
 ```
 
-## change x y name
+## Change Axis Labels
+
+You can customize the labels for the x and y axes.
 
 ```{python}
-ax=sns.boxplot(x = "day", y = "total_bill", data = df)
-ax.set_title("tips box plot ")
-ax.set(xlabel='x-axis label', ylabel='y-axis label')
-
+ax = sns.boxplot(x="day", y="total_bill", data=df)
+ax.set_title("Tips Box Plot")
+ax.set(xlabel='X-axis Label', ylabel='Y-axis Label')
 ```
 
+# Applying Themes
 
-# applying themes
+Seaborn comes with several built-in themes to style your plots.
 
 ::: {.panel-tabset .nav-pills}
 
-## darkgrid themes
+## Darkgrid Theme
 
-If you set the set_style function without any arguments the "darkgrid" theme will be used by default, which adds a gray background and white grid lines.
+The "darkgrid" theme is the default and features a gray background with white grid lines.
 
 ```{python}
 import seaborn as sns
-
 df = sns.load_dataset("tips")
-
 sns.set_theme()
 # Equivalent to:
 # sns.set_style("darkgrid")
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
+sns.boxplot(x="day", y="total_bill", data=df)
 ```
 
+## Whitegrid Theme
 
-## whitegrid themes
-
-If you want to add gray grid lines but with a white background set this theme.
+The "whitegrid" theme has a white background with gray grid lines.
 
 ```{python}
 import seaborn as sns
-
 df = sns.load_dataset("tips")
 sns.set_style("whitegrid")
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
+sns.boxplot(x="day", y="total_bill", data=df)
 ```
 
-## dark themes
+## Dark Theme
 
-The "dark" theme is the same as "darkgrid" but without the grid lines.
+The "dark" theme is similar to "darkgrid" but without the grid lines.
 
 ```{python}
 import seaborn as sns
-
 df = sns.load_dataset("tips")
-
 sns.set_style("dark")
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
+sns.boxplot(x="day", y="total_bill", data=df)
 ```
 
+## White Theme
 
-## white themes
-
-The "white" theme is the same as "whitegrid" but without the gray grid lines.
+The "white" theme is similar to "whitegrid" but without the grid lines.
 
 ```{python}
 import seaborn as sns
-
 df = sns.load_dataset("tips")
-
 sns.set_style("white")
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
+sns.boxplot(x="day", y="total_bill", data=df)
 ```
 
-## ticks themes
+## Ticks Theme
 
-The "ticks" theme is the same as the "white" theme but this theme adds ticks to the axes.
+The "ticks" theme is like the "white" theme but adds ticks to the axes.
 
 ```{python}
 import seaborn as sns
-
 df = sns.load_dataset("tips")
-
 sns.set_style("ticks")
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
+sns.boxplot(x="day", y="total_bill", data=df)
 ```
 
-## fivethirtyeight themes
+## fivethirtyeight Theme
+
+This theme mimics the style of the FiveThirtyEight website.
 
 ```{python}
-
 plt.clf()
-
 plt.style.use('fivethirtyeight')
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
-
+sns.boxplot(x="day", y="total_bill", data=df)
 plt.show()
 ```
 
+## ggplot Theme
 
-## ggplot
+This theme emulates the popular `ggplot2` library in R.
+
 ```{python}
 plt.clf()
-
 plt.style.use('ggplot')
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
-fig.tight_layout()
+sns.boxplot(x="day", y="total_bill", data=df)
 plt.show()
 ```
 
-## tableau-colorblind10
+
+
+## tableau-colorblind10 Theme
+
+This theme uses a color palette that is friendly to colorblind viewers.
+
 ```{python}
 plt.clf()
 plt.style.use('tableau-colorblind10')
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
-fig.tight_layout()
+sns.boxplot(x="day", y="total_bill", data=df)
 plt.show()
 ```
 
+## dark_background Theme
 
+This theme uses a dark background for the plots.
 
-
-## dark_background
 ```{python}
 plt.clf()
 plt.style.use('dark_background')
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
-fig.tight_layout()
+sns.boxplot(x="day", y="total_bill", data=df)
 plt.show()
 ```
+
 :::
 
+# Saving a Plot
 
-# Save plot
+You can save your plot to a file in various formats.
 
 ```{python}
 import seaborn as sns
-
 df = sns.load_dataset("tips")
-
 plt.clf()
-
 plt.style.use('default')
-
-sns.boxplot(x = "day", y = "total_bill", data = df)
-
-# Save the plot with desired size
+sns.boxplot(x="day", y="total_bill", data=df)
 plt.savefig("output.png", dpi=100, bbox_inches="tight")
-
-
 ```
 
+# Animated Plot
 
-# Animation plot
+You can create animated plots to show changes over time or another variable.
 
 ```{python}
 from celluloid import Camera
 ```
 
-
 ```{python}
-#| output: false 
+#| output: false
 from celluloid import Camera
 from matplotlib import pyplot as plt
 
 fig = plt.figure()
-
 camera = Camera(fig)
 
-a=sns.lineplot(data=dowjones4,x='Date',y='Price',hue='type')
-
+a = sns.lineplot(data=dowjones4, x='Date', y='Price', hue='type')
 hands, labs = a.get_legend_handles_labels()
 
-new_data=dowjones4.sample(50, random_state=42)
+new_data = dowjones4.sample(50, random_state=42)
+new_data = new_data.sort_values(by=['Date'], ascending=True)
 
-new_data=new_data.sort_values(by=['Date'], ascending=True)
-
-for i in (new_data["Date"]):
-  data=dowjones4.query('Date <= @i')
-  #print(data)
-  sns.lineplot(data=data,x='Date',y='Price',hue='type')
-  plt.legend(handles=hands, labels=labs)
-  camera.snap()
+for i in new_data["Date"]:
+    data = dowjones4.query('Date <= @i')
+    sns.lineplot(data=data, x='Date', y='Price', hue='type')
+    plt.legend(handles=hands, labels=labs)
+    camera.snap()
 
 animation = camera.animate()
-
 ```
 
 ```{python}
@@ -440,11 +437,7 @@ from IPython.display import HTML
 HTML(animation.to_html5_video())
 ```
 
+# References
 
-
-
-# reference:
-
-https://seaborn.pydata.org/index.html
-
-https://www.youtube.com/watch?v=ooqXQ37XHMM
+- [Seaborn Official Documentation](https://seaborn.pydata.org/index.html)
+- [YouTube Tutorial on Seaborn](https://www.youtube.com/watch?v=ooqXQ37XHMM)

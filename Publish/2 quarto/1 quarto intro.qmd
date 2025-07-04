@@ -1,0 +1,120 @@
+---
+title: "Using marimo python in quarto"
+author: "Tony Duan"
+execute:
+  warning: false
+  error: false
+
+  
+format:
+  html:
+    toc: true
+    toc-location: right
+    code-fold: show
+    code-tools: true
+    
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    code-copy: true
+
+
+filters:
+    - marimo-team/marimo
+---
+
+
+```{r}
+library(reticulate)
+py_require(c("wigglystuff","marimo"))
+```
+
+
+# Uinsg marimo in quarto
+
+##  Add quarto-marimo to your project
+
+
+```{base}
+quarto add marimo-team/quarto-marimo
+```
+
+
+## Add filters in YAML header
+
+````
+---
+filters:
+    - marimo-team/marimo
+---
+````
+  
+  
+  
+# add code in quaro
+
+## slider bar
+
+```python {.marimo}
+#| echo: true
+import marimo as mo
+slider = mo.ui.slider(1, 500, 1, label="Look, a slider!",full_width=True)
+slider
+```
+
+print out slider value
+
+```python {.marimo}
+#| echo: true
+slider.value
+```
+
+print out slider value number of 🍃
+
+
+```python {.marimo}
+#| echo: true
+mo.md("🍃" * slider.value + "～～～～!")
+```
+
+## slider number
+
+```python {.marimo}
+#| echo: true
+from wigglystuff import TangleSlider
+
+coffees = mo.ui.anywidget(
+  TangleSlider(amount=10.0, min_value=0.0, step=1, suffix=" coffees" , digits=0)
+)
+
+price = mo.ui.anywidget(
+TangleSlider(amount=3.50, min_value=0.01, max_value=10, step=0.01, prefix="$",digits=2
+)
+
+)
+
+```
+
+
+```python {.marimo}
+#| echo: true
+total = coffees.amount * price.amount
+total
+```
+
+
+
+
+```python {.marimo}
+#| echo: true
+mo.md(f"""
+### coffee billing:
+
+you have {coffees} with  {price} and the total spending is ${total:.2f}
+"""
+)
+```
+
+
+# Reference
+
+https://github.com/marimo-team/quarto-marimo
