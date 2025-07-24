@@ -1,0 +1,596 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"SQL database with python\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/1594917913096.png){width=\"600\"}\n",
+        "\n",
+        "# Connection with database"
+      ],
+      "id": "05270ae0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import seaborn for loading sample datasets\n",
+        "import seaborn as sns\n",
+        "# Import pandas for data manipulation\n",
+        "import pandas as pd\n",
+        "# Import sqlite3 for SQLite database interaction\n",
+        "import sqlite3\n",
+        "\n",
+        "# Load the 'tips' dataset from seaborn\n",
+        "tips = sns.load_dataset(\"tips\")\n",
+        "# Load the 'planets' dataset from seaborn\n",
+        "planets=sns.load_dataset('planets')"
+      ],
+      "id": "b7746851",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## create database file pythonsqlite.db and copy tips data and planets data into database"
+      ],
+      "id": "557d216e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "# Import the sqlite3 module\n",
+        "import sqlite3\n",
+        "# Create a connection to the SQLite database file 'pythonsqlite.db'\n",
+        "db = sqlite3.connect('pythonsqlite.db')\n",
+        "\n",
+        "# Write the 'tips' DataFrame to a SQL table named 'tips', replacing it if it already exists\n",
+        "tips.to_sql(name='tips', con=db,if_exists='replace')\n",
+        "# Write the 'planets' DataFrame to a SQL table named 'planets', replacing it if it already exists\n",
+        "planets.to_sql(name='planets', con=db,if_exists='replace')\n",
+        "\n",
+        "# Close the database connection\n",
+        "db.close()"
+      ],
+      "id": "d83bea5f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## check all table in database"
+      ],
+      "id": "a1cd0507"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Connect to the SQLite database file 'pythonsqlite.db'\n",
+        "db = sqlite3.connect('pythonsqlite.db')\n",
+        "# Execute an SQL query to select table names from sqlite_master and read into a pandas DataFrame\n",
+        "table = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\n",
+        "# Display the DataFrame\n",
+        "table"
+      ],
+      "id": "d3053e2f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# SQL\n",
+        "\n",
+        "## select"
+      ],
+      "id": "26f44ae2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Connect to the SQLite database\n",
+        "db = sqlite3.connect('pythonsqlite.db')\n",
+        "# Define an SQL query to select all columns from the 'tips' table, limiting to 3 rows\n",
+        "sql=\"select * from tips LIMIT 3;\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the DataFrame\n",
+        "table"
+      ],
+      "id": "74de438f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Renaming column"
+      ],
+      "id": "13d2ad09"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select 'total_bill' and alias it as 'new_total_bill'\n",
+        "sql=\"select total_bill as new_total_bill from tips\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "07a12504",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## create column"
+      ],
+      "id": "2c075f5b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select 'total_bill' as 'new_total_bill' and also the original 'total_bill'\n",
+        "sql=\"select total_bill as new_total_bill,total_bill from tips\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "af7580b0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Filter rows"
+      ],
+      "id": "438bbd82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select all columns from 'tips' where 'sex' is 'Male'\n",
+        "sql=\"select * from tips where sex='Male'\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "13f9a452",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filters with AND conditions"
+      ],
+      "id": "186d9edd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select all columns from 'tips' where 'sex' is 'Male' AND 'size' is greater than 3\n",
+        "sql=\"select * from tips where sex='Male' and size>3\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "7d39c20d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filters with or conditions"
+      ],
+      "id": "a164fd53"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select all columns from 'tips' where 'sex' is 'Male' OR 'size' is greater than 3\n",
+        "sql=\"select * from tips where sex='Male' or size>3\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the shape of the DataFrame (number of rows, number of columns)\n",
+        "table.shape"
+      ],
+      "id": "645f043e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Append\n",
+        "\n",
+        "### append by row"
+      ],
+      "id": "ab3dc9ce"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to union all rows from 'tips' with itself\n",
+        "sql=\"select * from tips UNION all select * from tips\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the shape of the DataFrame\n",
+        "table.shape"
+      ],
+      "id": "2e076a06",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### append by column\n",
+        "\n",
+        "### Dropping NA values\n",
+        "\n",
+        "### keep NA values\n",
+        "\n",
+        "## group by\n",
+        "\n",
+        "### average,min,max,sum"
+      ],
+      "id": "8dab839d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to calculate the average, minimum, maximum, and sum of 'total_bill' grouped by 'sex'\n",
+        "sql=\"select AVG(total_bill),min(total_bill),max(total_bill),sum(total_bill) from tips group by sex\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the DataFrame\n",
+        "table"
+      ],
+      "id": "bedd549d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### count"
+      ],
+      "id": "490ac786"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to count records grouped by 'sex'\n",
+        "sql=\"select sex,count(*) from tips group by 1\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the DataFrame\n",
+        "table"
+      ],
+      "id": "fa0efc2a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## order rows"
+      ],
+      "id": "2e4ef200"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select all columns from 'tips' and order by 'total_bill' in ascending order\n",
+        "sql=\"select * from tips order by total_bill\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "b64c65f8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Sort in descending order"
+      ],
+      "id": "7ee70304"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select all columns from 'tips' and order by 'total_bill' in descending order\n",
+        "sql=\"select * from tips order by total_bill desc\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "6dbc6a97",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Arrange by multiple variables"
+      ],
+      "id": "90915c2f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select all columns from 'tips' and order by 'total_bill' then by 'tip'\n",
+        "sql=\"select * from tips order by total_bill,tip\"\n",
+        "# Execute the SQL query and read the result into a pandas DataFrame\n",
+        "table = pd.read_sql_query(sql,db)\n",
+        "# Display the first 5 rows of the DataFrame\n",
+        "table.head()"
+      ],
+      "id": "61231155",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## join\n",
+        "\n",
+        "Joining tables is a fundamental operation in SQL, allowing you to combine rows from two or more tables based on a related column between them. Here are common types of joins:\n",
+        "\n",
+        "### inner_join\n",
+        "\n",
+        "An INNER JOIN returns only the rows that have matching values in both tables.\n",
+        "\n",
+        "```python\n",
+        "# Create sample DataFrames for demonstration\n",
+        "lhs_df = pd.DataFrame({'id': [1,2,3], 'val': ['lhs.1', 'lhs.2', 'lhs.3']})\n",
+        "rhs_df = pd.DataFrame({'id': [1,2,4], 'val': ['rhs.1', 'rhs.2', 'rhs.3']})\n",
+        "\n",
+        "# Perform an INNER JOIN using pandas merge\n",
+        "inner_join_result = pd.merge(lhs_df, rhs_df, on='id', how='inner')\n",
+        "print(\"Inner Join Result:\")\n",
+        "print(inner_join_result)\n",
+        "```\n",
+        "\n",
+        "### full join\n",
+        "\n",
+        "A FULL OUTER JOIN returns all rows when there is a match in one of the tables. If there are no matches, it returns NULL values for columns from the table that doesn't have a match.\n",
+        "\n",
+        "```python\n",
+        "# Perform a FULL OUTER JOIN using pandas merge\n",
+        "full_join_result = pd.merge(lhs_df, rhs_df, on='id', how='outer')\n",
+        "print(\"\\nFull Outer Join Result:\")\n",
+        "print(full_join_result)\n",
+        "```\n",
+        "\n",
+        "### left join\n",
+        "\n",
+        "A LEFT JOIN (or LEFT OUTER JOIN) returns all rows from the left table, and the matching rows from the right table. If there is no match from the right table, NULL values are used.\n",
+        "\n",
+        "```python\n",
+        "# Perform a LEFT JOIN using pandas merge\n",
+        "left_join_result = pd.merge(lhs_df, rhs_df, on='id', how='left')\n",
+        "print(\"\\nLeft Join Result:\")\n",
+        "print(left_join_result)\n",
+        "```\n",
+        "\n",
+        "### anti join\n",
+        "\n",
+        "An ANTI JOIN returns rows from the left table that have no matching rows in the right table.\n",
+        "\n",
+        "```python\n",
+        "# Perform an ANTI JOIN (rows in lhs_df not in rhs_df)\n",
+        "anti_join_result = lhs_df[~lhs_df['id'].isin(rhs_df['id'])]\n",
+        "print(\"\\nAnti Join Result (lhs_df not in rhs_df):\")\n",
+        "print(anti_join_result)\n",
+        "```\n",
+        "\n",
+        "## Reshape tables\n",
+        "\n",
+        "\n",
+        "### Gather data long(wide to long)\n",
+        "\n",
+        "### Spread data wide (long to wide)\n",
+        "\n",
+        "## string\n",
+        "\n",
+        "### upper case\n",
+        "\n",
+        "### lower case\n",
+        "\n",
+        "### match\n",
+        "\n",
+        "### concatenation\n",
+        "\n",
+        "### replace\n",
+        "\n",
+        "### extract\n",
+        "\n",
+        "## date\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "## create table into database"
+      ],
+      "id": "522aad3e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to create a new table named 'new_tips' if it doesn't already exist, copying data from 'tips'\n",
+        "sql=\"create table if not exists new_tips as select * from tips\"\n",
+        "# Execute the SQL query\n",
+        "db.execute(sql)\n",
+        "\n",
+        "# Execute an SQL query to select table names from sqlite_master and read into a pandas DataFrame\n",
+        "table = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\n",
+        "# Display the DataFrame\n",
+        "table"
+      ],
+      "id": "8d7c4f34",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## delete table in database"
+      ],
+      "id": "b6600294"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to drop the table named 'new_tips' if it exists\n",
+        "sql=\"drop table if  exists new_tips\"\n",
+        "# Execute the SQL query\n",
+        "db.execute(sql)\n",
+        "\n",
+        "# Execute an SQL query to select table names from sqlite_master and read into a pandas DataFrame\n",
+        "table = pd.read_sql_query(\"SELECT name FROM sqlite_master WHERE type='table';\", db)\n",
+        "# Display the DataFrame\n",
+        "table"
+      ],
+      "id": "24285da5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## edit table in database\n"
+      ],
+      "id": "6f6f169f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Close the database connection\n",
+        "db.close()"
+      ],
+      "id": "49a63864",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Using SQL with Pandas"
+      ],
+      "id": "5e88c78f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import the sqldf function from the pandasql library\n",
+        "from pandasql import sqldf"
+      ],
+      "id": "57fedd21",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define an SQL query to select the first 5 rows from the 'tips' table\n",
+        "sql=\"SELECT * FROM tips LIMIT 5;\"\n",
+        "# Execute the SQL query on the 'tips' DataFrame and store the result in 'data'\n",
+        "data=sqldf(sql)\n",
+        "# Display the resulting DataFrame\n",
+        "data"
+      ],
+      "id": "c4f033a5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# reference:"
+      ],
+      "id": "b49df46b"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

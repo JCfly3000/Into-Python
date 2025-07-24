@@ -1,0 +1,1248 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Data structure in Python\"\n",
+        "author: \"Tony Duan\"\n",
+        "\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/python-data-structures.png){width=\"500\"}\n",
+        "\n",
+        "\n",
+        "# Built-in Data Structures\n",
+        "\n",
+        "## Singular Values"
+      ],
+      "id": "4709ed45"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Assign an integer value to variable a\n",
+        "a=1\n",
+        "# Print the type of variable a\n",
+        "type(a)"
+      ],
+      "id": "72614447",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Assign a float value to variable a\n",
+        "a=1.3\n",
+        "# Print the type of variable a\n",
+        "type(a)"
+      ],
+      "id": "c0ee1ef0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Assign a string value to variable a\n",
+        "a='hell'\n",
+        "# Print the type of variable a\n",
+        "type(a)"
+      ],
+      "id": "8c3c27ae",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Assign a boolean value to variable a\n",
+        "a= True\n",
+        "# Print the type of variable a\n",
+        "type(a)"
+      ],
+      "id": "a9cadfe2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## list\n",
+        "\n",
+        "Lists are ordered, mutable (changeable) sequences that can store items of different data types. They are defined by enclosing elements in square brackets `[]`."
+      ],
+      "id": "9de9d72b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a list named a\n",
+        "a=[1,2,3]\n",
+        "\n",
+        "# Print the list\n",
+        "a"
+      ],
+      "id": "9d72f41c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the type of variable a\n",
+        "type(a) "
+      ],
+      "id": "d09a9eb0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a list of fruits\n",
+        "fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana','apple']"
+      ],
+      "id": "12f7e51e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### find length of the list with `len()`"
+      ],
+      "id": "6e983b71"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the length of the fruits list\n",
+        "len(fruits)"
+      ],
+      "id": "6ffe19f3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### First 2 on the list"
+      ],
+      "id": "2a786dbe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Get the first 2 elements of the fruits list\n",
+        "fruits[:2]"
+      ],
+      "id": "14634221",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Last 2 on the list"
+      ],
+      "id": "e4ed7ab5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Get the last 2 elements of the fruits list\n",
+        "fruits[-2:]"
+      ],
+      "id": "cd0c6b67",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Find how many times in the list with `count()`"
+      ],
+      "id": "a52f179a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Count the number of times 'apple' appears in the fruits list\n",
+        "fruits.count('apple')"
+      ],
+      "id": "26f70bc5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Find location on the list with `index()`\n",
+        "\n",
+        "show the first 'apple' index. Python lists start at 0"
+      ],
+      "id": "a1813748"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Find the index of the first occurrence of 'apple' in the fruits list\n",
+        "fruits.index('apple')"
+      ],
+      "id": "fb4892b3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "all 'apple' in the list"
+      ],
+      "id": "987fbf11"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Use a list comprehension to find all indices where the value is 'apple'\n",
+        "[index for index, value in enumerate(fruits) if value == 'apple']"
+      ],
+      "id": "ed66b6b8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Reverse the list"
+      ],
+      "id": "af0fb8f1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Reverse the order of elements in the fruits list in-place\n",
+        "fruits.reverse()\n",
+        "# Print the modified fruits list\n",
+        "fruits"
+      ],
+      "id": "e4b5166c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Sort the list"
+      ],
+      "id": "24504fb7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Sort the elements of the fruits list in-place alphabetically\n",
+        "fruits.sort()\n",
+        "# Print the modified fruits list\n",
+        "fruits"
+      ],
+      "id": "722cc088",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Add element to the list"
+      ],
+      "id": "8c8eeee5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Add 'grape' to the end of the fruits list\n",
+        "fruits.append('grape')\n",
+        "# Print the modified fruits list\n",
+        "fruits"
+      ],
+      "id": "6a9b43aa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Drop last element"
+      ],
+      "id": "b3c32e16"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Remove and return the last element from the fruits list\n",
+        "fruits.pop()\n",
+        "\n",
+        "# Print the modified fruits list\n",
+        "fruits"
+      ],
+      "id": "f65bdfe7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### List Comprehensions\n",
+        "\n",
+        "using loop:"
+      ],
+      "id": "294d2b2b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Initialize an empty list to store squares\n",
+        "squares = []\n",
+        "# Loop from 0 to 9\n",
+        "for x in range(10):\n",
+        "  # Append the square of x to the squares list\n",
+        "  squares.append(x**2)\n",
+        "  \n",
+        "# Print the squares list\n",
+        "squares"
+      ],
+      "id": "5cfaa8b9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "using List Comprehensions"
+      ],
+      "id": "7cdcdbbe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a list of squares using a list comprehension\n",
+        "squares = [x**2 for x in range(10)]\n",
+        "# Print the squares list\n",
+        "squares"
+      ],
+      "id": "ac48bb3a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### List to Tuples"
+      ],
+      "id": "49071929"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Convert the squares list to a tuple\n",
+        "tuple(squares)"
+      ],
+      "id": "260944bb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### List to Set "
+      ],
+      "id": "4b08e17a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Convert the squares list to a set\n",
+        "set(squares)"
+      ],
+      "id": "3e52034f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### List to Dictionary \n",
+        "\n",
+        "#### One list to dictionary"
+      ],
+      "id": "12c5e9f1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a list\n",
+        "list=['a', 1, 'b', 2, 'c', 3]\n",
+        "\n",
+        "# Define a function to convert a list to a dictionary\n",
+        "def convert(lst):\n",
+        "   res_dict = {}\n",
+        "   for i in range(0, len(lst), 2):\n",
+        "       res_dict[lst[i]] = lst[i + 1]\n",
+        "   return res_dict\n",
+        " \n",
+        "# Call the convert function with the list\n",
+        "convert(list)"
+      ],
+      "id": "7131a461",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Two lists to dictionary"
+      ],
+      "id": "a572e9e7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import the itertools module (though not used in this specific example)\n",
+        "import itertools\n",
+        "\n",
+        "# Define a tuple of keys\n",
+        "keys = ('name', 'age', 'food')\n",
+        "\n",
+        "# Define a tuple of values\n",
+        "values = ('Monty', 42, 'spam')\n",
+        "\n",
+        "# Create a dictionary by zipping the keys and values\n",
+        "dict(zip(keys, values))"
+      ],
+      "id": "505f05f9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Tuples\n",
+        "\n",
+        "Tuples are ordered, immutable (unchangeable) sequences. They are defined by enclosing elements in parentheses `()`."
+      ],
+      "id": "5e5b0ae9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a tuple named fruits\n",
+        "fruits = ('orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana','apple')\n",
+        "\n",
+        "# Print the tuple\n",
+        "fruits"
+      ],
+      "id": "9ea2fbf1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the type of the fruits tuple\n",
+        "type(fruits)"
+      ],
+      "id": "9012019b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "tuple cannot be modified.\n",
+        "\n",
+        "## Sets\n",
+        "\n",
+        "A set is an unordered collection with no duplicate elements. Sets are useful for mathematical set operations like union, intersection, difference, and symmetric difference. They are defined by enclosing elements in curly braces `{}`."
+      ],
+      "id": "9a234593"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a set named basket with duplicate elements\n",
+        "basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}\n",
+        "\n",
+        "# Print the set (duplicates are automatically removed)\n",
+        "basket"
+      ],
+      "id": "784f08af",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the type of the basket set\n",
+        "type(basket)"
+      ],
+      "id": "c92686c9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Dictionaries\n",
+        "\n",
+        "Dictionaries are unordered collections of key-value pairs. Each key must be unique, and it maps to a value. Dictionaries are defined by enclosing key-value pairs in curly braces `{}`."
+      ],
+      "id": "b79d8ddf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a dictionary named tel\n",
+        "tel = {'jack': 4098, 'sape': 4139}\n",
+        "\n",
+        "# Print the dictionary\n",
+        "tel"
+      ],
+      "id": "1e75fcae",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the type of the tel dictionary\n",
+        "type(tel)"
+      ],
+      "id": "deabfa12",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Access the value associated with the key 'jack' in the tel dictionary\n",
+        "tel['jack']"
+      ],
+      "id": "5086592c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# NumPy Data Structures (Matrix in Python)\n",
+        "\n",
+        "NumPy is the fundamental package for scientific computing in Python. It is a Python library that provides a multidimensional array object\n",
+        "\n",
+        "Python doesn't have a built-in type for matrices. However, we can treat a list of a list as a matrix"
+      ],
+      "id": "fad49321"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a list of lists representing a matrix\n",
+        "A = [[1, 4, 5, 12], \n",
+        "    [-5, 8, 9, 0],\n",
+        "    [-6, 7, 11, 19]]\n",
+        "    \n",
+        "# Print the matrix\n",
+        "A"
+      ],
+      "id": "958cd595",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## NumPy Array"
+      ],
+      "id": "32b780c4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import the numpy library\n",
+        "import numpy as np\n",
+        "\n",
+        "# Create a 2x3 NumPy array\n",
+        "A2 = np.array([[1, 2, 3], [3, 4, 5]])\n",
+        "# Print the array\n",
+        "print(A2)"
+      ],
+      "id": "85f53c1e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the type of the A2 array\n",
+        "type(A2)"
+      ],
+      "id": "9a663054",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Shape"
+      ],
+      "id": "99bd0a3e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the shape of the A2 array (rows, columns)\n",
+        "A2.shape"
+      ],
+      "id": "b875c8e0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Row Number"
+      ],
+      "id": "6aae2962"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the number of rows in the A2 array\n",
+        "len(A2)"
+      ],
+      "id": "b3f36a7d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Total Elements"
+      ],
+      "id": "b9b12217"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the total number of elements in the A2 array\n",
+        "A2.size"
+      ],
+      "id": "0187f89e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Dimension "
+      ],
+      "id": "8719e036"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the number of dimensions of the A2 array\n",
+        "A2.ndim"
+      ],
+      "id": "b605f1aa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Count NumPy Array Elements"
+      ],
+      "id": "82a22fde"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import the collections and numpy modules\n",
+        "import collections, numpy\n",
+        "# Create a NumPy array\n",
+        "a = numpy.array([0, 3, 0, 4])\n",
+        "# Count the occurrences of each element in the array\n",
+        "collections.Counter(a)"
+      ],
+      "id": "91cace48",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Convert List into NumPy Array"
+      ],
+      "id": "cc8ff8ac"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Define a list of lists\n",
+        "A = [\n",
+        "  [1, 4, 5, 12], \n",
+        "  [-5, 8, 9, 0],\n",
+        "  [-6, 7, 11, 19],\n",
+        "  [1, 4, 5, 12], \n",
+        "  [-5, 8, 9, 0],\n",
+        "  [-6, 7, 11, 19],\n",
+        "  [1, 4, 5, 12], \n",
+        "  [-5, 8, 9, 0],\n",
+        "  [-6, 7, 11, 19]\n",
+        "  ]\n",
+        "    \n",
+        "# Convert the list of lists to a NumPy array\n",
+        "A3 = np.array(A)\n",
+        "\n",
+        "# Print the NumPy array\n",
+        "print(A3)"
+      ],
+      "id": "909498ba",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Selection\n",
+        "\n",
+        "\n",
+        "### First 5 Rows"
+      ],
+      "id": "72208a17"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select the first 5 rows of the array\n",
+        "A[:5]"
+      ],
+      "id": "4331e5c4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Last 5 Rows"
+      ],
+      "id": "a69b87a8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select all rows except the last 5\n",
+        "A[:-5]"
+      ],
+      "id": "d8c2f532",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### First Row"
+      ],
+      "id": "2c9ed9ba"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select the first row of the array\n",
+        "A[0]"
+      ],
+      "id": "f588b8f8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### First Column"
+      ],
+      "id": "f8d4cf45"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select the first column of the A2 array\n",
+        "A2[:,0]"
+      ],
+      "id": "b09a5e3a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### First Row and First Column Element"
+      ],
+      "id": "02d63bc4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select the element at the first row and first column of the A2 array\n",
+        "A2[0,0]"
+      ],
+      "id": "42f62671",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the data type of the elements in the A2 array\n",
+        "A2.dtype"
+      ],
+      "id": "23a7027b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Second Row and Third Column"
+      ],
+      "id": "ba5bad40"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select the element at the second row (index 1) and third column (index 2) of the A2 array\n",
+        "A2[1,2]"
+      ],
+      "id": "69c46e2b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Filter \n",
+        "\n",
+        "### filter all"
+      ],
+      "id": "51bf2fc8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the A3 array\n",
+        "print(A3)"
+      ],
+      "id": "3398df1f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a boolean array where True indicates elements greater than 4\n",
+        "A3>4"
+      ],
+      "id": "3a104429",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select elements from A3 that are greater than 4\n",
+        "A3[A3>4]"
+      ],
+      "id": "49f8b03b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Filter Row "
+      ],
+      "id": "6f21eaea"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Print the A3 array\n",
+        "A3"
+      ],
+      "id": "fe3aa0d9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "filter second column > 5"
+      ],
+      "id": "b13f0ae2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a boolean array where True indicates rows where the second column (index 1) has a value greater than 5\n",
+        "filter_val=(A3>5)[:,2]"
+      ],
+      "id": "f8688476",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "which only keeps 2,3 rows."
+      ],
+      "id": "4fc831a1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Select rows from A3 based on the filter_val boolean array, and all columns\n",
+        "A3[filter_val,0:]"
+      ],
+      "id": "824a7a2a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Create NumPy Array\n",
+        "\n",
+        "### Create Identity Matrix"
+      ],
+      "id": "aba1fc46"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a 3x3 identity matrix\n",
+        "np.eye(3)"
+      ],
+      "id": "9f91bf1e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Create Zeros Array"
+      ],
+      "id": "7001d1b4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a 2x3 array filled with zeros\n",
+        "np.zeros((2,3))"
+      ],
+      "id": "caca2fb2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Create Ones Array"
+      ],
+      "id": "c654c2ba"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a 2x3 array filled with ones\n",
+        "np.ones((2,3))"
+      ],
+      "id": "ad50a9b7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Compare Arrays"
+      ],
+      "id": "139b334f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Creating Array\n",
+        "a = np.array([1,2,3,4]) \n",
+        "b = np.array([3,2,5,6])"
+      ],
+      "id": "860ec6e5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Compare if elements of array a are greater than elements of array b\n",
+        "np.greater(a, b)"
+      ],
+      "id": "98389270",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Compare if elements of array a are greater than or equal to elements of array b\n",
+        "a >= b"
+      ],
+      "id": "52bebd48",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Compare if elements of array a are less than elements of array b\n",
+        "np.less(a, b)"
+      ],
+      "id": "5436a2f1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Compare if elements of array a are equal to elements of array b\n",
+        "np.equal(a, b)"
+      ],
+      "id": "e51dabfa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Reshape Array"
+      ],
+      "id": "a1089d56"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create a 1D array with values from 0 to 8 and reshape it into a 3x3 2D array\n",
+        "a=np.arange(9).reshape(3, 3)\n",
+        "\n",
+        "# Print the reshaped array\n",
+        "a"
+      ],
+      "id": "111ee420",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Array Calculations"
+      ],
+      "id": "b57448c1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Perform element-wise multiplication of array a by itself\n",
+        "b=a*a\n",
+        "# Print the result\n",
+        "b"
+      ],
+      "id": "e355c5ff",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Perform element-wise addition of array a to itself\n",
+        "b=a+a\n",
+        "# Print the result\n",
+        "b"
+      ],
+      "id": "6eff2e40",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## NumPy Array to DataFrame"
+      ],
+      "id": "c3775c23"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import the pandas library\n",
+        "import pandas as pd\n",
+        "# Create a DataFrame from the NumPy array b, with specified column names\n",
+        "df = pd.DataFrame(b, columns=['Column_A', 'Column_B', 'Column_C'])\n",
+        "\n",
+        "# Print the DataFrame\n",
+        "df"
+      ],
+      "id": "3e49e659",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Reference\n",
+        "\n",
+        "https://docs.python.org/3/tutorial/datastructures.html#\n",
+        "\n",
+        "https://numpy.org/doc/stable/user/basics.rec.html"
+      ],
+      "id": "e021ef0f"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

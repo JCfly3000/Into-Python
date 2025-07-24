@@ -1,0 +1,698 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Plotnine Chart\"\n",
+        "execute:\n",
+        "  warning: false\n",
+        "  error: false\n",
+        "\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: right\n",
+        "    code-fold: show\n",
+        "    code-tools: true\n",
+        "    number-sections: true\n",
+        "    code-block-bg: true\n",
+        "    code-block-border-left: \"#31BAE9\"\n",
+        "---\n",
+        "\n",
+        "![](images/logo-540.png){width=\"300\"}\n",
+        "\n",
+        "# Introduction to Plotnine\n",
+        "\n",
+        "Plotnine is a Python implementation of the Grammar of Graphics, inspired by R's `ggplot2`. It allows you to create complex and beautiful plots by adding layers of data, aesthetics, and geoms. This document provides a guide to creating various plots with Plotnine."
+      ],
+      "id": "23642784"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotnine\n",
+        "print(plotnine.__version__)"
+      ],
+      "id": "a75b0c99",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "import seaborn as sns\n",
+        "import pandas as pd\n",
+        "\n",
+        "# Load an example dataset\n",
+        "tips = sns.load_dataset(\"tips\")\n",
+        "tips.head()"
+      ],
+      "id": "50b0ed0c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Scatter Plot\n",
+        "\n",
+        "A scatter plot is used to visualize the relationship between two continuous variables."
+      ],
+      "id": "9da95440"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", y=\"total_bill\") + geom_point()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "2550745f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Color by Group\n",
+        "\n",
+        "You can color the points based on a categorical variable to see how the relationship varies across different groups."
+      ],
+      "id": "8bea5c15"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", y=\"total_bill\") + geom_point(aes(color=\"sex\"))\n",
+        ")\n",
+        "p"
+      ],
+      "id": "435d43ed",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Size by Group\n",
+        "\n",
+        "The size of the points can be mapped to a variable to add another dimension to the plot."
+      ],
+      "id": "3e4fc26a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", y=\"total_bill\", size=\"size\") + geom_point()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "f7d4277b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Line Plot\n",
+        "\n",
+        "A line plot is suitable for showing the trend of a variable over time."
+      ],
+      "id": "77130447"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones = sns.load_dataset(\"dowjones\")\n",
+        "dowjones.head()"
+      ],
+      "id": "41b6f3f5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=dowjones) + aes(x=\"Date\", y=\"Price\") + geom_line()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "82c16f09",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Line Plot with Dots\n",
+        "You can also add markers to the line plot to highlight the data points."
+      ],
+      "id": "4df04ae3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=dowjones) + aes(x=\"Date\", y=\"Price\") + geom_line() + geom_point()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "0dc4254c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: true\n",
+        "import random\n",
+        "\n",
+        "# Create datasets for comparison\n",
+        "dowjones2 = dowjones.copy()\n",
+        "dowjones2['type'] = 'old'\n",
+        "\n",
+        "dowjones3 = dowjones.copy()\n",
+        "dowjones3['Price'] = dowjones3['Price'] + random.random() * 200\n",
+        "dowjones3['type'] = 'new'\n",
+        "\n",
+        "dowjones4 = pd.concat([dowjones2, dowjones3], ignore_index=True)\n",
+        "dowjones4 = dowjones4.sort_values('Date').reset_index(drop=True)"
+      ],
+      "id": "a6226ad6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dowjones4.head()"
+      ],
+      "id": "b21c05c0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Color by Group\n",
+        "\n",
+        "You can plot multiple lines on the same plot to compare different groups."
+      ],
+      "id": "5f0f32c1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=dowjones4) + aes(x=\"Date\", y=\"Price\") + geom_line(aes(color=\"type\"))\n",
+        ")\n",
+        "p"
+      ],
+      "id": "5cf0735d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Histogram\n",
+        "\n",
+        "A histogram visualizes the distribution of a single continuous variable."
+      ],
+      "id": "ac7ddc94"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\") + geom_histogram()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "c153c6f5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Color by Group\n",
+        "\n",
+        "You can create separate histograms for different groups to compare their distributions."
+      ],
+      "id": "b2c96f26"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge')\n",
+        ")\n",
+        "p"
+      ],
+      "id": "91955868",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Bar Chart\n",
+        "\n",
+        "A bar chart is used to display categorical data with bars of lengths proportional to the values they represent."
+      ],
+      "id": "e15d94ca"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x='sex', y='tip', fill=\"sex\") + geom_col()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "8582f2b5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Box Plot\n",
+        "\n",
+        "A box plot shows the distribution of a dataset, including the median, quartiles, and potential outliers."
+      ],
+      "id": "22e07f9a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x='day', y='tip', fill=\"day\") + geom_boxplot()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "b82eda21",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Color by Group\n",
+        "\n",
+        "You can group box plots by a categorical variable to compare distributions."
+      ],
+      "id": "ec404f43"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x='day', y='tip', fill=\"sex\") + geom_boxplot()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "f0fdc6bf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Strip Plot\n",
+        "\n",
+        "A strip plot is a scatter plot for a categorical variable, showing the distribution of data points."
+      ],
+      "id": "a4964ed3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x='day', y='tip') + geom_jitter(width=0.1)\n",
+        ")\n",
+        "p"
+      ],
+      "id": "8d95a77a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Color by Group\n",
+        "\n",
+        "You can color the points in a strip plot to distinguish between different groups."
+      ],
+      "id": "af25bd8c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x='day', y='tip', fill=\"sex\") + geom_jitter(position=position_jitterdodge())\n",
+        ")\n",
+        "p"
+      ],
+      "id": "eafcfb35",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Facet Plot\n",
+        "\n",
+        "Facet plots create subplots for different subsets of the data, allowing for easy comparison."
+      ],
+      "id": "387375c3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", y=\"total_bill\") + geom_point(aes(color=\"sex\"))\n",
+        "    + facet_wrap(\"day\")\n",
+        ")\n",
+        "p"
+      ],
+      "id": "a209b49f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Three Plots per Row\n",
+        "\n",
+        "You can control the layout of the facet grid by specifying the number of columns."
+      ],
+      "id": "7b40ac95"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", y=\"total_bill\") + geom_point(aes(color=\"sex\"))\n",
+        "    + facet_wrap(\"day\", ncol=3)\n",
+        ")\n",
+        "p"
+      ],
+      "id": "3ee3456e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Customizing Title, Size, and Axis Names\n",
+        "\n",
+        "## Add Title\n",
+        "\n",
+        "You can add a title to your plot to provide context."
+      ],
+      "id": "6d37d05a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge') + ggtitle(\"Tip by Sex\")\n",
+        ")\n",
+        "p"
+      ],
+      "id": "c4c7df1b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Adjust Size\n",
+        "\n",
+        "The size of the plot can be customized to fit your needs."
+      ],
+      "id": "91886a15"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge') + ggtitle(\"Tip by Sex\") + theme(figure_size=(4, 3))\n",
+        ")\n",
+        "p"
+      ],
+      "id": "6bc1bf14",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Change Axis Names\n",
+        "\n",
+        "You can change the labels of the x and y axes for clarity."
+      ],
+      "id": "6c5bf03c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", y=\"total_bill\") + geom_point() + scale_x_continuous(name=\"New X Name\") + scale_y_continuous(name=\"New Y Name\")\n",
+        ")\n",
+        "p"
+      ],
+      "id": "8f2f68e9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Applying Themes\n",
+        "\n",
+        "Plotnine offers several built-in themes to change the appearance of your plots. You can find all themes [here](https://github.com/has2k1/plotnine/tree/main/plotnine/themes).\n",
+        "\n",
+        "::: {.panel-tabset .nav-pills}\n",
+        "\n",
+        "## xkcd Theme\n",
+        "\n",
+        "This theme gives your plots a hand-drawn, xkcd-style look."
+      ],
+      "id": "4feb894b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge') + theme_xkcd()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "54b3f6d9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## theme_538\n",
+        "\n",
+        "This theme mimics the style of the FiveThirtyEight website."
+      ],
+      "id": "5cf2acb6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge') + theme_538()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "f6f1376a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## theme_dark\n",
+        "\n",
+        "This theme uses a dark background for a modern look."
+      ],
+      "id": "b1bb8dba"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge') + theme_dark()\n",
+        ")\n",
+        "p"
+      ],
+      "id": "1f2881ab",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "# Saving a Plot\n",
+        "\n",
+        "You can save your plot to a file in various formats."
+      ],
+      "id": "f2533d19"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(data=tips) + aes(x=\"tip\", fill='sex') + geom_histogram(position='dodge') + theme_dark()\n",
+        ")\n",
+        "p.save(filename='test3.png')"
+      ],
+      "id": "5e3daf24",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Animated Plot\n",
+        "\n",
+        "Plotnine can also be used to create animated plots."
+      ],
+      "id": "3c827545"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine.animation import PlotnineAnimation"
+      ],
+      "id": "c9272c12",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| output: false\n",
+        "new_data = dowjones4.sample(50, random_state=42)\n",
+        "new_data = new_data.sort_values(by=['Date'], ascending=True)\n",
+        "\n",
+        "def plot(x):\n",
+        "    df2 = dowjones4.query('Date <= @x')\n",
+        "    p = (\n",
+        "        ggplot(df2, aes(x='Date', y='Price'))\n",
+        "        + geom_line(aes(color=\"type\"))\n",
+        "        + theme(subplots_adjust={'right': 0.85})\n",
+        "    )\n",
+        "    return p\n",
+        "\n",
+        "plots = (plot(i) for i in new_data[\"Date\"])"
+      ],
+      "id": "8f4f1889",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from matplotlib import rc\n",
+        "\n",
+        "rc(\"animation\", html=\"html5\")\n",
+        "\n",
+        "animation = PlotnineAnimation(plots, interval=300, repeat_delay=500)\n",
+        "animation"
+      ],
+      "id": "81c209e1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Reference\n",
+        "\n",
+        "- [Plotnine Official Documentation](https://plotnine.org/)"
+      ],
+      "id": "84ff7cdc"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

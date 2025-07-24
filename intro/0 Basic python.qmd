@@ -39,16 +39,11 @@ import sys
 print(sys.version)
 ```
 
-
+## Check Python location 
 
 ```{python}
-# Import the python_version function from the platform module
-from platform import python_version
-# Print the Python version
-print(python_version())
+print(sys.executable)
 ```
-
-
 
 ## Delete Old Python Version on Mac
 
@@ -495,5 +490,109 @@ import os
 os.system('!pipdeptree')
 
 ```
+
+
+
+# check IP location
+
+```{python}
+import requests
+
+def get_location():
+    response = requests.get("http://ip-api.com/json/")
+    if response.status_code == 200:
+        data = response.json()
+        print(f"IP Address: {data['query']}")
+        print(f"City: {data['city']}")
+        print(f"Region: {data['regionName']}")
+        print(f"Country: {data['country']}")
+        print(f"ISP: {data['isp']}")
+        print(f"Latitude: {data['lat']}, Longitude: {data['lon']}")
+        
+    else:
+        print("Failed to get location")
+
+get_location()
+```
+
+# check internet speed and connection
+
+
+```{python}
+
+import socket
+
+def test_connection(host, port=80, timeout=3):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket().connect((host, port))
+        return True
+    except Exception:
+        return False
+
+def check_sites():
+    sites = ["www.baidu.com", "www.google.com"]
+    print("\n🌍 Site Connectivity:")
+    for site in sites:
+        reachable = test_connection(site)
+        status = "✅ Reachable" if reachable else "❌ Unreachable"
+        print(f"  {site:<20} {status}")
+
+
+check_sites()
+```
+
+
+```{python}
+import requests
+import time
+import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def test_download_speed(url, test_size_bytes=1_048_576):  # 1MB
+    start = time.time()
+    response = requests.get(url, stream=True, verify=False)
+    bytes_downloaded = 0
+    for chunk in response.iter_content(4096):
+        bytes_downloaded += len(chunk)
+        if bytes_downloaded >= test_size_bytes:
+            break
+    duration = time.time() - start
+    mbps = (bytes_downloaded * 8) / (duration * 1_000_000)  # bits/sec -> Mbit/sec
+    return mbps
+
+def test_upload_speed(url, test_size_bytes=1_048_576):  # 1MB
+    data = b'x' * test_size_bytes
+    start = time.time()
+    response = requests.post(url, data=data)
+    duration = time.time() - start
+    mbps = (test_size_bytes * 8) / (duration * 1_000_000)
+    return mbps
+```
+
+
+```{python}
+download_url = "https://www.thinkbroadband.com/download/100MB.zip"
+upload_url = "http://speedtest.cc.cloudxns.net/speedtest/upload.php"
+```
+
+
+```{python}
+print("Testing download speed...")
+down_speed = test_download_speed(download_url)
+print(f"Download speed: {down_speed:.2f} Mbps")
+```
+
+
+
+```{python}
+print("Testing upload speed...")
+up_speed = test_upload_speed(upload_url)
+print(f"Upload speed: {up_speed:.2f} Mbps")
+```
+
 
 
